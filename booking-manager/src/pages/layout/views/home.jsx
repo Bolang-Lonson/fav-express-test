@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import logo from '../../../assets/VERSION 1.png'
 
 const Home = () => {
-    const [startDate, setStartDate] = useState(new Date);
+    const [startDate, setStartDate] = useState(new Date());
     let day = startDate.getDay();
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   return (
-    <div className='bg-slate-100 h-full pt-16'>
+    <div className='h-1/2 pb-32 pt-28 md:pt-32'>
+        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md">
+            <img 
+                src={logo} alt="logo"
+                className=' h-16'
+            />
+            <p className=' text-gray-500 font-semibold max-md:text-sm'>Bus Schedules & Destinations</p>
+            <div className='w-16'></div>
+        </div>
         <form action="">
-            <div className="w-full bg-white py-2 px-14 mb-16">
+            <div className="w-full bg-white py-2 px-14 mb-10 md:mb-16 overflow-x-auto">
                 <div className="form-group flex flex-col mb-3">
                     <label htmlFor="depart" className='text-sm text-gray-400 float-start mb-2'>From</label>
                     <div className="flex flex-row justify-between px-0 items-center">
@@ -47,9 +56,9 @@ const Home = () => {
                 </div>
             </div>
 
-            <button className=' rounded-sm text-sm text-white bg-violet-500 py-3 w-3/5 mx-auto shadow-lg block'>BOOK/RESERVE NOW</button>
+            <button className='rounded-md text-sm text-white bg-violet-500 py-3 w-3/5 mx-auto shadow-xl block'>BOOK/RESERVE NOW</button>
         </form>
-        <p className="mt-24 px-16 text-gray-500 font-semibold">Please remember to be at our agency 45 mins before travel time!</p>
+        <p className="mt-10 md:mt-24 px-12 md:px-16 text-gray-500 font-semibold text-center">Please remember to be at our agency 45 mins before travel time!</p>
     </div>
   )
 }

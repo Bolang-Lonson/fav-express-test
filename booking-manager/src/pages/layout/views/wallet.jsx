@@ -1,7 +1,16 @@
 import React from 'react';
 import logo from '../../../assets/VERSION 2.png';
+import mtn from '../../../assets/MobileMoney 2.jpg';
+import orange from '../../../assets/orange-money-logo.png';
 
 const Wallet = () => {
+
+	const table = {
+		Price: 5000,
+		Discount: 'N/A',
+		Fee: '500Frs'
+	};
+
 	return (
 		<div className=' h-full'>
 			<div className="bg-favblue flex justify-between pb-10 px-5">
@@ -17,33 +26,52 @@ const Wallet = () => {
 					<p className="bg-red-600 text-white text-sm py-1 px-2 rounded-md border border-black">5000 FRS</p>
 				</div>
 			</div>
-			<div className="bg-white block max-md:w-[90%] md:max-lg:w-3/4 lg:max-xl:w-3/5 w-1/2 mx-auto rounded-md pt-3 translate-y-[-20px]">
+			<div className="bg-white block max-md:w-[90%] md:max-lg:w-3/4 lg:max-xl:w-3/5 w-1/2 mx-auto rounded pt-3 translate-y-[-20px]">
 				<div id="head" className='flex items-center justify-evenly border-b'>
-					<div>MTN Money</div>
-					<div>Orange Money</div>
+					<div className='flex gap-2 items-center border-favblue border-b-4 pb-2'>
+						<img 
+							src={mtn} alt="mtn"
+							className=' h-8'
+						/>
+						<p>MTN Money</p>
+					</div>
+					<div className='flex gap-2 items-center pb-2'>
+						<img 
+							src={orange} alt="orange"
+							className=' h-8'
+						/>
+						<p>Orange Money</p>
+					</div>
 				</div>
-				<div id="body">
-					<table className=' table'>
+				<div id="body" className=' py-4 px-8'>
+					<table className='w-full table-auto'>
 						<tbody>
-							<tr className=' table-row'>
-								<td className=' table-column'>Price</td>
-								<td>5000</td>
-							</tr>
-							<tr>
-								<td>Discount</td>
-								<td>N/A</td>
-							</tr>
-							<tr>
-								<td>Fee</td>
-								<td>500Frs</td>
-							</tr>
+							{Object.keys(table).map(key => (
+								<tr>
+									<td className='text-sm ps-2 font-medium'>{key}</td>
+									<td className='w-1/12 text-start text-sm text-gray-400 font-semibold'>{table[key]}</td>
+								</tr>
+							))}
 						</tbody>
 					</table>
 				</div>
+				<div id="foot" className='border-t flex items-center justify-between py-3 ps-10 pe-5'>
+					<p className='text-sm font-medium'>Total Payment</p>
+					<p className='text-sm font-semibold text-gray-500'>5500 FRS</p>
+				</div>
 			</div>
-
+			<div 
+				id="input-box"
+				className='w-4/5 md:w-1/2 mx-auto h-14 border border-black rounded-lg mt-8'
+			>
+				<input 
+					type="text" name="telephone" id="telephone" 
+					placeholder='Input your telephone number +237'
+					className='w-full h-full rounded-lg px-5 text-center bg-slate-200'
+				/>
+			</div>
 		</div>
 	)
 }
 
-export default Wallet
+export default Wallet;

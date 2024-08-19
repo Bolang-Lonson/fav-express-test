@@ -8,7 +8,7 @@ const Layout = () => {
     <div className='w-full'>
         
         <div className='bg-slate-100 min-h-[100dvh]'><Outlet/></div>
-        <div className="fixed w-full py-3 sm:py-5  bottom-0 bg-white flex flex-row items-center justify-around px-1">
+        <div className="fixed w-full py-3 sm:py-5  bottom-0 bg-white flex flex-row items-center lg:justify-center justify-around lg:gap-16 px-1">
             <NavLink 
                 to='/home' exact='true'
                 className={({isActive}) => (isActive? baseClass+' text-favbluelight': baseClass+' text-gray-400')}

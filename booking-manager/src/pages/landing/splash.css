@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.slider {
+    scroll-snap-type: x mandatory;
+    scrollbar-color: rgba(255, 255, 255, 0);
+    scrollbar-width: 0px;
+}
+
+.slider div {
+    flex: 1 0 100%;
+    scroll-snap-align: start;
+}
+
+#slider-nav a {
+    @apply w-4 h-4 rounded-[50%]
+    bg-black opacity-50;
+    transition: opacity ease 250ms;
+}
+
+#slider-nav a:hover {
+    opacity: 1;
+}

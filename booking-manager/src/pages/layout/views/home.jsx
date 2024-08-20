@@ -63,12 +63,15 @@ const Home = () => {
                 </div>
                 <div className="form-group flex flex-col">
                     <label htmlFor="depart" className='text-sm text-gray-400 float-start mb-2'>Time</label>
-                    <div className="flex flex-row justify-between px-0 items-center">
+                    <div className="flex flex-row justify-between px-0 items-center gap-10">
                         <i className="bi bi-clock text-xl text-favbluelight font-bold"></i>
-                        <div className="gap-1 flex flex-row">
+                        <div className="gap-1 flex flex-row flex-wrap hho">
                             <p className={(departureTime === '7am')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('7am')}>7 AM |</p>
                             <p className={(departureTime === '10am')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('10am')}>10 AM |</p>
                             <p className={(departureTime === '1pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('1pm')}>1 PM |</p>
+                            <p className={(departureTime === '4pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('4pm')}>4 PM |</p>
+                            <p className={(departureTime === '4pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('4pm')}>4 PM |</p>
+                            <p className={(departureTime === '4pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('4pm')}>4 PM |</p>
                             <p className={(departureTime === '4pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('4pm')}>4 PM |</p>
                         </div>
                         

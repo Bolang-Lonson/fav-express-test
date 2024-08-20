@@ -5,10 +5,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import logo from '../../../assets/VERSION 1.png'
 
 const Home = () => {
+    // react date-picker logic
     const [startDate, setStartDate] = useState(new Date());
     let day = startDate.getDay();
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+    // agency locations
     const options = [
         {value: 'Buea', label: 'Buea'},
         {value: 'Limbe', label: 'Limbe'},
@@ -17,7 +19,9 @@ const Home = () => {
         {value: 'Yaounde', label: 'Yaounde'},
     ]
 
+    // departure time logic
     const [departureTime, setDepartureTime] = useState(null);
+    const times = ['7 am', '10 am', '1 pm', '4 pm', '7 pm'] // these times will be changed through the admin and fetched from the backend
 
   return (
     <div className='h-1/2 pb-32 pt-28 md:pt-32'>
@@ -30,49 +34,72 @@ const Home = () => {
             <div className='w-16'></div>
         </div>
         <form action="">
-            <div className="w-full bg-white py-2 px-14 mb-10 md:mb-16">
+            <div className="w-full bg-white py-2 px-14 mb-10 md:mb-16 pb-10">
                 <div className="form-group flex flex-col mb-3">
-                    <label htmlFor="depart" className='text-sm text-gray-400 float-start mb-2'>From</label>
+                    <label htmlFor="depart" className='text-sm font-semibold text-gray-400 float-start mb-2'>From</label>
                     <div className="flex flex-row justify-between px-0 items-center">
                         <i className="bi bi-circle-fill text-[8px]"></i>
-                        <select name="depart" id="depart" className='h-10 w-10/12'>
+                        {/* <select name="depart" id="depart" className='h-10 w-10/12'>
                             <option value="" selected>Enter Departure</option>
                             {options.map((op) => (
                                 <option value={op.value}>{op.label}</option>
                             ))}
-                        </select>
+                        </select> */}
+                        <Select 
+                            options={options} className=' w-10/12'
+                            defaultValue={{value: 'Enter Departure', label: 'Enter Departure'}}
+                        />
                     </div>
                 </div>
                 <div className="form-group flex flex-col mb-8">
-                    <label htmlFor="desti" className='text-sm text-gray-400 float-start mb-2'>To</label>
+                    <label htmlFor="desti" className='text-sm font-semibold text-gray-400 float-start mb-2'>To</label>
                     <div className="flex flex-row justify-between px-0 items-center">
                         <i className="bi bi-circle text-[8px]"></i>
                         <Select 
-                            options={options} className=' w-10/12 focus:border-0'
+                            options={options} className=' w-10/12'
                             defaultValue={{value: 'Enter Destination', label: 'Enter Desitination'}}
                         />
                     </div>
                 </div>
                 <div className="form-group flex flex-col mb-8">
-                    <label htmlFor="depart" className='text-sm text-gray-400 float-start mb-2'>Date</label>
+                    <label htmlFor="depart" className='text-sm font-semibold text-gray-400 float-start mb-2'>Date</label>
                     <div className="flex flex-row justify-between px-0 items-center">
-                        <i className="bi bi-calendar4-event text-xl text-favbluelight font-bold"></i>
-                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} dateFormat="dd  MMMM yyyy"/>
-                        <p className="font-bold">{daysOfWeek[day]}</p>
+                        <i className="bi bi-calendar4-event text-xl text-favbluelight"></i>
+                        <DatePicker 
+                            selected={startDate} dateFormat="dd  MMMM yyyy"
+                            onChange={(date) => setStartDate(date)} 
+                            className='text-gray-400 font-semibold'
+                        />
+                        <p className="font-bold text-[18px]">{daysOfWeek[day]}</p>
                     </div>
                 </div>
-                <div className="form-group flex flex-col">
-                    <label htmlFor="depart" className='text-sm text-gray-400 float-start mb-2'>Time</label>
-                    <div className="flex flex-row justify-between px-0 items-center gap-10">
-                        <i className="bi bi-clock text-xl text-favbluelight font-bold"></i>
-                        <div className="gap-1 flex flex-row flex-wrap hho">
-                            <p className={(departureTime === '7am')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('7am')}>7 AM |</p>
-                            <p className={(departureTime === '10am')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('10am')}>10 AM |</p>
-                            <p className={(departureTime === '1pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('1pm')}>1 PM |</p>
-                            <p className={(departureTime === '4pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('4pm')}>4 PM |</p>
-                            <p className={(departureTime === '4pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('4pm')}>4 PM |</p>
-                            <p className={(departureTime === '4pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('4pm')}>4 PM |</p>
-                            <p className={(departureTime === '4pm')? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} onClick={()=>setDepartureTime('4pm')}>4 PM |</p>
+                <div className="form-group flex flex-col w-full mb-4">
+                    <label htmlFor="depart" className='text-sm font-semibold text-gray-400 float-start mb-2'>Time</label>
+                    <div className="flex flex-row px-0 items-center w-full justify-stretch">
+                        <i className="bi bi-clock text-xl text-favbluelight"></i>
+                        <div 
+                            className="grid gap-1 absolute left-1/2 translate-x-[-40%]"
+                            style={{gridTemplateColumns: 'repeat(4, min-content)'}}
+                        >
+                            {times.map((time) => 
+                                (
+                                    <div 
+                                        className='flex gap-2 items-end border-e-2 border-gray-400 pe-2 text-center col-auto'
+                                        onClick={()=>setDepartureTime(time)}
+                                    >
+                                    <p 
+                                        className={(departureTime === time)? 'text-blue-600 font-bold text-2xl': 'text-gray-400 font-bold text-2xl'} 
+                                    >
+                                        {(time.toUpperCase().split(' '))[0]}
+                                    </p>
+                                    <p 
+                                        className={(departureTime === time)? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} 
+                                    >
+                                        {(time.toUpperCase().split(' '))[1]} 
+                                    </p>
+                                    </div>
+                                )
+                            )}
                         </div>
                         
                         <div></div>

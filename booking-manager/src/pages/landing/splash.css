@@ -22,3 +22,7 @@
 #slider-nav a:hover {
     opacity: 1;
 }
+
+#slider-nav a:active {
+    opacity: 1;
+}

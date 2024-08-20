@@ -13,16 +13,12 @@
     scroll-snap-align: start;
 }
 
-#slider-nav a {
+#slider-nav button {
     @apply w-4 h-4 rounded-[50%]
-    bg-black opacity-50;
+    bg-black;
     transition: opacity ease 250ms;
 }
 
-#slider-nav a:hover {
-    opacity: 1;
-}
-
-#slider-nav a:active {
+#slider-nav button:hover {
     opacity: 1;
 }

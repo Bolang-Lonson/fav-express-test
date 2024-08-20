@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <div className='h-1/2 pb-32 pt-28 md:pt-32'>
-        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md lg:px-6 z-10">
+        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md lg:px-6 z-20">
             <img 
                 src={logo} alt="logo"
                 className='h-16'
@@ -68,9 +68,9 @@ const Home = () => {
                         <DatePicker 
                             selected={startDate} dateFormat="dd  MMMM yyyy"
                             onChange={(date) => setStartDate(date)} 
-                            className='text-gray-400 font-semibold translate-x-6 md:text-xl pe-0 focus:translate-x-14'
+                            className='text-gray-400 font-semibold translate-x-8 md:text-xl pe-0 focus:translate-x-14'
                         />
-                        <p className="font-bold text-[18px] z-1">{daysOfWeek[day]}</p>
+                        <p className="font-bold text-[18px] z-10">{daysOfWeek[day]}</p>
                     </div>
                 </div>
                 <div className="form-group flex flex-col w-full mb-4">

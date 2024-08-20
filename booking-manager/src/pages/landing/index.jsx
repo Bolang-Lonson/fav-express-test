@@ -55,7 +55,7 @@ const Landing = () => {
                         className='text-favbluelight font-semibold lg:absolute lg:left-[10%]'
                         href='/mail'
                     >
-                        TRACK MAIL
+                        TRACK PARCELS
                     </a>
                     <div className='absolute left-1/2 translate-x-[-50%] z-[1] flex gap-4' id='slider-nav'>
                         <button onClick={() => setSlide('slide_1')} className={slide === 'slide_1'? 'opacity-100': 'opacity-50'}></button>
@@ -66,7 +66,7 @@ const Landing = () => {
                         className='text-favbluelight font-semibold lg:absolute lg:right-[10%]'
                         href='/home'
                     >
-                        START
+                        BOOK TICKET
                     </a>
                 </div>
                 

@@ -52,7 +52,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="form-group flex flex-col mb-8">
-                    <label htmlFor="desti" className='text-sm font-semibold text-gray-400 float-start mb-2'>To</label>
+                    <label htmlFor="desti" className='text-sm font-semibold text-gray-400 float-start mb-2'>To <i className='bi bi-arrow-down-up float-end'></i></label>
                     <div className="flex flex-row justify-between px-0 items-center">
                         <i className="bi bi-circle text-[8px]"></i>
                         <Select 
@@ -68,9 +68,9 @@ const Home = () => {
                         <DatePicker 
                             selected={startDate} dateFormat="dd  MMMM yyyy"
                             onChange={(date) => setStartDate(date)} 
-                            className='text-gray-400 font-semibold translate-x-8 md:text-xl pe-0 focus:translate-x-14'
+                            className='text-gray-400 font-semibold translate-x-10 md:text-xl pe-0 focus:translate-x-14'
                         />
-                        <p className="font-bold text-[18px] z-10">{daysOfWeek[day]}</p>
+                        <p className="font-bold text-[18px] z-10 pe-2">{daysOfWeek[day]}</p>
                     </div>
                 </div>
                 <div className="form-group flex flex-col w-full mb-4">
@@ -110,7 +110,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <a href='/wallet' className='text-center rounded-md text-sm text-white bg-violet-500 py-3 w-3/5 md:w-1/5 mx-auto shadow-xl block'>BOOK/RESERVE NOW</a>
+            <a href='/wallet' className='text-center rounded-md text-sm max-sm:text-xs text-white bg-violet-500 py-3 w-3/5 md:w-1/5 mx-auto shadow-xl block'>BOOK/RESERVE NOW</a>
         </form>
         <p className="mt-10 md:mt-24 px-12 md:px-16 text-gray-500 font-semibold text-center">Please remember to be at our agency 45 mins before travel time!</p>
     </div>

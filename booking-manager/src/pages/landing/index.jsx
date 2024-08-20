@@ -3,7 +3,7 @@ import logo from '../../assets/VERSION 1.png';
 import './splash.css';
 
 const Landing = () => {
-    const [slide, setSlide] = useState('slide_1');
+    const [slide, setSlide] = useState('slide_1');  // slide currently displayed
 
     const slides = {
         slide_1: useRef(null),
@@ -11,11 +11,14 @@ const Landing = () => {
         slide_3: useRef(null)
     };
 
+    // scrolls to slide when slide value is set by slider nav
     useEffect(() => {
         if(slide) {
             slides[slide].current.scrollIntoView({behavior: 'smooth'})
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slide]);
+    
     return (
         <div
             className='w-full flex flex-col h-[100vh] relative'
@@ -69,7 +72,7 @@ const Landing = () => {
                 
             </div>
         </div>
-    )
+    );
 }
 
-export default Landing
+export default Landing;

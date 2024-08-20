@@ -25,16 +25,16 @@ const Home = () => {
 
   return (
     <div className='h-1/2 pb-32 pt-28 md:pt-32'>
-        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md">
+        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md md:px-6">
             <img 
                 src={logo} alt="logo"
-                className=' h-16'
+                className='h-16'
             />
             <p className=' text-gray-500 font-semibold max-md:text-sm'>Bus Schedules & Destinations</p>
             <div className='w-16'></div>
         </div>
         <form action="">
-            <div className="w-full bg-white py-2 px-14 mb-10 md:mb-16 pb-10">
+            <div className="w-full bg-white pt-2 md:py-10 px-14 md:px-24 mb-10 md:mb-16 pb-10 md:w-3/5 md:mx-auto md:rounded-md md:shadow">
                 <div className="form-group flex flex-col mb-3">
                     <label htmlFor="depart" className='text-sm font-semibold text-gray-400 float-start mb-2'>From</label>
                     <div className="flex flex-row justify-between px-0 items-center">
@@ -68,7 +68,7 @@ const Home = () => {
                         <DatePicker 
                             selected={startDate} dateFormat="dd  MMMM yyyy"
                             onChange={(date) => setStartDate(date)} 
-                            className='text-gray-400 font-semibold'
+                            className='text-gray-400 font-semibold translate-x-14 md:text-xl pe-0 focus:translate-x-14'
                         />
                         <p className="font-bold text-[18px]">{daysOfWeek[day]}</p>
                     </div>
@@ -83,20 +83,23 @@ const Home = () => {
                         >
                             {times.map((time) => 
                                 (
-                                    <div 
-                                        className='flex gap-2 items-end border-e-2 border-gray-400 pe-2 text-center col-auto'
-                                        onClick={()=>setDepartureTime(time)}
-                                    >
-                                    <p 
-                                        className={(departureTime === time)? 'text-blue-600 font-bold text-2xl': 'text-gray-400 font-bold text-2xl'} 
-                                    >
-                                        {(time.toUpperCase().split(' '))[0]}
-                                    </p>
-                                    <p 
-                                        className={(departureTime === time)? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} 
-                                    >
-                                        {(time.toUpperCase().split(' '))[1]} 
-                                    </p>
+                                    <div>
+                                        <div 
+                                            className='flex gap-2 items-end border-e-2 border-gray-400 pe-2 text-center'
+                                            onClick={()=>setDepartureTime(time)}
+                                        >
+                                            <p 
+                                                className={(departureTime === time)? 'text-blue-600 font-bold text-2xl': 'text-gray-400 font-bold text-2xl'} 
+                                            >
+                                                {(time.toUpperCase().split(' '))[0]}
+                                            </p>
+                                            <p 
+                                                className={(departureTime === time)? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} 
+                                            >
+                                                {(time.toUpperCase().split(' '))[1]} 
+                                            </p>
+                                        </div>
+                                        <p className='text-sm text-center'>{Math.round((Math.random() * 70) +1) /* randomizing number of seats left*/} plcs</p>
                                     </div>
                                 )
                             )}
@@ -107,7 +110,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <button className='rounded-md text-sm text-white bg-violet-500 py-3 w-3/5 mx-auto shadow-xl block'>BOOK/RESERVE NOW</button>
+            <a href='/wallet' className='text-center rounded-md text-sm text-white bg-violet-500 py-3 w-3/5 md:w-1/5 mx-auto shadow-xl block'>BOOK/RESERVE NOW</a>
         </form>
         <p className="mt-10 md:mt-24 px-12 md:px-16 text-gray-500 font-semibold text-center">Please remember to be at our agency 45 mins before travel time!</p>
     </div>

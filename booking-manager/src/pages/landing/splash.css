@@ -5,7 +5,7 @@
 .slider {
     scroll-snap-type: x mandatory;
     scrollbar-color: rgba(255, 255, 255, 0);
-    scrollbar-width: 0px;
+    scrollbar-width: none;
 }
 
 .slider div {

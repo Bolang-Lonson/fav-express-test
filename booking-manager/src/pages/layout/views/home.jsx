@@ -21,7 +21,7 @@ const Home = () => {
 
     // departure time logic
     const [departureTime, setDepartureTime] = useState(null);
-    const times = ['7 am', '10 am', '1 pm', '4 pm', '7 pm'] // these times will be changed through the admin and fetched from the backend
+    const times = ['7 am', '10 am', '1 pm', '4 pm', '7 pm', '10 pm' ] // these times will be changed through the admin and fetched from the backend
 
   return (
     <div className='h-1/2 pb-32 pt-28 md:pt-32'>
@@ -78,7 +78,7 @@ const Home = () => {
                     <div className="flex flex-row px-0 items-center w-full justify-stretch">
                         <i className="bi bi-clock text-xl text-favbluelight"></i>
                         <div 
-                            className="grid gap-1 absolute left-1/2 translate-x-[-40%]"
+                            className="max-md:grid lg:flex max-md:gap-1 lg:gap-1 absolute left-1/2 translate-x-[-40%]"
                             style={{gridTemplateColumns: 'repeat(4, min-content)'}}
                         >
                             {times.map((time) => 
@@ -99,7 +99,7 @@ const Home = () => {
                                                 {(time.toUpperCase().split(' '))[1]} 
                                             </p>
                                         </div>
-                                        <p className='text-sm text-center'>{Math.round((Math.random() * 70) +1) /* randomizing number of seats left*/} seats</p>
+                                        <p className='text-sm max-sm:text-xs text-center'>{Math.round((Math.random() * 70) +1) /* randomizing number of seats left*/} seats</p>
                                     </div>
                                 )
                             )}

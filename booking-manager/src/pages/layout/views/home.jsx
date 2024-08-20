@@ -94,7 +94,7 @@ const Home = () => {
                                                 {(time.toUpperCase().split(' '))[0]}
                                             </p>
                                             <p 
-                                                className={(departureTime === time)? 'text-blue-600 font-bold': 'text-gray-400 font-bold'} 
+                                                className={(departureTime === time)? 'text-blue-600 font-bold lg:text-xl': 'text-gray-400 font-bold lg:text-xl'} 
                                             >
                                                 {(time.toUpperCase().split(' '))[1]} 
                                             </p>

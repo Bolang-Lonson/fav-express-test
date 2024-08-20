@@ -14,11 +14,20 @@
 }
 
 #slider-nav button {
-    @apply w-4 h-4 rounded-[50%]
+    @apply lg:w-4 lg:h-4 w-2 h-2 rounded-[50%]
     bg-black;
     transition: opacity ease 250ms;
 }
 
 #slider-nav button:hover {
     opacity: 1;
+}
+
+.bus-card {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7)), url('../../assets/bus\ pic.jpeg');
+    background-size: cover;
+}
+
+.accord-head {
+    @apply text-[1px] py-[1px];
 }

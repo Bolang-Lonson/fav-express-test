@@ -70,7 +70,7 @@ const Home = () => {
                             onChange={(date) => setStartDate(date)} 
                             className='text-gray-400 font-semibold translate-x-6 md:text-xl pe-0 focus:translate-x-14'
                         />
-                        <p className="font-bold text-[18px]">{daysOfWeek[day]}</p>
+                        <p className="font-bold text-[18px] z-1">{daysOfWeek[day]}</p>
                     </div>
                 </div>
                 <div className="form-group flex flex-col w-full mb-4">

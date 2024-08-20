@@ -99,7 +99,7 @@ const Home = () => {
                                                 {(time.toUpperCase().split(' '))[1]} 
                                             </p>
                                         </div>
-                                        <p className='text-sm text-center'>{Math.round((Math.random() * 70) +1) /* randomizing number of seats left*/} plcs</p>
+                                        <p className='text-sm text-center'>{Math.round((Math.random() * 70) +1) /* randomizing number of seats left*/} seats</p>
                                     </div>
                                 )
                             )}

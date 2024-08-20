@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <div className='h-1/2 pb-32 pt-28 md:pt-32'>
-        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md md:px-6">
+        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md lg:px-6 z-10">
             <img 
                 src={logo} alt="logo"
                 className='h-16'
@@ -34,7 +34,7 @@ const Home = () => {
             <div className='w-16'></div>
         </div>
         <form action="">
-            <div className="w-full bg-white pt-2 md:py-10 px-14 md:px-24 mb-10 md:mb-16 pb-10 md:w-3/5 md:mx-auto md:rounded-md md:shadow">
+            <div className="w-full bg-white pt-2 md:py-10 px-8 md:px-24 mb-10 md:mb-16 pb-10 md:w-3/5 md:mx-auto md:rounded-md md:shadow">
                 <div className="form-group flex flex-col mb-3">
                     <label htmlFor="depart" className='text-sm font-semibold text-gray-400 float-start mb-2'>From</label>
                     <div className="flex flex-row justify-between px-0 items-center">
@@ -68,7 +68,7 @@ const Home = () => {
                         <DatePicker 
                             selected={startDate} dateFormat="dd  MMMM yyyy"
                             onChange={(date) => setStartDate(date)} 
-                            className='text-gray-400 font-semibold translate-x-14 md:text-xl pe-0 focus:translate-x-14'
+                            className='text-gray-400 font-semibold translate-x-6 md:text-xl pe-0 focus:translate-x-14'
                         />
                         <p className="font-bold text-[18px]">{daysOfWeek[day]}</p>
                     </div>
@@ -89,12 +89,12 @@ const Home = () => {
                                             onClick={()=>setDepartureTime(time)}
                                         >
                                             <p 
-                                                className={(departureTime === time)? 'text-blue-600 font-bold text-2xl': 'text-gray-400 font-bold text-2xl'} 
+                                                className={(departureTime === time)? 'text-blue-600 font-bold lg:text-2xl text-xl': 'text-gray-400 font-bold lg:text-2xl text-xl'} 
                                             >
                                                 {(time.toUpperCase().split(' '))[0]}
                                             </p>
                                             <p 
-                                                className={(departureTime === time)? 'text-blue-600 font-bold text-xl': 'text-gray-400 font-bold text-xl'} 
+                                                className={(departureTime === time)? 'text-blue-600 font-bold': 'text-gray-400 font-bold'} 
                                             >
                                                 {(time.toUpperCase().split(' '))[1]} 
                                             </p>

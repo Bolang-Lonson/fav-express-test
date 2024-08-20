@@ -5,7 +5,7 @@ import './splash.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Landing = () => {
-    const [slide, setSlide] = useState('slide_3');  // slide currently displayed
+    const [slide, setSlide] = useState('slide_1');  // slide currently displayed
 
     const slides = {
         slide_1: useRef(null),
@@ -36,7 +36,7 @@ const Landing = () => {
                     />
                     <h1 className="md:text-4xl text-2xl font-semibold text-favblue">FAVOUR EXPRESS ®</h1>
                     <h1 className="md:text-[2.5rem] text-[2rem] mt-4 font-semibold">BOOKING MANAGER</h1>
-                    <p className="text-[16px] mt-4">Yaounde - Douala - Buea - Limbe - Kumba</p>
+                    <p className="text-[16px] lg:text-[20px] mt-4">Yaounde - Douala - Buea - Limbe - Kumba</p>
                 </div>
                 <div 
                     className='flex flex-col text-center items-center justify-center h-[80%]'

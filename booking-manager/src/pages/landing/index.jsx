@@ -4,7 +4,7 @@ import './splash.css';
 import faqs from './faqs.json';
 
 const Landing = () => {
-    const [slide, setSlide] = useState('slide_3');  // slide currently displayed
+    const [slide, setSlide] = useState('slide_1');  // slide currently displayed
 
     const slides = {
         slide_1: useRef(null),
@@ -67,7 +67,7 @@ const Landing = () => {
                     ref={slides.slide_3}
                 >
                     <div className="w-full h-full faq-card py-6 lg:py-16 overflow-y-auto">
-                        <h1 className='text-3xl font-bold'>FAQ</h1>
+                        <h1 className='text-3xl font-bold'>FAQs</h1>
                         {/* Accordion */}
                         <div id="accordion-container" className='mx-4 mt-4 rounded-md'>
                             {faqs.slice(0, 5).map((faq, idx) => (

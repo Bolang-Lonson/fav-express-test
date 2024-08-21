@@ -28,6 +28,6 @@
     background-size: cover;
 }
 
-.accord-head {
-    @apply text-[1px] py-[1px];
+.faq-card {
+    scrollbar-width: none;
 }

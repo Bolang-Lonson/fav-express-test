@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import logo from '../../assets/VERSION 1.png';
-import Accordion from 'react-bootstrap/Accordion'
 import './splash.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import faqs from './faqs.json';
 
 const Landing = () => {
-    const [slide, setSlide] = useState('slide_1');  // slide currently displayed
+    const [slide, setSlide] = useState('slide_3');  // slide currently displayed
 
     const slides = {
         slide_1: useRef(null),
@@ -20,12 +19,25 @@ const Landing = () => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slide]);
+
+    const [isOpen, setIsOpen] = useState({
+        0: false,
+        1: false,
+        2: false,
+        3: false,
+        4: false
+    });
+
+    const toggleOpen = (idx) => {
+        setIsOpen({...isOpen, [idx]: !isOpen[idx]})
+    }
     
     return (
         <div
             className='w-full flex flex-col h-[100vh] relative'
         >
             <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto">
+                    {/* Logo slide */}
                 <div 
                     className='flex flex-col text-center items-center justify-center h-[80%]'
                     ref={slides.slide_1}
@@ -38,6 +50,7 @@ const Landing = () => {
                     <h1 className="md:text-[2.5rem] text-[2rem] mt-4 font-semibold">BOOKING MANAGER</h1>
                     <p className="text-[16px] lg:text-[20px] mt-4">Yaounde - Douala - Buea - Limbe - Kumba</p>
                 </div>
+                    {/* Services Info Slide */}
                 <div 
                     className='flex flex-col text-center items-center justify-center h-[80%]'
                     ref={slides.slide_2}
@@ -48,34 +61,49 @@ const Landing = () => {
                         <p className="text-amber-200 font-serif absolute bottom-[15%] text-center text-xl font-bold left-1/2 translate-x-[-50%]">We Offer First-Class Inter-Urban Road Travel</p>
                     </div>
                 </div>
+                    {/* FAQ Slide */}
                 <div 
                     className='flex flex-col text-center items-center justify-center h-[80%]'
                     ref={slides.slide_3}
                 >
                     <div className="w-full h-full faq-card py-6 lg:py-16 overflow-y-auto">
                         <h1 className='text-3xl font-bold'>FAQ</h1>
-                        <div id="accordion-container" className='mx-4 mt-4 border rounded'>
-                            {[1, 2, 3, 4, 5].map(idx => (
-                                <Accordion defaultActiveKey={0}>
-                                    <Accordion.Item eventKey={idx}>
-                                        <Accordion.Header className='accord-head'>Question {idx}</Accordion.Header>
-                                        <Accordion.Body className=' bg-body-tertiary'>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium voluptas facere sequi debitis blanditiis hic assumenda, corporis asperiores repellendus quod minus magni totam repellat dicta vero numquam unde cupiditate. Totam!
-                                        </Accordion.Body>
-                                    </Accordion.Item>
-                                </Accordion>
-                            ))}
+                        {/* Accordion */}
+                        <div id="accordion-container" className='mx-4 mt-4 rounded-md'>
+                            {faqs.slice(0, 5).map((faq, idx) => (
+                                    <div className="w-full cursor-pointer" key={idx}>
+                                        <div 
+                                            className={`max-md:text-xs py-2 text-start px-2 lg:px-8 flex items-center justify-between border-b ${idx ===0? 'border-t': ''}`}
+                                            onClick={() => toggleOpen(idx)}
+                                        >
+                                            {faq.question}
+                                            <button 
+                                                className={`bi ${isOpen[idx]? 'bi-dash': 'bi-plus'} text-xl lg:text-3xl hover:text-blue-600`}
+                                                style={{transition: 'all ease 0.5s', transitionDelay: '0.5s'}}
+                                            ></button>
+                                        </div>
+                                        <div 
+                                            className={`${isOpen[idx]? 'lg:max-h-52 max-h-28 overflow-y-scroll':'max-h-0'} bg-slate-100 overflow-hidden`}
+                                            style={{
+                                                transition: 'max-height ease-in-out 0.5s',
+                                            }}
+                                        >
+                                            <p className="p-4 max-md:text-xs">{faq.answer}</p>
+                                        </div>
+                                    </div>
+                                )
+                            )}
                         </div>
-                        <form action="" className='mt-4 mx-4'>
-                            <h1 className='text-3xl font-bold'>Complaints</h1>
-                            <div className="input-group mb-3 mt-3">
-                                <input type="text" className="form-control" id="name" placeholder='Phone number'/>
+                        <form action="" className='mt-8 mx-4'>
+                            <h1 className='text-3xl font-bold mb-6'>Complaints</h1>
+                            <div className="w-[90%] lg:w-1/2 h-10 my-5 mx-auto">
+                                <input type="text" className="w-full h-full px-7 border-2 focus:outline-none focus:border-green-600 rounded-md" id="name" placeholder='Phone number'/>
                             </div>
-                            <div className="input-group mb-3">
-                                <input type="text" className="form-control" id="name" placeholder='Enter your name(optional)'/>
+                            <div className="w-[90%] lg:w-1/2 h-10 my-5 mx-auto">
+                                <input type="text" className="w-full h-full px-7 border-2 focus:outline-none focus:border-green-600 rounded-md" id="name" placeholder='Enter your name(optional)'/>
                             </div>
-                            <div className="input-group mb-3">
-                                <textarea name="issue" id="issue" className="form-control h-[100px]" placeholder='Type in your issue or complaint'></textarea>
+                            <div className="w-[90%] lg:w-1/2 h-24 my-5 mx-auto">
+                                <textarea name="issue" id="issue" className="w-full h-full px-7 py-2 border-2 focus:outline-none focus:border-green-600 rounded-md" placeholder='Type in your issue or complaint'></textarea>
                             </div>
                             <button type="submit" className='text-white font-semibold max-md:text-xs bg-favbluelight py-2 px-3 rounded-md hover:opacity-80'>Submit</button>
                         </form>
@@ -83,14 +111,15 @@ const Landing = () => {
                 </div>
             </div>
             
-            <div className="px-8 absolute w-full bottom-14">
+            {/* Bottom navigation */}
+            <div className="px-8 absolute w-full bottom-14 lg:bottom-24">
                 <div className='flex flex-row items-center max-md:justify-between relative'>
                     <a
-                        className='text-favbluelight font-semibold lg:absolute lg:left-[10%] max-md:text-xs max-md:translate-x-[-7%] border border-favbluelight py-2 px-3 rounded-md hover:bg-favbluelight hover:text-white'
+                        className='text-favbluelight font-semibold lg:absolute lg:left-[10%] max-md:text-xs max-md:translate-x-[-10%] border border-favbluelight py-2 px-3 rounded-md hover:bg-favbluelight hover:text-white'
                         href='/mail'
                     >
                         Track Parcels
-                        <i className="bi bi-box-seam ms-1"></i>
+                        <i className="bi bi-box-seam ms-2"></i>
                     </a>
                     <div className='absolute left-1/2 translate-x-[-50%] z-[1] flex gap-4' id='slider-nav'>
                         <button onClick={() => setSlide('slide_1')} className={slide === 'slide_1'? 'opacity-100': 'opacity-50'}></button>
@@ -98,11 +127,11 @@ const Landing = () => {
                         <button onClick={() => setSlide('slide_3')} className={slide === 'slide_3'? 'opacity-100': 'opacity-50'}></button>
                     </div>
                     <a 
-                        className='text-white font-semibold lg:absolute lg:right-[10%] max-md:text-xs max-md:translate-x-[7%] bg-favbluelight py-2 px-3 rounded-md hover:opacity-80'
+                        className='text-white font-semibold lg:absolute lg:right-[10%] max-md:text-xs max-md:translate-x-[10%] bg-favbluelight py-2 px-3 rounded-md hover:opacity-80'
                         href='/home'
                     >
                         Book Ticket
-                        <i className="bi bi-ticket-perforated-fill ms-1"></i>
+                        <i className="bi bi-ticket-perforated-fill ms-2"></i>
                     </a>
                 </div>
                 

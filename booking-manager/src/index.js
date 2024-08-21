@@ -5,6 +5,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const favicon = document.createElement('link');
+favicon.rel = 'shortcut icon';
+favicon.href = '/VERSION 1.png';
+document.head.appendChild(favicon);
+document.title = 'Favour Express';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>

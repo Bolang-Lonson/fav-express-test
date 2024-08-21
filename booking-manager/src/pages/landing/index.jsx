@@ -12,13 +12,39 @@ const Landing = () => {
         slide_3: useRef(null)
     };
 
+    const handleSlide = (slide) => {
+        setSlide(slide);
+    }
     // scrolls to slide when slide value is set by slider nav
     useEffect(() => {
         if(slide) {
-            slides[slide].current.scrollIntoView({behavior: 'smooth'})
+            slides[slide].current.scrollIntoView({behavior: 'smooth'});
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [slide]);
+
+    // Detecting scroll activity to find which slide is in view by calculating slide center distance to slide container center
+    const containerRef = useRef(null);
+    const container = containerRef.current;
+    if (container) {
+        const rect = container.getBoundingClientRect();
+        const centX = rect.left + rect.width / 2;
+
+        container.addEventListener('scroll', (e) => {
+            let scrollCheck = setInterval(() => {
+                Object.entries(slides).forEach(slide => {
+                    const sld = slide[1].current;
+                    if (sld) { 
+                        const rect2 = sld.getBoundingClientRect();
+                        const cent2X = rect2.left + rect2.width / 2;
+
+                        if (Math.abs(cent2X - centX) <= (rect2.width / 2)) {console.log(slide[0]); setSlide(slide[0])}
+                        clearInterval(scrollCheck);
+                    }
+                });
+            }, 600);
+        });
+    }
 
     const [isOpen, setIsOpen] = useState({
         0: false,
@@ -36,10 +62,10 @@ const Landing = () => {
         <div
             className='w-full flex flex-col h-[100vh] relative'
         >
-            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto">
+            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto" ref={containerRef}>
                     {/* Logo slide */}
                 <div 
-                    className='flex flex-col text-center items-center justify-center h-[80%]'
+                    className='flex flex-col text-center items-center justify-center h-[80%] slide'
                     ref={slides.slide_1}
                 >
                     <img
@@ -48,11 +74,11 @@ const Landing = () => {
                     />
                     <h1 className="md:text-4xl text-2xl font-semibold text-favblue">FAVOUR EXPRESS ®</h1>
                     <h1 className="md:text-[2.5rem] text-[2rem] mt-4 font-semibold">BOOKING MANAGER</h1>
-                    <p className="text-[16px] lg:text-[20px] mt-4">Yaounde - Douala - Buea - Limbe - Kumba</p>
+                    <p className="text-[16px] lg:text-[21px] mt-4">Yaounde - Douala - Buea - Limbe - Kumba</p>
                 </div>
                     {/* Services Info Slide */}
                 <div 
-                    className='flex flex-col text-center items-center justify-center h-[80%]'
+                    className='flex flex-col text-center items-center justify-center h-[80%] slide'
                     ref={slides.slide_2}
                 >
                     <div 
@@ -63,13 +89,13 @@ const Landing = () => {
                 </div>
                     {/* FAQ Slide */}
                 <div 
-                    className='flex flex-col text-center items-center justify-center h-[80%]'
+                    className='flex flex-col text-center items-center justify-center h-[80%] slide'
                     ref={slides.slide_3}
                 >
                     <div className="w-full h-full faq-card py-6 lg:py-16 overflow-y-auto">
                         <h1 className='text-3xl font-bold'>FAQs</h1>
                         {/* Accordion */}
-                        <div id="accordion-container" className='mx-4 mt-4 rounded-md'>
+                        <div id="accordion-container" className='mx-4 lg:mx-16 mt-4 rounded-md'>
                             {faqs.slice(0, 5).map((faq, idx) => (
                                     <div className="w-full cursor-pointer" key={idx}>
                                         <div 
@@ -78,12 +104,12 @@ const Landing = () => {
                                         >
                                             {faq.question}
                                             <button 
-                                                className={`bi ${isOpen[idx]? 'bi-dash': 'bi-plus'} text-xl lg:text-3xl hover:text-blue-600`}
-                                                style={{transition: 'all ease 0.5s', transitionDelay: '0.5s'}}
+                                                className={`bi ${isOpen[idx]? 'bi-dash': 'bi-plus'} text-xl lg:text-3xl hover:text-blue-600`} 
+                                                id='plusbtn'
                                             ></button>
                                         </div>
                                         <div 
-                                            className={`${isOpen[idx]? 'lg:max-h-52 max-h-28 overflow-y-scroll':'max-h-0'} bg-slate-100 overflow-hidden`}
+                                            className={`${isOpen[idx]? 'lg:max-h-52 max-h-28 overflow-y-scroll':'max-h-0'} bg-slate-100 overflow-hidden border-x`}
                                             style={{
                                                 transition: 'max-height ease-in-out 0.5s',
                                             }}
@@ -95,7 +121,7 @@ const Landing = () => {
                             )}
                         </div>
                         <form action="" className='mt-8 mx-4'>
-                            <h1 className='text-3xl font-bold mb-6'>Complaints</h1>
+                            <h1 className='text-2xl font-bold mb-6'>Submit Complaints</h1>
                             <div className="w-[90%] lg:w-1/2 h-10 my-5 mx-auto">
                                 <input type="text" className="w-full h-full px-7 border-2 focus:outline-none focus:border-green-600 rounded-md" id="name" placeholder='Phone number'/>
                             </div>
@@ -118,16 +144,16 @@ const Landing = () => {
                         className='text-favbluelight font-semibold lg:absolute lg:left-[10%] max-md:text-xs max-md:translate-x-[-10%] border border-favbluelight py-2 px-3 rounded-md hover:bg-favbluelight hover:text-white'
                         href='/mail'
                     >
-                        Track Parcels
+                        Track Parcel
                         <i className="bi bi-box-seam ms-2"></i>
                     </a>
                     <div className='absolute left-1/2 translate-x-[-50%] z-[1] flex gap-4' id='slider-nav'>
-                        <button onClick={() => setSlide('slide_1')} className={slide === 'slide_1'? 'opacity-100': 'opacity-50'}></button>
-                        <button onClick={() => setSlide('slide_2')} className={slide === 'slide_2'? 'opacity-100': 'opacity-50'}></button>
-                        <button onClick={() => setSlide('slide_3')} className={slide === 'slide_3'? 'opacity-100': 'opacity-50'}></button>
+                        <button onClick={() => handleSlide('slide_1')} className={slide === 'slide_1'? 'opacity-100': 'opacity-50'}></button>
+                        <button onClick={() => handleSlide('slide_2')} className={slide === 'slide_2'? 'opacity-100': 'opacity-50'}></button>
+                        <button onClick={() => handleSlide('slide_3')} className={slide === 'slide_3'? 'opacity-100': 'opacity-50'}></button>
                     </div>
                     <a 
-                        className='text-white font-semibold lg:absolute lg:right-[10%] max-md:text-xs max-md:translate-x-[10%] bg-favbluelight py-2 px-3 rounded-md hover:opacity-80'
+                        className='text-white font-semibold lg:absolute lg:right-[10%] max-md:text-xs max-md:translate-x-[10%] bg-favbluelight py-2 px-3 rounded-md hover:opacity-80 flex'
                         href='/home'
                     >
                         Book Ticket

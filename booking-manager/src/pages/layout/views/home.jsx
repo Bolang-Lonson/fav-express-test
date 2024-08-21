@@ -25,7 +25,7 @@ const Home = () => {
 
   return (
     <div className='h-1/2 pb-32 pt-28 md:pt-32'>
-        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md lg:px-6 z-20">
+        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md lg:px-6 z-30">
             <img 
                 src={logo} alt="logo"
                 className='h-16'
@@ -46,7 +46,7 @@ const Home = () => {
                             ))}
                         </select> */}
                         <Select 
-                            options={options} className=' w-10/12'
+                            options={options} className=' w-10/12 z-[25]'
                             defaultValue={{value: 'Enter Departure', label: 'Enter Departure'}}
                         />
                     </div>
@@ -56,7 +56,7 @@ const Home = () => {
                     <div className="flex flex-row justify-between px-0 items-center">
                         <i className="bi bi-circle text-[8px]"></i>
                         <Select 
-                            options={options} className=' w-10/12'
+                            options={options} className=' w-10/12 z-20'
                             defaultValue={{value: 'Enter Destination', label: 'Enter Desitination'}}
                         />
                     </div>
@@ -68,9 +68,9 @@ const Home = () => {
                         <DatePicker 
                             selected={startDate} dateFormat="dd  MMMM yyyy"
                             onChange={(date) => setStartDate(date)} 
-                            className='text-gray-400 font-semibold translate-x-10 md:text-xl pe-0 focus:translate-x-14'
+                            className='text-gray-400 font-semibold translate-x-10 md:text-xl pe-0 focus:translate-x-14 -z-10'
                         />
-                        <p className="font-bold text-[18px] z-10 pe-2">{daysOfWeek[day]}</p>
+                        <p className="font-bold z-10 text-[18px] pe-2">{daysOfWeek[day]}</p>
                     </div>
                 </div>
                 <div className="form-group flex flex-col w-full mb-4">
@@ -81,9 +81,9 @@ const Home = () => {
                             className="max-md:grid lg:flex max-md:gap-1 lg:gap-1 absolute left-1/2 translate-x-[-40%]"
                             style={{gridTemplateColumns: 'repeat(4, min-content)'}}
                         >
-                            {times.map((time) => 
+                            {times.map((time, idx) => 
                                 (
-                                    <div>
+                                    <div key={idx}>
                                         <div 
                                             className='flex gap-2 items-end border-e-2 border-gray-400 pe-2 text-center'
                                             onClick={()=>setDepartureTime(time)}

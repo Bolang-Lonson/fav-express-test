@@ -10,7 +10,7 @@
 
 .slider div {
     flex: 1 0 100%;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
 }
 
 #slider-nav button {
@@ -30,4 +30,13 @@
 
 .faq-card {
     scrollbar-width: none;
+}
+
+#plusbtn {
+    transform: rotate(90deg);
+    transition: transform ease 0.4s;
+}
+
+#plusbtn.bi-dash {
+    transform: rotate(0deg);
 }

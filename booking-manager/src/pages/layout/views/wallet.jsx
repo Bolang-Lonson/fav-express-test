@@ -16,10 +16,12 @@ const Wallet = () => {
 		<div className=' h-full'>
 			<div className="bg-favblue flex justify-between pb-10 px-5">
 				<div className='flex items-center gap-1'>
+					<a href="/">
 					<img 
 						src={logo} alt="logo" 
 						className='h-14'
 					/>
+					</a>
 					<p className="text-white">Ticket(s)</p>
 				</div>
 				<div className='flex items-center gap-6'>

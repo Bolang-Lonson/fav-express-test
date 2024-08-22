@@ -26,10 +26,12 @@ const Home = () => {
   return (
     <div className='h-1/2 pb-32 pt-28 md:pt-32'>
         <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md lg:px-6 z-30">
-            <img 
-                src={logo} alt="logo"
-                className='h-16'
-            />
+            <a href="/">
+                <img 
+                    src={logo} alt="logo"
+                    className='h-16'
+                />
+            </a>
             <p className=' text-gray-500 font-semibold max-md:text-sm'>Bus Schedules & Destinations</p>
             <div className='w-16'></div>
         </div>
@@ -39,12 +41,6 @@ const Home = () => {
                     <label htmlFor="depart" className='text-sm font-semibold text-gray-400 float-start mb-2'>From</label>
                     <div className="flex flex-row justify-between px-0 items-center">
                         <i className="bi bi-circle-fill text-[8px]"></i>
-                        {/* <select name="depart" id="depart" className='h-10 w-10/12'>
-                            <option value="" selected>Enter Departure</option>
-                            {options.map((op) => (
-                                <option value={op.value}>{op.label}</option>
-                            ))}
-                        </select> */}
                         <Select 
                             options={options} className=' w-10/12 z-[25]'
                             defaultValue={{value: 'Enter Departure', label: 'Enter Departure'}}
@@ -68,7 +64,7 @@ const Home = () => {
                         <DatePicker 
                             selected={startDate} dateFormat="dd  MMMM yyyy"
                             onChange={(date) => setStartDate(date)} 
-                            className='text-gray-400 font-semibold translate-x-10 md:text-xl pe-0 focus:translate-x-14 -z-10'
+                            className='text-gray-400 font-semibold translate-x-10 md:text-xl pe-0 focus:translate-x-14 border'
                         />
                         <p className="font-bold z-10 text-[18px] pe-2">{daysOfWeek[day]}</p>
                     </div>

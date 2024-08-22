@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import logo from '../../assets/VERSION 1.png';
+import buspic from '../../assets/landpic.jpg';
 import './splash.css';
 import faqs from './faqs.json';
 
@@ -38,7 +39,7 @@ const Landing = () => {
                     const rect2 = sld.getBoundingClientRect();
                     const cent2X = rect2.left + rect2.width / 2;
 
-                    if (Math.abs(cent2X - centX) <= (rect2.width / 2)) {console.log(slide[0]); setSlide(slide[0])}
+                    if (Math.abs(cent2X - centX) <= (rect2.width / 2)) {setSlide(slide[0])}
                 }
             });
         }
@@ -60,34 +61,73 @@ const Landing = () => {
         <div
             className='w-full flex flex-col h-[100vh] relative'
         >
-            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto" ref={containerRef} onScroll={() => setIsScrolled(!isScrolled)}>
+            <div className="slider basis-[90%] flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto" ref={containerRef} onScroll={() => setTimeout(() => setIsScrolled(!isScrolled), 500)}>
                     {/* Logo slide */}
                 <div 
-                    className='flex flex-col text-center items-center justify-center h-[80%] slide overflow-y-scroll'
+                    className='flex flex-col text-center items-center justify-around h-full slide'
                     ref={slides.slide_1}
                 >
                     <img
                         src={logo} alt="logo" 
                         className='w-60'
                     />
-                    <h1 className="md:text-4xl text-2xl font-semibold text-favblue">FAVOUR EXPRESS ®</h1>
-                    <h1 className="md:text-[2.5rem] text-[2rem] mt-4 font-semibold">BOOKING MANAGER</h1>
-                    <p className="text-[16px] lg:text-[21px] mt-4">Yaounde - Douala - Buea - Limbe - Kumba</p>
+                    <div>
+                        <h1 className="md:text-4xl text-[1.75rem] font-roboto text-favblue">FAVOUR EXPRESS ®</h1>
+                        <h1 className="md:text-[2.5rem] text-[1.75rem] mt-4 font-semibold">BOOKING MANAGER</h1>
+                        <p className="text-[14px] font-roboto lg:text-[21px] mt-4">Yaounde - Douala - Buea - Limbe - Kumba</p>
+                    </div>
+                    {/* Buttons */}
+                    <div className="flex items-center justify-evenly lg:justify-between w-full">
+                        <a
+                            className='text-favblue font-roboto border border-favblue py-2 px-3 rounded-lg hover:bg-favblue hover:text-white'
+                            href='/mail'
+                        >
+                            Track Parcel
+                            <i className="bi bi-box-seam ms-2"></i>
+                        </a>
+                        <a 
+                        className='text-white font-semibold bg-favblue py-2 px-3 rounded-lg hover:opacity-90 flex'
+                        href='/home'
+                        >
+                            Book Ticket
+                            <i className="bi bi-ticket-perforated-fill ms-2"></i>
+                        </a>
+                    </div>
                 </div>
                     {/* Services Info Slide */}
                 <div 
-                    className='flex flex-col text-center items-center justify-center h-[80%] slide'
+                    className='flex flex-col text-center items-center justify-evenly h-full slide'
                     ref={slides.slide_2}
                 >
-                    <div 
-                        className="bus-card w-full h-full relative lg:w-4/5 lg:rounded-3xl lg:mt-[3.5rem]"
-                    >
-                        <p className="text-amber-200 font-palanquin absolute bottom-[10%] lg:bottom-[15%] text-center text-2xl lg:text-4xl font-bold left-1/2 translate-x-[-50%]">We Offer First-Class Inter-Urban Road Travel</p>
+                    <img 
+                        src={buspic} alt="bus"
+                        className='w-72 h-[283px] md:w-[70%] md:h-[50%] rounded-xl object-cover'
+                    />
+                    <div className='flex flex-col gap-3 pt-0'>
+                        <h1 className="md:text-4xl text-[2rem] font-roboto text-favblue">What we offer</h1>
+                        <p className="text-[16px] font-roboto lg:text-[21px] text-center px-16">Bus transportation first class and classic buses across center region(Yaounde) & South West Region <br />(Buea, Limbe & Kumba).</p>
+                        <p className="text-[16px] font-roboto lg:text-[21px] text-center">More <a href="/about-us" className=' underline'>about us</a></p>
+                    </div>
+                    <div className="flex items-center justify-evenly lg:justify-between w-full">
+                        <a
+                            className='text-favblue font-roboto border border-favblue py-2 px-3 rounded-lg hover:bg-favblue hover:text-white'
+                            href='/mail'
+                        >
+                            Track Parcel
+                            <i className="bi bi-box-seam ms-2"></i>
+                        </a>
+                        <a 
+                        className='text-white font-semibold bg-favblue py-2 px-3 rounded-lg hover:opacity-90 flex'
+                        href='/home'
+                        >
+                            Book Ticket
+                            <i className="bi bi-ticket-perforated-fill ms-2"></i>
+                        </a>
                     </div>
                 </div>
                     {/* FAQ Slide */}
                 <div 
-                    className='flex flex-col text-center items-center justify-center h-[80%] slide'
+                    className='flex flex-col text-center items-center justify-center h-full slide'
                     ref={slides.slide_3}
                 >
                     <div className="w-full h-full faq-card py-6 lg:py-16 overflow-y-auto">
@@ -129,36 +169,54 @@ const Landing = () => {
                             <div className="w-[90%] lg:w-1/2 h-24 my-5 mx-auto">
                                 <textarea name="issue" id="issue" className="w-full h-full px-7 py-2 border-2 focus:outline-none focus:border-green-600 rounded-md" placeholder='Type in your issue or complaint'></textarea>
                             </div>
-                            <button type="submit" className='text-white font-semibold max-md:text-xs bg-favbluelight py-2 px-3 rounded-md hover:opacity-80'>Submit</button>
+                            <button type="submit" className='text-white font-semibold max-md:text-xs bg-favblue py-2 px-3 rounded-md hover:opacity-90'>Submit</button>
                         </form>
                     </div>
                 </div>
             </div>
             
             {/* Bottom navigation */}
-            <div className="px-8 absolute w-full bottom-[7%] lg:bottom-[10%]">
-                <div className='flex flex-row items-center max-md:justify-between relative'>
-                    <a
-                        className='text-favbluelight font-semibold lg:absolute lg:left-[10%] max-md:text-xs max-md:translate-x-[-10%] border border-favbluelight py-2 px-3 rounded-md hover:bg-favbluelight hover:text-white'
-                        href='/mail'
+            <div className="px-8 w-full basis-[10%]">
+                <div className='flex items-center justify-between lg:justify-around h-full'>
+                    {// Prev button shows up as from 2nd page. Skip shows on first page
+                    (slide !== 'slide_1')?
+                    <button 
+                        className="text-favbluelight" 
+                        onClick={
+                            () => {
+                                let slideNum = slide.charAt(6);
+                                let prevSlide = `slide_${+slideNum - 1}`;
+                                setSlide(prevSlide);
+                            }
+                        }
                     >
-                        Track Parcel
-                        <i className="bi bi-box-seam ms-2"></i>
-                    </a>
-                    <div className='absolute left-1/2 translate-x-[-50%] z-[1] flex gap-4' id='slider-nav'>
-                        <button onClick={() => handleSlide('slide_1')} className={slide === 'slide_1'? 'opacity-100': 'opacity-50'}></button>
-                        <button onClick={() => handleSlide('slide_2')} className={slide === 'slide_2'? 'opacity-100': 'opacity-50'}></button>
-                        <button onClick={() => handleSlide('slide_3')} className={slide === 'slide_3'? 'opacity-100': 'opacity-50'}></button>
+                        Prev
+                    </button>
+                    :
+                    <button className="text-favbluelight" onClick={() => setSlide('slide_3')}>Skip</button>
+                    }
+                    <div className='z-[1] flex gap-2' id='slider-nav'>
+                        <button onClick={() => setSlide('slide_1')} className={slide === 'slide_1'? 'opacity-100': 'opacity-50'}></button>
+                        <button onClick={() => setSlide('slide_2')} className={slide === 'slide_2'? 'opacity-100': 'opacity-50'}></button>
+                        <button onClick={() => setSlide('slide_3')} className={slide === 'slide_3'? 'opacity-100': 'opacity-50'}></button>
                     </div>
-                    <a 
-                        className='text-white font-semibold lg:absolute lg:right-[10%] max-md:text-xs max-md:translate-x-[10%] bg-favbluelight py-2 px-3 rounded-md hover:opacity-80 flex'
-                        href='/home'
+                    {// Next shows only on first 2 pages
+                    (slide !== 'slide_3' )?
+                    <button 
+                        className="text-favbluelight"
+                        onClick={
+                            () => {
+                                let slideNum = slide.charAt(6);
+                                let nextSlide = `slide_${+slideNum + 1}`;
+                                setSlide(nextSlide);
+                            }
+                        }
                     >
-                        Book Ticket
-                        <i className="bi bi-ticket-perforated-fill ms-2"></i>
-                    </a>
+                        Next
+                    </button>
+                    :
+                    <div className='text-transparent'>Next</div>}
                 </div>
-                
             </div>
         </div>
     );

@@ -60,10 +60,10 @@ const Landing = () => {
         <div
             className='w-full flex flex-col h-[100vh] relative'
         >
-            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto overflow-y-auto" ref={containerRef} onScroll={() => setIsScrolled(!isScrolled)}>
+            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto" ref={containerRef} onScroll={() => setIsScrolled(!isScrolled)}>
                     {/* Logo slide */}
                 <div 
-                    className='flex flex-col text-center items-center justify-center h-[80%] slide'
+                    className='flex flex-col text-center items-center justify-center h-[80%] slide overflow-y-scroll'
                     ref={slides.slide_1}
                 >
                     <img
@@ -80,9 +80,9 @@ const Landing = () => {
                     ref={slides.slide_2}
                 >
                     <div 
-                        className="bus-card w-full h-full relative lg:w-4/5 lg:rounded-3xl"
+                        className="bus-card w-full h-full relative lg:w-4/5 lg:rounded-3xl lg:mt-[3.5rem]"
                     >
-                        <p className="text-amber-200 font-serif absolute bottom-[15%] text-center text-xl font-bold left-1/2 translate-x-[-50%]">We Offer First-Class Inter-Urban Road Travel</p>
+                        <p className="text-amber-200 font-palanquin absolute bottom-[10%] lg:bottom-[15%] text-center text-2xl lg:text-4xl font-bold left-1/2 translate-x-[-50%]">We Offer First-Class Inter-Urban Road Travel</p>
                     </div>
                 </div>
                     {/* FAQ Slide */}
@@ -136,7 +136,7 @@ const Landing = () => {
             </div>
             
             {/* Bottom navigation */}
-            <div className="px-8 absolute w-full bottom-14 lg:bottom-[10%]">
+            <div className="px-8 absolute w-full bottom-[7%] lg:bottom-[10%]">
                 <div className='flex flex-row items-center max-md:justify-between relative'>
                     <a
                         className='text-favbluelight font-semibold lg:absolute lg:left-[10%] max-md:text-xs max-md:translate-x-[-10%] border border-favbluelight py-2 px-3 rounded-md hover:bg-favbluelight hover:text-white'

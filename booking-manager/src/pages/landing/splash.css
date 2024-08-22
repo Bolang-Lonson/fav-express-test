@@ -40,3 +40,7 @@
 #plusbtn.bi-dash {
     transform: rotate(0deg);
 }
+
+@media only screen and (orientation: landscape) {
+    /* Styles for landscape orientation */
+}

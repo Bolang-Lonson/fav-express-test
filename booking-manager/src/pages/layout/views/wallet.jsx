@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../../assets/VERSION 2.png';
 import mtn from '../../../assets/MobileMoney 2.jpg';
 import orange from '../../../assets/orange-money-logo.png';
 
 const Wallet = () => {
+	const [payMthd, setPayMethod] = useState('mtn');
 
 	const table = {
 		Price: 5000,
@@ -28,14 +29,21 @@ const Wallet = () => {
 			</div>
 			<div className="bg-white block max-md:w-[90%] md:max-lg:w-3/4 lg:max-xl:w-3/5 w-1/2 mx-auto rounded pt-3 translate-y-[-20px]">
 				<div id="head" className='flex items-center justify-evenly border-b'>
-					<div className='flex gap-2 items-center border-favblue border-b-4 pb-2'>
+					{/* Payment Method Picker */}
+					<div 
+						className={`flex gap-2 items-center ${payMthd === 'mtn'? 'border-favblue': 'border-white'} border-b-4 pb-2`} onClick={() => setPayMethod('mtn')}
+						style={{transition: 'border-color ease 0.5s'}}
+					>
 						<img 
 							src={mtn} alt="mtn"
 							className=' h-8'
 						/>
 						<p>MTN Money</p>
 					</div>
-					<div className='flex gap-2 items-center pb-2'>
+					<div 
+						className={`flex gap-2 items-center ${payMthd === 'orange'? 'border-favblue': 'border-white'} border-b-4 pb-2`} onClick={() => setPayMethod('orange')}
+						style={{transition: 'border-color ease 0.5s'}}
+					>
 						<img 
 							src={orange} alt="orange"
 							className=' h-8'
@@ -62,14 +70,16 @@ const Wallet = () => {
 			</div>
 			<div 
 				id="input-box"
-				className='w-4/5 md:w-1/2 mx-auto h-14 border border-black rounded-lg mt-8'
+				className='w-4/5 md:w-1/4 mx-auto h-14 border border-black rounded-lg mt-8'
 			>
 				<input 
 					type="text" name="telephone" id="telephone" 
 					placeholder='Input your telephone number +237'
 					className='w-full h-full rounded-lg px-5 text-center bg-slate-200'
 				/>
+
 			</div>
+			<button className="w-4/5 md:w-1/4 block text-white rounded-md mx-auto my-10 lg:my-16 p-2 bg-violet-500">Pay</button>
 		</div>
 	)
 }

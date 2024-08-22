@@ -25,7 +25,7 @@
 
 .bus-card {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7)), url('../../assets/bus\ pic.jpeg');
-    background-size: cover;
+    background-size: cover; background-position: center;
 }
 
 .faq-card {

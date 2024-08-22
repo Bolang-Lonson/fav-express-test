@@ -39,7 +39,6 @@ const Landing = () => {
                         const cent2X = rect2.left + rect2.width / 2;
 
                         if (Math.abs(cent2X - centX) <= (rect2.width / 2)) {console.log(slide[0]); setSlide(slide[0])}
-                        clearInterval(scrollCheck);
                     }
                 });
             }, 600);
@@ -62,7 +61,7 @@ const Landing = () => {
         <div
             className='w-full flex flex-col h-[100vh] relative'
         >
-            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto" ref={containerRef}>
+            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto overflow-y-auto" ref={containerRef}>
                     {/* Logo slide */}
                 <div 
                     className='flex flex-col text-center items-center justify-center h-[80%] slide'
@@ -138,7 +137,7 @@ const Landing = () => {
             </div>
             
             {/* Bottom navigation */}
-            <div className="px-8 absolute w-full bottom-14 lg:bottom-24">
+            <div className="px-8 absolute w-full bottom-14 lg:bottom-[10%]">
                 <div className='flex flex-row items-center max-md:justify-between relative'>
                     <a
                         className='text-favbluelight font-semibold lg:absolute lg:left-[10%] max-md:text-xs max-md:translate-x-[-10%] border border-favbluelight py-2 px-3 rounded-md hover:bg-favbluelight hover:text-white'

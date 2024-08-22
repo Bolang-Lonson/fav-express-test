@@ -5,6 +5,7 @@ import faqs from './faqs.json';
 
 const Landing = () => {
     const [slide, setSlide] = useState('slide_1');  // slide currently displayed
+    const [isScrolled, setIsScrolled] = useState(false);
 
     const slides = {
         slide_1: useRef(null),
@@ -26,24 +27,22 @@ const Landing = () => {
     // Detecting scroll activity to find which slide is in view by calculating slide center distance to slide container center
     const containerRef = useRef(null);
     const container = containerRef.current;
-    if (container) {
-        const rect = container.getBoundingClientRect();
-        const centX = rect.left + rect.width / 2;
+    useEffect(() => {
+        if (container) {
+            const rect = container.getBoundingClientRect();
+            const centX = rect.left + rect.width / 2;
 
-        container.addEventListener('scroll', (e) => {
-            let scrollCheck = setInterval(() => {
-                Object.entries(slides).forEach(slide => {
-                    const sld = slide[1].current;
-                    if (sld) { 
-                        const rect2 = sld.getBoundingClientRect();
-                        const cent2X = rect2.left + rect2.width / 2;
+            Object.entries(slides).forEach(slide => {
+                const sld = slide[1].current;
+                if (sld) { 
+                    const rect2 = sld.getBoundingClientRect();
+                    const cent2X = rect2.left + rect2.width / 2;
 
-                        if (Math.abs(cent2X - centX) <= (rect2.width / 2)) {console.log(slide[0]); setSlide(slide[0])}
-                    }
-                });
-            }, 600);
-        });
-    }
+                    if (Math.abs(cent2X - centX) <= (rect2.width / 2)) {console.log(slide[0]); setSlide(slide[0])}
+                }
+            });
+        }
+    },[isScrolled]);
 
     const [isOpen, setIsOpen] = useState({
         0: false,
@@ -61,7 +60,7 @@ const Landing = () => {
         <div
             className='w-full flex flex-col h-[100vh] relative'
         >
-            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto overflow-y-auto" ref={containerRef}>
+            <div className="slider h-full flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto overflow-y-auto" ref={containerRef} onScroll={() => setIsScrolled(!isScrolled)}>
                     {/* Logo slide */}
                 <div 
                     className='flex flex-col text-center items-center justify-center h-[80%] slide'

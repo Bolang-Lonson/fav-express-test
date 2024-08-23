@@ -62,7 +62,7 @@ const Landing = () => {
             className='w-full flex flex-col h-[100vh] relative'
         >
             <div 
-                className="slider basis-[90%] flex overflow-x-scroll lg:max-w-[70%] w-full mx-auto" 
+                className="slider basis-[80%] flex overflow-x-scroll lg:max-w-[70%] w-full mx-auto" 
                 ref={containerRef} onScroll={() => setTimeout(() => setIsScrolled(!isScrolled), 500)}
             >
                     {/* Logo slide */}
@@ -179,7 +179,7 @@ const Landing = () => {
             </div>
             
             {/* Bottom navigation */}
-            <div className="px-8 w-full basis-[10%]">
+            <div className="px-8 w-full basis-[20%]">
                 <div className='flex items-start justify-between lg:justify-around h-full'>
                     {// Prev button shows up as from 2nd page. Skip shows on first page
                     (slide !== 'slide_1')?

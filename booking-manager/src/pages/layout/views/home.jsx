@@ -34,7 +34,7 @@ const Home = () => {
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle-fill text-[8px] basis-[10%] ps-1"></i>
                         <Select 
-                            options={options} className='w-10/12 basis-[85%]'
+                            options={options} className='w-10/12 basis-[85%] z-20'
                             value={departure} onChange={(dep) => setDeparture(dep)}
                         />
                     </div>

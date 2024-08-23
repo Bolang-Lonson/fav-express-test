@@ -1,7 +1,6 @@
-import React from 'react'
-import { Outlet, NavLink } from 'react-router-dom'
-import faqIcon from './faq.svg'
-import logo from '../../assets/VERSION 1.png'
+import React from 'react';
+import { Outlet, NavLink } from 'react-router-dom';
+import logo from '../../assets/VERSION 1.png';
 
 const Layout = () => {
 

@@ -27,12 +27,14 @@ const Landing = () => {
     const container = containerRef.current;
     useEffect(() => {
         if (container) {
+            // calculating horizontal position of slider center
             const rect = container.getBoundingClientRect();
             const centX = rect.left + rect.width / 2;
 
             Object.entries(slides).forEach(slide => {
                 const sld = slide[1].current;
                 if (sld) { 
+                    // calculating horizontal position of current slide center
                     const rect2 = sld.getBoundingClientRect();
                     const cent2X = rect2.left + rect2.width / 2;
 
@@ -105,7 +107,7 @@ const Landing = () => {
                         className='w-72 h-[283px] md:w-[70%] md:h-[50%] rounded-xl object-cover'
                     />
                     <div className='flex flex-col gap-3 pt-0'>
-                        <h1 className="md:text-4xl text-[2rem] font-roboto text-favblue">What we offer</h1>
+                        <h1 className="md:text-4xl text-[2rem] font-roboto text-favblue">Our Services</h1>
                         <p className="text-[16px] font-roboto lg:text-[21px] text-center px-16">Bus transportation first class and classic buses across center region(Yaounde) & South West Region <br />(Buea, Limbe & Kumba).</p>
                         <p className="text-[16px] font-roboto lg:text-[21px] text-center">More <a href="/about-us" className=' underline'>about us</a></p>
                     </div>
@@ -182,7 +184,6 @@ const Landing = () => {
                     {// Prev button shows up as from 2nd page. Skip shows on first page
                     (slide !== 'slide_1')?
                     <button 
-                        className="text-favbluelight" 
                         onClick={
                             () => {
                                 let slideNum = slide.charAt(6);
@@ -194,7 +195,7 @@ const Landing = () => {
                         Prev
                     </button>
                     :
-                    <button className="text-favbluelight" onClick={() => setSlide('slide_3')}>Skip</button>
+                    <button onClick={() => setSlide('slide_3')}>Skip</button>
                     }
                     <div className='z-[1] flex gap-2' id='slider-nav'>
                         <button onClick={() => setSlide('slide_1')} className={slide === 'slide_1'? 'opacity-100': 'opacity-50'}></button>
@@ -204,7 +205,6 @@ const Landing = () => {
                     {// Next shows only on first 2 pages
                     (slide !== 'slide_3' )?
                     <button 
-                        className="text-favbluelight"
                         onClick={
                             () => {
                                 let slideNum = slide.charAt(6);

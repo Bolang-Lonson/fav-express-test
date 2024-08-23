@@ -60,7 +60,7 @@ const Home = () => {
                 <div className="form-group flex flex-col mb-8">
                     <label htmlFor="depart" className='text-sm font-semibold text-gray-400 float-start mb-2'>Date</label>
                     <div className="flex flex-row justify-between px-0 items-center">
-                        <i className="bi bi-calendar4-event text-xl text-favbluelight"></i>
+                        <i className="bi bi-calendar4-event text-xl text-favblue"></i>
                         <DatePicker 
                             selected={startDate} dateFormat="dd  MMMM yyyy"
                             onChange={(date) => setStartDate(date)} 
@@ -72,7 +72,7 @@ const Home = () => {
                 <div className="form-group flex flex-col w-full mb-4">
                     <label htmlFor="depart" className='text-sm font-semibold text-gray-400 float-start mb-2'>Time</label>
                     <div className="flex flex-row px-0 items-center w-full justify-stretch">
-                        <i className="bi bi-clock text-xl text-favbluelight"></i>
+                        <i className="bi bi-clock text-xl text-favblue"></i>
                         <div 
                             className="max-md:grid lg:flex max-md:gap-1 lg:gap-1 absolute left-1/2 translate-x-[-40%]"
                             style={{gridTemplateColumns: 'repeat(4, min-content)'}}
@@ -106,7 +106,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <a href='/wallet' className='text-center rounded-md text-sm max-sm:text-xs text-white bg-violet-500 py-3 w-3/5 md:w-1/5 mx-auto shadow-xl block'>BOOK/RESERVE NOW</a>
+            <a href='/wallet' className='text-center rounded-md text-sm max-sm:text-xs text-white bg-favblue py-3 w-3/5 md:w-1/5 mx-auto shadow-xl block'>Next</a>
         </form>
         <p className="mt-10 md:mt-24 px-12 md:px-16 text-gray-500 font-semibold text-center">Please remember to be at our agency 45 mins before travel time!</p>
     </div>

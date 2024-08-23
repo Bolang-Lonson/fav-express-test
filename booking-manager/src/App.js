@@ -20,7 +20,7 @@ function App() {
 		<Routes>
 			<Route index element={
 				<Suspense 
-					fallback={<Lottie loop={false} animationData={BusAnimation} style={{height: '100vh', transition: 'all 0.5s ease-in-out'}} duration={3}/>}
+					fallback={<Lottie loop={false} animationData={BusAnimation} style={{height: '100vh', transition: 'all 2s ease-in-out'}} duration={3}/>}
 				>
 					<Landing/>
 				</Suspense>

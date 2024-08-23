@@ -9,17 +9,26 @@
 }
 
 #splash {
-    animation: fadeIn 2s ease-in-out;
+    animation: dropDown 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from {
+@keyframes dropDown {
+    0% {
         opacity: 0;
+        transform: translateY(-100%);
     }
-    to {
+    50% {
         opacity: 1;
+        transform: translateY(10%);
+    }
+    80% {
+        transform: translateY(-5%);
+    }
+    100% {
+        transform: translateY(0);
     }
 }
+
 .slide {
     flex: 1 0 100%;
     scroll-snap-align: center;

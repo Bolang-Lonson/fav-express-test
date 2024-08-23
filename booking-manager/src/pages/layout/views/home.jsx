@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
 import {useMediaQuery} from 'react-responsive';
@@ -17,34 +17,51 @@ const Home = () => {
         {value: 'Yaounde', label: 'Yaounde'},
     ]
 
+    const [departure, setDeparture] = useState({value: 'Select Departure', label: 'Select Departure City'});
+    const [destination, setDestination] = useState({value: 'Enter Destination', label: 'Select Desitination City'});
+
     // departure time logic
     const [departureTime, setDepartureTime] = useState(null);
-    const times = ['07:00', '10:00', '13:00', '16:00', '7 pm', '10 pm' ] // these times will be changed through the admin and fetched from the backend
+    const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00' ] // these times will be changed through the admin and fetched from the backend
 
   return (
     <div className='pb-32 pt-[5.5rem] md:pt-28'>
         <form action="">
             <div className="w-[90%] mx-auto bg-white py-3 md:py-10 px-6 md:px-24 mb-10 md:mb-16 md:w-3/5 md:mx-auto rounded-xl md:shadow">
+                {/* Departure */}
                 <div className="form-group flex flex-col mb-3">
                     <label htmlFor="depart" className='text-sm font-semibold font-roboto float-start mb-2'>From</label>
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle-fill text-[8px] basis-[10%] ps-1"></i>
                         <Select 
                             options={options} className='w-10/12 basis-[85%]'
-                            defaultValue={{value: 'Select Departure', label: 'Select Departure City'}}
+                            value={departure} onChange={(dep) => setDeparture(dep)}
                         />
                     </div>
                 </div>
+                {/* Destination */}
                 <div className="form-group flex flex-col mb-8">
-                    <label htmlFor="desti" className='text-sm font-semibold font-roboto float-start mb-2'>To <button className='bi bi-arrow-down-up float-end px-2 py-1 hover:text-favblue hover:bg-blue-100 rounded-md'></button></label>
+                    <label htmlFor="desti" className='text-sm font-semibold font-roboto float-start mb-2'>
+                        To
+                        <button 
+                            className='bi bi-arrow-down-up float-end px-2 py-1 hover:text-favblue hover:bg-blue-100 rounded-md'
+                            onClick={(e) => {
+                                // Swapping departure and destination values
+                                e.preventDefault();
+                                setDeparture(destination);
+                                setDestination(departure);
+                            }}
+                        ></button>
+                    </label>
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle text-[8px] basis-[10%] ps-1"></i>
                         <Select 
-                            options={options} className='w-10/12 basis-[85%]'
-                            defaultValue={{value: 'Enter Destination', label: 'Select Desitination City'}}
+                            options={options} className='w-10/12 basis-[85%] z-10'
+                            value={destination} onChange={(des) => setDestination(des)}
                         />
                     </div>
                 </div>
+                {/* Date */}
                 <div className="form-group flex flex-col mb-8">
                     <label htmlFor="depart" className='text-sm font-semibold font-roboto float-start mb-2'>Date</label>
                     <div className="flex justify-between px-0 items-center">
@@ -63,6 +80,7 @@ const Home = () => {
                         }
                     </div>
                 </div>
+                {/* Time */}
                 <div className="form-group flex flex-col w-full mb-4">
                     <label htmlFor="" className='text-sm font-semibold font-roboto float-start mb-2'>Time</label>
                     <div className="flex px-0 items-center justify-between">

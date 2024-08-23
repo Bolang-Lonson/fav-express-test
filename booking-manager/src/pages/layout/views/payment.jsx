@@ -3,7 +3,7 @@ import logo from '../../../assets/VERSION 2.png';
 import mtn from '../../../assets/MobileMoney 2.jpg';
 import orange from '../../../assets/orange-money-logo.png';
 
-const Wallet = () => {
+const Payment = () => {
 	const [payMthd, setPayMethod] = useState('mtn');
 
 	const table = {
@@ -86,4 +86,4 @@ const Wallet = () => {
 	)
 }
 
-export default Wallet;
+export default Payment;

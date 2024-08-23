@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import logo from '../../../assets/VERSION 1.png'
 
 const Home = () => {
     // react date-picker logic
@@ -25,16 +24,7 @@ const Home = () => {
 
   return (
     <div className='h-1/2 pb-32 pt-28 md:pt-32'>
-        <div className="fixed top-0  w-full bg-white flex flex-row items-center justify-between drop-shadow-md lg:px-6 z-30">
-            <a href="/">
-                <img 
-                    src={logo} alt="logo"
-                    className='h-16'
-                />
-            </a>
-            <p className=' text-gray-500 font-semibold max-md:text-sm'>Bus Schedules & Destinations</p>
-            <div className='w-16'></div>
-        </div>
+        
         <form action="">
             <div className="w-full bg-white pt-2 md:py-10 px-8 md:px-24 mb-10 md:mb-16 pb-10 md:w-3/5 md:mx-auto md:rounded-md md:shadow">
                 <div className="form-group flex flex-col mb-3">

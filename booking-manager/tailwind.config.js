@@ -11,6 +11,10 @@ module.exports = {
         palanquin: ['Palanquin', 'sans-serif'],
         montserrat: ['Montserrat', 'sans-serif'],
         roboto: ['Roboto', 'sans-serif'],
+      },
+      fontSize: {
+        md: '14px',
+        x: '20PX'
       }
     },
   },

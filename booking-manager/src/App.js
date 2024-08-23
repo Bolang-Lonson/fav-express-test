@@ -5,8 +5,8 @@ import Layout from './pages/layout';
 import Home from './pages/layout/views/home';
 import Tickets from './pages/layout/views/tickets';
 import Profile from './pages/layout/views/profile';
-import Wallet from './pages/layout/views/wallet';
-import Settings from './pages/layout/views/settings';
+import Payment from './pages/layout/views/payment';
+import Faq from './pages/layout/views/faq';
 import React, { Suspense } from 'react';
 import pMinDelay from 'p-min-delay';
 import Lottie from "lottie-react";
@@ -24,15 +24,14 @@ function App() {
 				>
 					<Landing/>
 				</Suspense>
-				
 				}
 			/>
 			<Route path='/' element={<Layout/>}>
 				<Route path='/home'  element={<Home/>}/>
 				<Route path='/tickets' element={<Tickets/>}/>
 				<Route path='/profile' element={<Profile/>}/>
-				<Route path='/wallet' element={<Wallet/>}/>
-				<Route path='/settings' element={<Settings/>}/>
+				<Route path='/payment' element={<Payment/>}/>
+				<Route path='/faqs' element={<Faq/>}/>
 			</Route>
 		</Routes>
 	);

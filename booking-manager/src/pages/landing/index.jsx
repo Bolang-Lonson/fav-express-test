@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import logo from '../../assets/VERSION 1.png';
 import buspic from '../../assets/landpic.jpg';
 import './splash.css';
-import faqs from './faqs.json';
 
 const Landing = () => {
     const [slide, setSlide] = useState('slide_1');  // slide currently displayed
@@ -44,18 +43,6 @@ const Landing = () => {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isScrolled]);
-
-    const [isOpen, setIsOpen] = useState({
-        0: false,
-        1: false,
-        2: false,
-        3: false,
-        4: false
-    });
-
-    const toggleOpen = (idx) => {
-        setIsOpen({...isOpen, [idx]: !isOpen[idx]})
-    }
     
     return (
         <div
@@ -106,10 +93,10 @@ const Landing = () => {
                         src={buspic} alt="bus"
                         className='w-72 h-[283px] md:w-[70%] md:h-[50%] rounded-xl object-cover'
                     />
-                    <div className='flex flex-col gap-3 pt-0'>
-                        <h1 className="md:text-4xl text-[2rem] font-roboto text-favblue">Our Services</h1>
-                        <p className="text-[16px] font-roboto lg:text-[21px] text-center px-16">Bus transportation first class and classic buses across center region(Yaounde) & South West Region <br />(Buea, Limbe & Kumba).</p>
-                        <p className="text-[16px] font-roboto lg:text-[21px] text-center">More <a href="/about-us" className=' underline'>about us</a></p>
+                    <div className='flex flex-col gap-2 lg:gap-3 pt-0'>
+                        <h1 className="md:text-4xl text-[28px] font-roboto text-favblue">Our Services</h1>
+                        <p className="text-[14px] font-roboto lg:text-[21px] text-center px-16">Bus transportation first class and classic buses across center region(Yaounde) & South West Region <br />(Buea, Limbe & Kumba).</p>
+                        <p className="text-[14px] font-roboto lg:text-[21px] text-center">More <a href="/about-us" className=' underline'>about us</a></p>
                     </div>
                     <div className="flex items-center justify-evenly lg:justify-between w-full">
                         <a
@@ -130,51 +117,40 @@ const Landing = () => {
                 </div>
                     {/* FAQ Slide */}
                 <div 
-                    className='flex flex-col text-center items-center justify-center h-full slide'
+                    className='flex flex-col text-center items-center justify-around h-full slide'
                     ref={slides.slide_3}
                 >
-                    <div className="w-full h-full faq-card py-6 lg:py-16 overflow-y-auto">
-                        <h1 className='text-3xl font-bold'>FAQs</h1>
-                        {/* Accordion */}
-                        <div id="accordion-container" className='mx-4 lg:mx-16 mt-4 rounded-md'>
-                            {faqs.slice(0, 5).map((faq, idx) => (
-                                    <div className="w-full cursor-pointer" key={idx}>
-                                        <div 
-                                            className={`max-md:text-xs py-2 text-start px-2 lg:px-8 flex items-center justify-between border-b ${idx ===0? 'border-t': ''}`}
-                                            onClick={() => toggleOpen(idx)}
-                                        >
-                                            {faq.question}
-                                            <button 
-                                                className={`bi ${isOpen[idx]? 'bi-dash': 'bi-plus'} text-xl lg:text-3xl hover:text-blue-600`} 
-                                                id='plusbtn'
-                                            ></button>
-                                        </div>
-                                        <div 
-                                            className={`${isOpen[idx]? 'lg:max-h-52 max-h-28 overflow-y-scroll':'max-h-0'} bg-slate-100 overflow-hidden border-x`}
-                                            style={{
-                                                transition: 'max-height ease-in-out 0.5s',
-                                            }}
-                                        >
-                                            <p className="p-4 max-md:text-xs">{faq.answer}</p>
-                                        </div>
-                                    </div>
-                                )
-                            )}
-                        </div>
-                        <form action="" className='mt-8 mx-4'>
-                            <h1 className='text-2xl font-bold mb-6'>Submit Complaints</h1>
-                            <div className="w-[90%] lg:w-1/2 h-10 my-5 mx-auto">
-                                <input type="text" className="w-full h-full px-7 border-2 focus:outline-none focus:border-green-600 rounded-md" id="name" placeholder='Phone number'/>
-                            </div>
-                            <div className="w-[90%] lg:w-1/2 h-10 my-5 mx-auto">
-                                <input type="text" className="w-full h-full px-7 border-2 focus:outline-none focus:border-green-600 rounded-md" id="name" placeholder='Enter your name(optional)'/>
-                            </div>
-                            <div className="w-[90%] lg:w-1/2 h-24 my-5 mx-auto">
-                                <textarea name="issue" id="issue" className="w-full h-full px-7 py-2 border-2 focus:outline-none focus:border-green-600 rounded-md" placeholder='Type in your issue or complaint'></textarea>
-                            </div>
-                            <button type="submit" className='text-white font-semibold max-md:text-xs bg-favblue py-2 px-3 rounded-md hover:opacity-90'>Submit</button>
-                        </form>
+                    <h1 className="text-favblue font-roboto md:text-4xl text-[1.75rem] mt-8">Let's get you started</h1>
+                    {/* Buttons */}
+                    <div className="flex flex-col gap-8 items-center justify-between w-full lg:w-2/3">
+                        <a 
+                            className='text-white font-semibold bg-favblue w-2/3 py-2 rounded-lg hover:opacity-90'
+                            href='/home'
+                        >
+                            Book Ticket
+                            <i className="bi bi-ticket-perforated-fill ms-2"></i>
+                        </a>
+                        <a
+                            className='text-favblue font-roboto border border-favblue py-[7px] w-2/3 rounded-lg hover:bg-favblue hover:text-white'
+                            href='/mail'
+                        >
+                            Track Parcel
+                            <i className="bi bi-box-seam ms-2"></i>
+                        </a>
+                        <a href="/reschedule" className="w-1/3 border-b border-favblue pb-[2px] text-favblue">
+                            Reschedule
+                            <i className="bi bi-pencil ms-2"></i>
+                        </a>
                     </div>
+                    {/* Customer service */}
+                    <div className="flex flex-wrap gap-y-8">
+                        <h1 className='text-favblue font-roboto md:text-4xl text-[20px] basis-full'>CUSTOMER SERVICE</h1>
+                        <p className='font-roboto basis-1/2 lg:basis-1/4 text-md'><span className='text-favblue'>YDE</span> +237 673348251</p>
+                        <p className='font-roboto basis-1/2 lg:basis-1/4 text-md'><span className="text-favblue">BUEA</span> +237 678137452</p>
+                        <p className='font-roboto basis-1/2 lg:basis-1/4 text-md'><span className="text-favblue">DLA</span> +237 675475486</p>
+                        <p className='font-roboto basis-1/2 lg:basis-1/4 text-md'><span className="text-favblue">LIMBE</span> +237 678137452</p>
+                    </div>
+                    <a href="/faqs" className="text-favblue text-x font-roboto -mb-4">FAQ</a>
                 </div>
             </div>
             

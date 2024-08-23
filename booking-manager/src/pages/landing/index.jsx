@@ -180,7 +180,7 @@ const Landing = () => {
             
             {/* Bottom navigation */}
             <div className="px-8 w-full basis-[10%]">
-                <div className='flex items-center justify-between lg:justify-around h-full'>
+                <div className='flex items-start justify-between lg:justify-around h-full'>
                     {// Prev button shows up as from 2nd page. Skip shows on first page
                     (slide !== 'slide_1')?
                     <button 

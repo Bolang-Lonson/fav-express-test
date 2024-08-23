@@ -14,9 +14,6 @@ const Landing = () => {
         slide_3: useRef(null)
     };
 
-    const handleSlide = (slide) => {
-        setSlide(slide);
-    }
     // scrolls to slide when slide value is set by slider nav
     useEffect(() => {
         if(slide) {
@@ -43,6 +40,7 @@ const Landing = () => {
                 }
             });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isScrolled]);
 
     const [isOpen, setIsOpen] = useState({
@@ -61,11 +59,14 @@ const Landing = () => {
         <div
             className='w-full flex flex-col h-[100vh] relative'
         >
-            <div className="slider basis-[90%] flex overflow-x-scroll scroll-smooth lg:max-w-[70%] w-full mx-auto" ref={containerRef} onScroll={() => setTimeout(() => setIsScrolled(!isScrolled), 500)}>
+            <div 
+                className="slider basis-[90%] flex overflow-x-scroll lg:max-w-[70%] w-full mx-auto" 
+                ref={containerRef} onScroll={() => setTimeout(() => setIsScrolled(!isScrolled), 500)}
+            >
                     {/* Logo slide */}
                 <div 
                     className='flex flex-col text-center items-center justify-around h-full slide'
-                    ref={slides.slide_1}
+                    ref={slides.slide_1} id='splash'
                 >
                     <img
                         src={logo} alt="logo" 
@@ -74,7 +75,7 @@ const Landing = () => {
                     <div>
                         <h1 className="md:text-4xl text-[1.75rem] font-roboto text-favblue">FAVOUR EXPRESS ®</h1>
                         <h1 className="md:text-[2.5rem] text-[1.75rem] mt-4 font-semibold">BOOKING MANAGER</h1>
-                        <p className="text-[14px] font-roboto lg:text-[21px] mt-4">Yaounde - Douala - Buea - Limbe - Kumba</p>
+                        <p className="text-[14px] font-roboto lg:text-[21px] mt-4">Yaounde - Douala - Buea - Limbe</p>
                     </div>
                     {/* Buttons */}
                     <div className="flex items-center justify-evenly lg:justify-between w-full">

@@ -5,9 +5,21 @@
 .slider {
     scroll-snap-type: x mandatory;
     scrollbar-color: rgba(255, 255, 255, 0);
-    scrollbar-width: 0px;
+    scrollbar-width: none;
 }
 
+#splash {
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 .slide {
     flex: 1 0 100%;
     scroll-snap-align: center;

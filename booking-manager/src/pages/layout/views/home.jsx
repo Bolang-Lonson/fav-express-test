@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
 import {useMediaQuery} from 'react-responsive';
 
 const Home = () => {
     const mobileDisplay = useMediaQuery({ query : '(max-width: 767.99px)'});
+    const [timeSet, setTimeSet] = useState(0);
 
     // react date-picker logic
     const [travelDate, setTravelDate] = useState(null);
@@ -22,7 +23,27 @@ const Home = () => {
 
     // departure time logic
     const [departureTime, setDepartureTime] = useState(null);
-    const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00' ] // these times will be changed through the admin and fetched from the backend
+    const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00', '24:00'] // these times will be changed through the admin and fetched from the backend
+
+
+    const scrollRight = (e) => {
+        e.preventDefault();
+        const newTimeSet = timeSet + 3;
+        setTimeSet(newTimeSet);
+        const newSet = document.getElementById(`time${newTimeSet}`);
+        if (newSet) {
+            newSet.scrollIntoView({behavior: 'smooth'});
+        }
+    }
+    const scrollLeft = (e) => {
+        e.preventDefault();
+        const newTimeSet = timeSet - 3;
+        setTimeSet(newTimeSet);
+        const newSet = document.getElementById(`time${newTimeSet}`);
+        if (newSet) {
+            newSet.scrollIntoView({behavior: 'smooth'});
+        }
+    }
 
   return (
     <div className='pb-32 pt-[5.5rem] md:pt-28'>
@@ -85,15 +106,23 @@ const Home = () => {
                     <label htmlFor="" className='text-sm font-semibold font-roboto float-start mb-2'>Time</label>
                     <div className="flex px-0 items-center justify-between">
                         <i className="bi bi-clock text-xl text-favblue ps-1 basis-[10%]"></i>
-                        <div className="basis-[85%] flex overflow-x-scroll items-center gap-[5%]">
+                        <div className="basis-[85%] relative flex items-center">
+                            {
+                            timeSet !== 0
+                            &&
+                            <button id="scroll-left" className='bi bi-chevron-left rounded-[50%] text-favblue bg-favbluelight px-1 absolute left-0 translate-x-[-50%]'
+                                onClick={scrollLeft}
+                            ></button>
+                            }
+                            <div className="flex overflow-x-scroll items-center gap-[5%] w-full h-full" style={{scrollbarColor: 'transparent', scrollbarWidth: 'none'}} id='timeCase'>
                             {times.map((time, idx) => 
                                 (
                                     <div 
-                                        onClick={()=>setDepartureTime(time)} key={idx} 
-                                        className={`${departureTime === time? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 basis-[30%] grow shrink-0 flex flex-col justify-evenly`}
+                                        onClick={()=>setDepartureTime(time)} key={idx} id={`time${idx}`}
+                                        className={`${departureTime === time? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow shrink-0 flex flex-col justify-evenly`}
                                     >
-                                        <div 
-                                            className='flex gap-2 items-center justify-center text-center'
+                                        <div
+                                            className='flex items-center justify-center text-center'
                                         >
                                             <p 
                                                 className={'text-favblue font-roboto font-semibold lg:text-2xl text-16'}
@@ -105,6 +134,14 @@ const Home = () => {
                                     </div>
                                 )
                             )}
+                            </div>
+                            {
+                            times.length - timeSet > 3
+                            &&
+                            <button id="scroll-right" className='bi bi-chevron-right rounded-[50%] text-favblue bg-favbluelight px-1 absolute right-0 translate-x-[50%]'
+                                onClick={scrollRight}
+                            ></button>
+                            }
                         </div>
                     </div>
                 </div>

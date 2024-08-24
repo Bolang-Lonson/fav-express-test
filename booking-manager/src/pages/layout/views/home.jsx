@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
 import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
 import {useMediaQuery} from 'react-responsive';
@@ -23,7 +23,7 @@ const Home = () => {
 
     // departure time logic
     const [departureTime, setDepartureTime] = useState(null);
-    const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00', '24:00'] // these times will be changed through the admin and fetched from the backend
+    const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00'] // these times will be changed through the admin and fetched from the backend
 
 
     const scrollRight = (e) => {

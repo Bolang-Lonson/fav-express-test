@@ -114,12 +114,12 @@ const Home = () => {
                                 onClick={scrollLeft}
                             ></button>
                             }
-                            <div className="flex overflow-x-scroll items-center gap-[5%] w-full h-full" style={{scrollbarColor: 'transparent', scrollbarWidth: 'none'}} id='timeCase'>
+                            <div className="flex overflow-x-hidden items-center gap-[5%] w-full h-full" style={{scrollbarColor: 'transparent', scrollbarWidth: 'none'}} id='timeCase'>
                             {times.map((time, idx) => 
                                 (
                                     <div 
-                                        onClick={()=>setDepartureTime(time)} key={idx} id={`time${idx}`} style={{scrollSnapType: 'x mandatory',scrollSnapAlign: 'start'}}
-                                        className={`${departureTime === time? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow shrink-0 flex flex-col justify-evenly`}
+                                        onClick={()=>setDepartureTime(time)} key={idx} id={`time${idx}`}
+                                        className={`${departureTime === time? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow-0 shrink-0 flex flex-col`}
                                     >
                                         <div
                                             className='flex items-center justify-center text-center'

@@ -106,11 +106,11 @@ const Home = () => {
                     <label htmlFor="" className='text-sm font-semibold font-roboto float-start mb-2'>Time</label>
                     <div className="flex px-0 items-center justify-between">
                         <i className="bi bi-clock text-xl text-favblue ps-1 basis-[10%]"></i>
-                        <div className="basis-[85%] relative flex items-center">
+                        <div className="basis-[85%] relative items-center">
                             {
                             timeSet !== 0
                             &&
-                            <button id="scroll-left" className='bi bi-chevron-left rounded-[50%] text-favblue bg-favbluelight px-1 absolute left-0 translate-x-[-50%]'
+                            <button id="scroll-left" className='bi bi-chevron-left rounded-[50%] text-favblue bg-favbluelight px-1 absolute left-0 translate-x-[-50%] top-1/2 translate-y-[-50%]'
                                 onClick={scrollLeft}
                             ></button>
                             }
@@ -138,7 +138,7 @@ const Home = () => {
                             {
                             times.length - timeSet > 3
                             &&
-                            <button id="scroll-right" className='bi bi-chevron-right rounded-[50%] text-favblue bg-favbluelight px-1 absolute right-0 translate-x-[50%]'
+                            <button id="scroll-right" className='bi bi-chevron-right rounded-[50%] text-favblue bg-favbluelight px-1 absolute right-0 translate-x-[50%] top-1/2 -translate-y-1/2'
                                 onClick={scrollRight}
                             ></button>
                             }

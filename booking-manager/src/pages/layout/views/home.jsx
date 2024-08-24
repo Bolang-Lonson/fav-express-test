@@ -32,7 +32,7 @@ const Home = () => {
         setTimeSet(newTimeSet);
         const newSet = document.getElementById(`time${newTimeSet}`);
         if (newSet) {
-            newSet.scrollIntoView({behavior: 'smooth'});
+            newSet.scrollIntoView({behavior: 'smooth', inline: 'start'});
         }
     }
     const scrollLeft = (e) => {
@@ -41,7 +41,7 @@ const Home = () => {
         setTimeSet(newTimeSet);
         const newSet = document.getElementById(`time${newTimeSet}`);
         if (newSet) {
-            newSet.scrollIntoView({behavior: 'smooth'});
+            newSet.scrollIntoView({behavior: 'smooth', inline: 'start'});
         }
     }
 
@@ -118,7 +118,7 @@ const Home = () => {
                             {times.map((time, idx) => 
                                 (
                                     <div 
-                                        onClick={()=>setDepartureTime(time)} key={idx} id={`time${idx}`}
+                                        onClick={()=>setDepartureTime(time)} key={idx} id={`time${idx}`} style={{scrollSnapType: 'x mandatory',scrollSnapAlign: 'start'}}
                                         className={`${departureTime === time? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow shrink-0 flex flex-col justify-evenly`}
                                     >
                                         <div

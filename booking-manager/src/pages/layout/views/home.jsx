@@ -332,25 +332,36 @@ const Home = () => {
                     </div>
                 </div>
             </ContentSwitcher>
-            
+            {
+            viewIndex < 3
+            &&
             <div className={`flex justify-between ${(viewIndex !== 0) && 'w-[90%] md:w-3/5'} mx-auto`}>
-                {
-                viewIndex !== 0
-                &&
-                <button 
-                    className={`text-favblue font-roboto border border-favblue py-[7px] basis-[40%] rounded-lg hover:bg-favblue hover:text-white`}
-                    onClick={(e) => {e.preventDefault();setViewIndex(viewIndex - 1)}}
-                >Prev</button>
-                }
-                <button 
+            {
+            viewIndex !== 0
+            &&
+            <button 
+                className={`text-favblue font-roboto border border-favblue py-[7px] basis-[40%] rounded-lg hover:bg-favblue hover:text-white`}
+                onClick={(e) => {e.preventDefault();setViewIndex(viewIndex - 1)}}
+            >Prev</button>
+            }
+            <button 
                 className={`text-center rounded-md text-sm max-sm:text-[1rem] text-white bg-favblue py-3 ${viewIndex === 0? ' basis-3/4 md:basis-1/5 mx-auto': 'basis-[40%]'} shadow-xl font-roboto`}
                 onClick={(e) => {e.preventDefault();setViewIndex(viewIndex + 1)}}
             >Next</button>
             </div>
+            }
+            
             
         </form>
-        <p className="mt-10 md:mt-16 px-12 font-roboto text-[16px] md:px-16 text-red text-center">Please remember to be at our agency 45 mins before travel time!</p>
-        <a href="/terms-n-conditions" className="text-favblue underline text-16 font-roboto mt-5 block text-center">Terms and Conditions</a>
+        {
+        viewIndex < 3
+        &&
+        <>
+            <p className="mt-10 md:mt-16 px-12 font-roboto text-[16px] md:px-16 text-red text-center">Please remember to be at our agency 45 mins before travel time!</p>
+            <a href="/terms-n-conditions" className="text-favblue underline text-16 font-roboto mt-5 block text-center">Terms and Conditions</a>
+        </>
+        }
+        
     </div>
   )
 }

@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
-import logo from '../../../assets/VERSION 2.png'
+import logo from '../../../assets/VERSION 2.png';
 import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 import {useMediaQuery} from 'react-responsive';
+
+dayjs.locale('en');
 
 const Home = () => {
     const mobileDisplay = useMediaQuery({ query : '(max-width: 767.99px)'});
     const [timeSet, setTimeSet] = useState(0);
 
     // react date-picker logic
-    const [travelDate, setTravelDate] = useState(null);
+    const [travelDate, setTravelDate] = useState(new dayjs());
 
     // agency locations
     const options = [
@@ -27,7 +30,7 @@ const Home = () => {
 
 
     // departure time logic
-    const [departureTime, setDepartureTime] = useState(null);
+    const [departureTime, setDepartureTime] = useState('');
     const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00'] // these times will be changed through the admin and fetched from the backend
 
 
@@ -50,15 +53,16 @@ const Home = () => {
         }
     }
 
+    const [viewIndex, setViewIndex] = useState(0);
     const ContentSwitcher = ({className, children}) => {
-        const [currentComponent, setCurrentComponent] = useState(children[3]);
+        const [currentComponent, setCurrentComponent] = useState(children[viewIndex]);
     
         const handleComponentChange = (index) => {
             setCurrentComponent(children[index]);
         };
     
         return (
-            <div className={className}>
+            <div className={className} style={{transition: 'all ease 0.5s'}}>
                 {currentComponent}
             </div>
         );
@@ -66,7 +70,7 @@ const Home = () => {
   return (
     <div className='pb-32 pt-[5.5rem] md:pt-28'>
         <form action="">
-            <ContentSwitcher className={'w-[90%] overflow-hidden mx-auto bg-white rounded-xl md:shadow mb-10 md:mb-16 md:w-3/5'}>
+            <ContentSwitcher className={`w-[90%] ${viewIndex === 3 && 'overflow-hidden'} mx-auto bg-white rounded-xl md:shadow mb-10 md:mb-16 md:w-3/5`}>
                 {/* Home View 1 */}
                 <div className="py-3 md:py-10 px-6 md:px-24">
                     {/* Departure */}
@@ -190,7 +194,7 @@ const Home = () => {
                             <i className="bi bi-bus-front text-xl basis-[10%] ps-1"></i>
                             <Select 
                                 options={[
-                                    {value: 'one-way', label: 'One-way'},
+                                    {value: 'One Way', label: 'One-way'},
                                     {value: 'round-trip', label: 'Round-trip'}
                                 ]} className='w-10/12 basis-[85%] z-10'
                                 value={travelType} onChange={(type) => setTravelType(type)}
@@ -270,13 +274,13 @@ const Home = () => {
                         <div className="basis-3/5 grid gap-x-2 gap-y-1 items-center justify-items-stretch my-2" style={{gridTemplateColumns: 'repeat(3, min-content)'}}>
                             <span className='text-md font-roboto'>FROM</span>
                             <span className='bi bi-circle-fill text-gray-200 text-xs'></span>
-                            <span className='text-favblue font-semibold font-roboto'>Yaounde</span>
+                            <span className='text-favblue font-semibold font-roboto'>{departure.value}</span>
                             <div className="grid grid-cols-subgrid col-span-3 justify-items-center">
                                 <div className="col-start-2 border border-[#DBB33C] w-0 h-6"></div>
                             </div>
                             <span className='text-md font-roboto'>TO</span>
                             <span className='bi bi-circle-fill text-gray-200 text-xs'></span>
-                            <span className='text-favblue font-semibold font-roboto'>Buea</span>
+                            <span className='text-favblue font-semibold font-roboto'>{destination.value}</span>
                         </div>
                         <div className="basis-2/5 flex items-center justify-end my-2">
                             <span className='bg-favblue rounded-lg text-white px-4 py-2 font-roboto text-md'>XAF 7500</span>
@@ -285,23 +289,23 @@ const Home = () => {
                     <div id="middle" className="py-6 md:py-6 px-4 md:px-24 grid gap-y-6 justify-between border-t border-gray-300 border-dashed" style={{gridTemplateColumns: 'repeat(3, max-content)'}}>
                         <div className="flex flex-col">
                             <p className='text-md font-roboto'>CLASS</p>
-                            <p className='text-favblue font-semibold font-roboto'>VIP</p>
+                            <p className='text-favblue font-semibold font-roboto'>{travelClass.value.toUpperCase()}</p>
                         </div>
                         <div className="flex flex-col">
                             <p className='text-md font-roboto'>TRAVEL TYPE</p>
-                            <p className='text-favblue font-semibold font-roboto'>One Way</p>
+                            <p className='text-favblue font-semibold font-roboto'>{travelType.value.toUpperCase()}</p>
                         </div>
                         <div className="flex flex-col">
                             <p className='text-md font-roboto'>TRAVEL DATE</p>
-                            <p className='text-favblue font-semibold font-roboto'>AUG 30, 2024</p>
+                            <p className='text-favblue font-semibold font-roboto'>{travelDate.format(`${mobileDisplay ? 'MMM': 'MMMM'} D, YYYY`)}</p>
                         </div>
                         <div className="flex flex-col">
                             <p className='text-md font-roboto'>TIME</p>
-                            <p className='text-favblue font-semibold font-roboto'>10:00 AM</p>
+                            <p className='text-favblue font-semibold font-roboto'>{departureTime}</p>
                         </div>
                         <div className="flex flex-col">
                             <p className='text-md font-roboto'>SEAT</p>
-                            <p className='text-favblue font-semibold font-roboto'>1 adult</p>
+                            <p className='text-favblue font-semibold font-roboto'>{seats.value} adult</p>
                         </div>
                         <div className="flex flex-col">
                             <p className='text-md font-roboto'>TARIFF</p>
@@ -329,8 +333,21 @@ const Home = () => {
                 </div>
             </ContentSwitcher>
             
-
-            <button href='/wallet' className='text-center rounded-md text-sm max-sm:text-[1rem] text-white bg-favblue py-3 w-3/4 md:w-1/5 mx-auto shadow-xl block font-roboto'>Next</button>
+            <div className={`flex justify-between ${(viewIndex !== 0) && 'w-[90%] md:w-3/5'} mx-auto`}>
+                {
+                viewIndex !== 0
+                &&
+                <button 
+                    className={`text-favblue font-roboto border border-favblue py-[7px] basis-[40%] rounded-lg hover:bg-favblue hover:text-white`}
+                    onClick={(e) => {e.preventDefault();setViewIndex(viewIndex - 1)}}
+                >Prev</button>
+                }
+                <button 
+                className={`text-center rounded-md text-sm max-sm:text-[1rem] text-white bg-favblue py-3 ${viewIndex === 0? ' basis-3/4 md:basis-1/5 mx-auto': 'basis-[40%]'} shadow-xl font-roboto`}
+                onClick={(e) => {e.preventDefault();setViewIndex(viewIndex + 1)}}
+            >Next</button>
+            </div>
+            
         </form>
         <p className="mt-10 md:mt-16 px-12 font-roboto text-[16px] md:px-16 text-red text-center">Please remember to be at our agency 45 mins before travel time!</p>
         <a href="/terms-n-conditions" className="text-favblue underline text-16 font-roboto mt-5 block text-center">Terms and Conditions</a>

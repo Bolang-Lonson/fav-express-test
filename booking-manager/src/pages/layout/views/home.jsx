@@ -58,7 +58,7 @@ const Home = () => {
         console.log(`${info.number} through ${info.mthd}`)
     }
 
-    const [viewIndex, setViewIndex] = useState(5);
+    const [viewIndex, setViewIndex] = useState(0);
     const ContentSwitcher = ({className, children}) => {
         const [currentComponent, setCurrentComponent] = useState(children[viewIndex]);
         return (

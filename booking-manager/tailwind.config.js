@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       colors: {
         favblue: '#2f3d6c',
-        favbluelight: '#eaf1fe'
+        favbluelight: '#eaf1fe',
+        red: '#ff0000',
       },
       fontFamily: {
         palanquin: ['Palanquin', 'sans-serif'],

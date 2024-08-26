@@ -115,7 +115,7 @@ const Landing = () => {
                         </a>
                     </div>
                 </div>
-                    {/* FAQ Slide */}
+                    {/* Start Slide */}
                 <div 
                     className='flex flex-col text-center items-center justify-around h-full slide'
                     ref={slides.slide_3}

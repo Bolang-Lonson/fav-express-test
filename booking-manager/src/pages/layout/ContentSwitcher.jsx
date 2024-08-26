@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 
-const ContentSwitcher = ({children}) => {
-    const [currentComponent, setCurrentComponent] = useState(children[0]);
+const ContentSwitcher = ({className, children}) => {
+    const [currentComponent, setCurrentComponent] = useState(children[1]);
 
     const handleComponentChange = (index) => {
         setCurrentComponent(children[index]);
     };
 
     return (
-        <div>
+        <div className='w-full h-full'>
             {currentComponent}
         </div>
     );

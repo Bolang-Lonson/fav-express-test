@@ -404,7 +404,7 @@ const Landing = () => {
                             </div>
                             {/* Thanks */}
                             <div className='pb-8 px-4'>
-                                <div className="flex flex-col items-center gap-10">
+                                <div className="flex flex-col items-center gap-10 lg:gap-16">
                                     <div className="bg-[#1F75FE26] w-[100px] h-[100px] lg:w-32 lg:h-32 translate-y-[35px] lg:translate-y-12 rounded-[50%] relative">
                                         <i className="bi bi-hand-thumbs-up text-favblue absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-6xl"></i>
                                     </div>

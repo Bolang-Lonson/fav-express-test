@@ -3,8 +3,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './pages/layout';
 import Home from './pages/layout/views/home';
-import Tickets from './pages/layout/views/tickets';
-import Payment from './pages/layout/views/payment';
+import Tickets, { TicketView } from './pages/layout/views/tickets';
 import Faq from './pages/layout/views/faq';
 import React, { Suspense } from 'react';
 import pMinDelay from 'p-min-delay';
@@ -35,7 +34,7 @@ function App() {
 					}
 				/>
 				<Route path='/tickets' element={<Tickets/>}/>
-				<Route path='/payment' element={<Payment/>}/>
+				<Route path='/tickets/:id' element={<TicketView/>}/>
 				<Route path='/faqs' element={<Faq/>}/>
 			</Route>
 		</Routes>

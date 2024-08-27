@@ -76,17 +76,38 @@ export const Benefits = () => {
 
 export const PaymentComplete = () => {
   return (
-	<div className="py-10 md:py-24 px-8 md:px-24 flex flex-col gap-6 lg:gap-14">
-		<div className="flex justify-center relative">
-			<img src={confetti} alt="" className='w-[150px] h-[150px] absolute' id='confetti'/>
-			<div className="rounded-[50%] bg-favblue w-[100px] h-[100px] translate-y-[35px] relative">
+	<div className="py-10 md:py-24 px-8 md:px-24 flex flex-col gap-10 lg:gap-14">
+		<div className="flex justify-center relative flex-wrap gap-4 lg:gap-6">
+			<img src={confetti} alt="" className='w-[150px] h-[150px] lg:w-48 lg:h-48 absolute' id='confetti'/>
+			<div className="rounded-[50%] bg-favblue w-[100px] h-[100px] lg:w-32 lg:h-32 translate-y-[35px] lg:translate-y-12 relative">
 				<i className="bi bi-check-lg text-white text-6xl absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"></i>
 			</div>
+			<p className="basis-full shrink-0 font-roboto text-16 mt-14 lg:text-3xl text-center">Your payment was made successfully </p>
+			<button 
+				className='basis-full shrink-0 text-center w-full md:basis-1/2 mx-auto rounded-lg text-sm text-[1rem] text-white bg-favblue py-3 font-roboto'
+			>Download Ticket</button>
 		</div>
-		<p className="font-roboto text-16 mt-14 lg:text-3xl text-center">Your payment was made successfully </p>
-		<button 
-            className='text-center w-full md:w-1/2 mx-auto rounded-lg text-sm max-sm:text-[1rem] text-white bg-favblue py-3 font-roboto'
-        >Download Ticket</button>
+		
+		<hr style={{borderColor: 'rgba(0, 0, 0, 0.5'}}/>
+		<div className="flex flex-col gap-3 items-center">
+			<p className="font-roboto text-16 lg:text-x font-medium">Payment amount</p>
+			<p className="text-xl lg:text-2xl text-favblue font-roboto font-medium">XAF 7,500</p>
+			<p className="text-md lg:text-x">{(new Date()).toUTCString()}</p>
+		</div>
+	</div>
+  )
+}
+
+export const PaymentFailed = () => {
+  return (
+	<div className="pt-10 h-[75vh] md:py-24 px-8 md:px-24 flex flex-col gap-20 text-center">
+		<div className="flex justify-center">
+			<div className="bg-[#D70040] w-[100px] h-[100px] lg:w-32 lg:h-32 translate-y-[35px] lg:translate-y-12 rounded-[50%] relative">
+				<i className="bi bi-x-lg text-white absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-6xl"></i>
+			</div>
+		</div>
+		<p className="font-roboto text-16">Sorry we couldn't process your payment</p>
+		<button className="font-medium text-favblue">Try again</button>
 	</div>
   )
 }

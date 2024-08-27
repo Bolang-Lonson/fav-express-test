@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Select from 'react-select';
 import logo from '../../../assets/VERSION 2.png';
 import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import {useMediaQuery} from 'react-responsive';
-import Payment, { Benefits, PaymentComplete } from './payment';
+import Payment, { Benefits, PaymentComplete, PaymentFailed } from './payment';
 
 dayjs.locale('en');
 
 const Home = () => {
+	const modalRef = useRef(null);
     const mobileDisplay = useMediaQuery({ query : '(max-width: 767.99px)'});
     const [timeSet, setTimeSet] = useState(0);
 
@@ -23,6 +24,7 @@ const Home = () => {
         {value: 'Yaounde', label: 'Yaounde'},
     ]
 
+    // Value states to eventually post to backend
     const [departure, setDeparture] = useState({value: 'Select Departure', label: 'Select Departure City'});
     const [destination, setDestination] = useState({value: 'Enter Destination', label: 'Select Desitination City'});
     const [seats, setSeats] = useState({value: 'Number of seats', label: 'Number of Seats'});
@@ -56,6 +58,12 @@ const Home = () => {
 
     function payHandle({...info}) {
         console.log(`${info.number} through ${info.mthd}`)
+        const modal = modalRef.current;
+        modal.showModal();
+        setTimeout(() => {
+            modal.close();
+            setViewIndex(5);
+        }, 3000)
     }
 
     const [viewIndex, setViewIndex] = useState(0);
@@ -334,9 +342,12 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            {/* Home View 5 */}
+            {/* Home View 5: Payment */}
             <Payment payHandle={payHandle}/>
+            {/* Home View 6: Payment Completed */}
             <PaymentComplete/>
+            {/* Home View 7: Payment Failed */}
+            <PaymentFailed/>
         </ContentSwitcher>
         {
         viewIndex < 3
@@ -369,7 +380,15 @@ const Home = () => {
             <a href="/terms-n-conditions" className="text-favblue underline text-16 font-roboto mt-5 block text-center">Terms and Conditions</a>
         </>
         }
-        
+        <dialog className='w-[80vw] lg:w-[30vw] p-10 rounded-2xl backdrop:bg-[#21212159]' ref={modalRef}>
+            <div className="flex flex-col items-center gap-5">
+                <div className="bg-[#1F75FE26] w-14 h-14 rounded-[50%] relative">
+                    <i className="bi bi-send absolute left-1/2 bottom-1/2 -translate-x-1/2 text-4xl translate-y-1/2 text-favblue "></i>
+                </div>
+                <p className="font-roboto text-xl text-favblue">Processing...</p>
+                <p className="text-16 font-roboto font-light text-center">Please hold on, your payment is in process</p>
+            </div>
+        </dialog>
     </div>
   )
 }

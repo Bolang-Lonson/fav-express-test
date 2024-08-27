@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import logo from '../../../assets/VERSION 2.png';
 import QR from '../../../assets/QR_Code-removebg-preview 1.png'
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Tickets = () => {
 
@@ -62,7 +62,7 @@ export default Tickets;
 
 export const TicketView = () => {
 
-	const {id} = useParams();
+	// const {id} = useParams();
 	const navigate = useNavigate();
 	const thanksModal = useRef(null);
 

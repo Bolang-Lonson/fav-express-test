@@ -133,7 +133,7 @@ const Landing = () => {
         }
     }
 
-    const [trackingNumber, setTrackingNumber] = useState(null);
+    // const [trackingNumber, setTrackingNumber] = useState('');
     const [trackingError, setTrackingError] = useState(false);
 
     return (
@@ -420,20 +420,25 @@ const Landing = () => {
                             <div className="flex flex-col items-center gap-8 py-10 px-6">
                                 <p className="font-roboto text-favblue text-xl font-medium">TRACKING NUMBER</p>
                                 <p className="text-16 font-roboto">Please Enter your Tracking Number</p>
-                                <div className="w-full flex flex-col gap-4 md:w-2/3">
+                                <form 
+                                    className="w-full flex flex-col gap-4 md:w-2/3"
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        const trackingNumber = e.target.trackingNumber.value;
+                                        if(trackingNumber){navigate(`/track/${trackingNumber}`);}
+                                        else {setTrackingError(true)}
+                                    }}
+                                >
                                     <input 
-                                        type="text" value={trackingNumber} onChange={(e) => {e.preventDefault();setTrackingNumber(e.target.value)}}
+                                        type="text" name='trackingNumber'
                                         className='w-full mx-auto border border-black rounded-lg h-10 text-center max-sm:text-sm' placeholder='Enter number'
                                     />
                                     {trackingError && <p className='text-red'>Enter a valid tracking number</p>}
                                     <button 
                                         className='text-center w-full mx-auto rounded-lg text-16 text-white bg-favblue py-3 font-roboto'
-                                        onClick={() => {
-                                            if(trackingNumber){navigate(`/track/${trackingNumber}`);}
-                                            else {setTrackingError(true)}
-                                        }}
+                                        type='submit'
                                     >Submit</button>
-                                </div>
+                                </form>
                             </div>
                             <div></div>
                         </ContentSwitcher>
@@ -492,7 +497,7 @@ export default Landing;
 export const Modal = ({reference, children, open, className}) => {
 
     return (
-        <dialog ref={reference} open={open} className={className} id='dialog'>
+        <dialog ref={reference} open={open} className={className}>
             {children}
         </dialog>
     )

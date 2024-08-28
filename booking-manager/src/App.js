@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './pages/layout';
 import Home from './pages/layout/views/home';
 import Tickets, { TicketView } from './pages/layout/views/tickets';
-import Track from './pages/landing/track';
+import Track, { TrackStatus } from './pages/landing/track';
 import Faq from './pages/layout/views/faq';
 import React, { Suspense } from 'react';
 import pMinDelay from 'p-min-delay';
@@ -30,6 +30,7 @@ function App() {
 				}
 			/>
 			<Route path='/track/:number' element={<Track/>}/>
+			<Route path='/track/:number/status' element={<TrackStatus/>}/>
 			<Route path='/' element={<Layout/>}>
 				<Route path='/home'  element={
 					<LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -39,7 +39,7 @@ const Track = () => {
 							<i className="bi bi-circle-fill text-xs"></i>
 							<div className="flex flex-col">
 								<span className="text-md text-favblue font-medium font-roboto">Parcel To</span>
-								<span className="text-md font-roboto">Yaounde (677-324-561)</span>
+								<span className="text-md font-roboto">Buea (677-324-561)</span>
 							</div>
 						</div>
 						<div className="flex flex-col justify-around">
@@ -74,7 +74,7 @@ const Track = () => {
 							<div className="w-10 h-10 rounded-[50%] bg-favblue text-white relative"><i className="bi bi-telephone absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"></i></div>
 						</div>
 					</div>
-					<div className="text-center fixed bottom-[7%] left-0 w-full">
+					<div className="text-center fixed bottom-[4%] lg:bottom-[7%] left-0 w-full">
 						<a href={`/track/${number}/status`} className="bg-favblue text-16 font-roboto text-white py-3 px-28 rounded-lg">Parcel Status</a>
 					</div>
 				</div>

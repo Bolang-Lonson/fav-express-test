@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import faqs from '../../landing/faqs.json';
-
+import '../layout.css'
 
 const Faq = () => {
 
@@ -13,7 +13,13 @@ const Faq = () => {
     });
 
     const toggleOpen = (idx) => {
-        setIsOpen({...isOpen, [idx]: !isOpen[idx]})
+        setIsOpen({
+			0: false,
+			1: false,
+			2: false,
+			3: false,
+			4: false, 
+			[idx]: !isOpen[idx]})
     }
 
 	return (

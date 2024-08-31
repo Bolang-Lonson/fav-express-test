@@ -49,19 +49,6 @@
     background-size: cover; background-position: center;
 }
 
-.faq-card {
-    scrollbar-width: none;
-}
-
-#plusbtn {
-    transform: rotate(90deg);
-    transition: transform ease 0.4s;
-}
-
-#plusbtn.bi-dash {
-    transform: rotate(0deg);
-}
-
 @media only screen and (orientation: landscape) {
     /* Styles for landscape orientation */
 }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
 import logo from '../../../assets/VERSION 2.png';
 import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
@@ -43,7 +43,7 @@ const Home = () => {
         setTimeSet(newTimeSet);
         const newSet = document.getElementById(`time${newTimeSet}`);
         if (newSet) {
-            newSet.scrollIntoView({behavior: 'smooth', inline: 'start'});
+            newSet.scrollIntoView({behavior: 'smooth', block: 'start'});
         }
     }
     const scrollLeft = (e) => {
@@ -145,22 +145,18 @@ const Home = () => {
                                 onClick={scrollLeft}
                             ></button>
                             }
-                            <div className="flex overflow-x-hidden items-center gap-[5%] w-full h-full" style={{scrollbarColor: 'transparent', scrollbarWidth: 'none'}} id='timeCase'>
+                            <div className="flex overflow-x-auto items-center gap-[5%] w-full h-full" style={{scrollbarColor: 'transparent', scrollbarWidth: 'none', scrollSnapType: 'x mandatory'}}>
                             {times.map((time, idx) => 
                                 (
                                     <div 
-                                        onClick={()=>setDepartureTime(time)} key={idx} id={`time${idx}`}
-                                        className={`${departureTime === time? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow-0 shrink-0 flex flex-col`}
+                                        onClick={(event)=> {event.stopPropagation();setDepartureTime(time)}} key={time} id={`time${idx}`}
+                                        className={`${departureTime === time? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow-0 shrink-0 flex flex-col justify-center items-center`} style={{scrollSnapAlign: 'start'}}
                                     >
-                                        <div
-                                            className='flex items-center justify-center text-center'
+                                        <p 
+                                            className={'text-favblue font-roboto font-semibold lg:text-2xl text-16'}
                                         >
-                                            <p 
-                                                className={'text-favblue font-roboto font-semibold lg:text-2xl text-16'}
-                                            >
-                                                {time}
-                                            </p>
-                                        </div>
+                                            {time}
+                                        </p>
                                         <p className='text-sm max-sm:text-xs text-center'>{Math.round((Math.random() * 70) +1) /* randomizing number of seats left*/}plc left</p>
                                     </div>
                                 )
@@ -353,18 +349,18 @@ const Home = () => {
         viewIndex < 3
         &&
         <div className={`flex justify-between ${(viewIndex !== 0) && 'w-[90%] md:w-3/5'} mx-auto`}>
-        {
-        viewIndex !== 0
-        &&
-        <button 
-            className={`text-favblue font-roboto border border-favblue py-[7px] basis-[40%] rounded-lg hover:bg-favblue hover:text-white`}
-            onClick={(e) => {e.preventDefault();setViewIndex(viewIndex - 1)}}
-        >Prev</button>
-        }
-        <button 
-            className={`text-center rounded-md text-sm max-sm:text-[1rem] text-white bg-favblue py-3 ${viewIndex === 0? ' basis-3/4 md:basis-1/5 mx-auto': 'basis-[40%]'} shadow-xl font-roboto`}
-            onClick={(e) => {e.preventDefault();setViewIndex(viewIndex + 1)}}
-        >Next</button>
+            {
+            viewIndex !== 0
+            &&
+            <button 
+                className={`text-favblue font-roboto border border-favblue py-[7px] basis-[40%] rounded-lg hover:bg-favblue hover:text-white`}
+                onClick={(e) => {e.preventDefault();setViewIndex(viewIndex - 1)}}
+            >Prev</button>
+            }
+            <button 
+                className={`text-center rounded-md text-sm max-sm:text-[1rem] text-white bg-favblue py-3 ${viewIndex === 0? ' basis-3/4 md:basis-1/5 mx-auto': 'basis-[40%]'} shadow-xl font-roboto`}
+                onClick={(e) => {e.preventDefault();setViewIndex(viewIndex + 1)}}
+            >Next</button>
         </div>
         }
         {

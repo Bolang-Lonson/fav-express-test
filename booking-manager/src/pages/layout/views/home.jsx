@@ -53,6 +53,7 @@ const Home = () => {
     const [departureTime, setDepartureTime] = useState('');
     const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00'] // these times will be changed through the admin and fetched from the backend
     useEffect(() => {
+        console.log(travelData.departure.id);
         (async function() {
             const resp = await axios.get(
                 'https://valiant-wholeness-production.up.railway.app/api/v1/trips/filter/',

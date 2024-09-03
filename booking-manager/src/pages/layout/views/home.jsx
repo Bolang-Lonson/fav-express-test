@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
+import axios from 'axios'
 import logo from '../../../assets/VERSION 2.png';
 import { DatePicker, MobileDatePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
@@ -9,6 +10,19 @@ import Payment, { Benefits, PaymentComplete, PaymentFailed } from './payment';
 dayjs.locale('en');
 
 const Home = () => {
+    // Loading locations for departure and desination
+    useEffect(() => {
+        const getLocations = async () => {
+            const resp = await axios.get('https://valiant-wholeness-production.up.railway.app/api/v1/towns/');
+            const locationArray = resp.data.results;
+            const active = locationArray.filter((loc) => loc.is_active);
+            setLocations(active.map((loc) => {
+                return {name: loc.slug, label: loc.name, id: loc.id}
+            }));
+        }
+        getLocations();        
+    }, []);
+
 	const modalRef = useRef(null);
     const mobileDisplay = useMediaQuery({ query : '(max-width: 767.99px)'});
     const [timeSet, setTimeSet] = useState(0);
@@ -17,14 +31,17 @@ const Home = () => {
     const [travelDate, setTravelDate] = useState(new dayjs());
 
     // agency locations
-    const options = [
-        {value: 'Buea', label: 'Buea'},
-        {value: 'Limbe', label: 'Limbe'},
-        {value: 'Douala', label: 'Douala'},
-        {value: 'Yaounde', label: 'Yaounde'},
-    ]
+    const [locations, setLocations] = useState([]);
 
     // Value states to eventually post to backend
+    const [travelData, setTravelData] = useState({
+        departure: {value: 'Select Departure', label: 'Select Departure City'},
+        destination: {value: 'Enter Destination', label: 'Select Desitination City'},
+        travelDate: new dayjs(),
+        seats: {value: 'Number of seats', label: 'Number of Seats'},
+        travelType: {value: 'Travel Type', label: 'Select Travel Type'},
+        travelClass: {value: 'Travel Class', label: 'Select Travel Class'},
+    })
     const [departure, setDeparture] = useState({value: 'Select Departure', label: 'Select Departure City'});
     const [destination, setDestination] = useState({value: 'Enter Destination', label: 'Select Desitination City'});
     const [seats, setSeats] = useState({value: 'Number of seats', label: 'Number of Seats'});
@@ -35,7 +52,21 @@ const Home = () => {
     // departure time logic
     const [departureTime, setDepartureTime] = useState('');
     const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00'] // these times will be changed through the admin and fetched from the backend
-
+    useEffect(() => {
+        (async function() {
+            const resp = await axios.get(
+                'https://valiant-wholeness-production.up.railway.app/api/v1/trips/filter/',
+                {
+                    params: {
+                        origin: travelData.departure.id,
+                        destination: travelData.destination.id,
+                        date: travelData.travelDate.format('YYYY-MM-DD'),
+                    }
+                }
+            );
+            console.log(resp.data);
+        })();
+    },[travelData.departure, travelData.destination, travelData.travelDate])
 
     const scrollRight = (e) => {
         e.preventDefault();
@@ -86,8 +117,8 @@ const Home = () => {
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle-fill text-[8px] basis-[10%] ps-1"></i>
                         <Select 
-                            options={options} className='w-10/12 basis-[85%] z-20'
-                            value={departure} onChange={(dep) => setDeparture(dep)}
+                            options={locations} className='w-10/12 basis-[85%] z-20'
+                            value={travelData.departure} onChange={(dep) => setTravelData({...travelData, departure: dep})}
                         />
                     </div>
                 </div>
@@ -100,16 +131,17 @@ const Home = () => {
                             onClick={(e) => {
                                 // Swapping departure and destination values
                                 e.preventDefault();
-                                setDeparture(destination);
-                                setDestination(departure);
+                                const des = travelData.destination;
+                                const dep = travelData.departure;
+                                setTravelData({...travelData, departure: des, destination: dep})
                             }}
                         ></button>
                     </label>
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle text-[8px] basis-[10%] ps-1"></i>
                         <Select 
-                            options={options} className='w-10/12 basis-[85%] z-10'
-                            value={destination} onChange={(des) => setDestination(des)}
+                            options={locations} className='w-10/12 basis-[85%] z-10'
+                            value={travelData.destination} onChange={(des) => setTravelData({...travelData, destination: des})}
                         />
                     </div>
                 </div>
@@ -121,12 +153,12 @@ const Home = () => {
                         {
                         mobileDisplay?
                         <MobileDatePicker 
-                            value={travelDate} onChange={(newDate) => setTravelDate(newDate)}
+                            value={travelData.travelDate} onChange={(newDate) => setTravelData({...travelData, travelDate: newDate})}
                             className='basis-[85%] text-center' label='Choose Date'
                         />
                         :
                         <DatePicker 
-                            value={travelDate} onChange={(newDate) => setTravelDate(newDate)}
+                            value={travelData.travelDate} onChange={(newDate) => setTravelData({...travelData, travelDate: newDate})}
                             className='basis-[85%] text-center' label='Choose Date'
                         />
                         }

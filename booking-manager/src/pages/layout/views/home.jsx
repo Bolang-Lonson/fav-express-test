@@ -219,7 +219,7 @@ const Home = () => {
                                 {value: 2, label: 2},
                                 {value: 3, label: 3},
                             ]} className='w-10/12 basis-[85%] z-20'
-                            value={seats} onChange={(num) => setSeats(num)}
+                            value={travelData.seats} onChange={(num) => setTravelData({...travelData, seats: num})}
                         />
                     </div>
                 </div>
@@ -233,7 +233,7 @@ const Home = () => {
                                 {value: 'One Way', label: 'One-way'},
                                 {value: 'round-trip', label: 'Round-trip'}
                             ]} className='w-10/12 basis-[85%] z-10'
-                            value={travelType} onChange={(type) => setTravelType(type)}
+                            value={travelData.travelType} onChange={(type) => setTravelData({...travelData, travelType: type})}
                         />
                     </div>
                 </div>
@@ -247,7 +247,7 @@ const Home = () => {
                                 {value: 'classic', label: 'Classic'},
                                 {value: 'vip', label: 'VIP'},
                             ]} className='w-10/12 basis-[85%]'
-                            value={travelClass} onChange={(cl) => setTravelClass(cl)}
+                            value={travelData.travelClass} onChange={(cl) => setTravelData({...travelData, travelClass: cl})}
                         />
                     </div>
                 </div>

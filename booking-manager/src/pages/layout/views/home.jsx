@@ -10,17 +10,32 @@ import Payment, { Benefits, PaymentComplete, PaymentFailed } from './payment';
 dayjs.locale('en');
 
 const Home = () => {
+    const [networkError, setNetworkError] = useState(false);
     // Loading locations for departure and desination
     useEffect(() => {
-        const getLocations = async () => {
-            const resp = await axios.get('https://valiant-wholeness-production.up.railway.app/api/v1/towns/');
-            const locationArray = resp.data.results;
-            const active = locationArray.filter((loc) => loc.is_active);
-            setLocations(active.map((loc) => {
-                return {name: loc.slug, label: loc.name, id: loc.id}
-            }));
-        }
-        getLocations();        
+        (async () => {
+            try {
+                const resp = await axios.get('https://valiant-wholeness-production.up.railway.app/api/v1/towns/');
+                const locationArray = resp.data.results;
+                const active = locationArray.filter((loc) => loc.is_active);
+                setNetworkError(false);
+                setLocations(active.map((loc) => {
+                    return {name: loc.slug, label: loc.name, id: loc.id}
+                }));
+            } catch (error) {
+                if (error.response) {
+                  // The request was made and the server responded with a status code outside the 2xx range
+                  console.error('Error Response:', error.response.data);
+                } else if (error.request) {
+                  // The request was made but no response was received (network error)
+                  setNetworkError(true);
+                  console.error('Network Error:', error.request);
+                } else {
+                  // Something happened in setting up the request that triggered an Error
+                  console.error('Error:', error.message);
+                }
+            }
+        })()     
     }, []);
 
 	const modalRef = useRef(null);
@@ -28,7 +43,7 @@ const Home = () => {
     const [timeSet, setTimeSet] = useState(0);
 
     // react date-picker logic
-    const [travelDate, setTravelDate] = useState(new dayjs());
+    const [payAmt, setPayAmt] = useState(0);
 
     // agency locations
     const [locations, setLocations] = useState([]);
@@ -37,35 +52,51 @@ const Home = () => {
     const [travelData, setTravelData] = useState({
         departure: {value: 'Select Departure', label: 'Select Departure City'},
         destination: {value: 'Enter Destination', label: 'Select Desitination City'},
+        trip: {departure_time: '', route: {base_price: 7000}},
         travelDate: new dayjs(),
-        seats: {value: 'Number of seats', label: 'Number of Seats'},
-        travelType: {value: 'Travel Type', label: 'Select Travel Type'},
-        travelClass: {value: 'Travel Class', label: 'Select Travel Class'},
+        seats: {value: 1, label: 1},
+        travelType: {value: 'One Way', label: 'One-way'},
+        travelClass: {value: 'classic', label: 'Classic'},
     })
-    const [departure, setDeparture] = useState({value: 'Select Departure', label: 'Select Departure City'});
-    const [destination, setDestination] = useState({value: 'Enter Destination', label: 'Select Desitination City'});
-    const [seats, setSeats] = useState({value: 'Number of seats', label: 'Number of Seats'});
-    const [travelType, setTravelType] = useState({value: 'Travel Type', label: 'Select Travel Type'});
-    const [travelClass, setTravelClass] = useState({value: 'Travel Class', label: 'Select Travel Class'});
 
+    // user details
+    const [userDetails, setUserDetails] = useState({
+        surname: '',
+        givenName: '',
+        id_number: null,
+        mobile_number: null
+    });
 
     // departure time logic
-    const [departureTime, setDepartureTime] = useState('');
-    const times = ['07:00', '10:00', '13:00', '16:00', '19:00', '22:00'] // these times will be changed through the admin and fetched from the backend
+    const [trips, setTrips] = useState([]); // these times will be changed through the admin and fetched from the backend
     useEffect(() => {
-        console.log(travelData.departure.id);
-        (async function() {
-            const resp = await axios.get(
-                'https://valiant-wholeness-production.up.railway.app/api/v1/trips/filter/',
-                {
-                    params: {
-                        origin: travelData.departure.id,
-                        destination: travelData.destination.id,
-                        date: travelData.travelDate.format('YYYY-MM-DD'),
+        (async () => {
+            try {
+                const resp = await axios.get(
+                    'https://valiant-wholeness-production.up.railway.app/api/v1/trips/filter/',
+                    {
+                        params: {
+                            origin: travelData.departure.id,
+                            destination: travelData.destination.id,
+                            date: travelData.travelDate.format('YYYY-MM-DD'),
+                        }
                     }
+                );
+                setNetworkError(false);
+                setTrips(resp.data);
+            } catch (error) {
+                if (error.response) {
+                  // The request was made and the server responded with a status code outside the 2xx range
+                  console.error('Error Response:', error.response.data);
+                } else if (error.request) {
+                  // The request was made but no response was received (network error)
+                setNetworkError(true);
+                  console.error('Network Error:', error.request);
+                } else {
+                  // Something happened in setting up the request that triggered an Error
+                  console.error('Error:', error.message);
                 }
-            );
-            console.log(resp.data);
+            }
         })();
     },[travelData.departure, travelData.destination, travelData.travelDate])
 
@@ -167,7 +198,7 @@ const Home = () => {
                 </div>
                 {/* Time */}
                 <div className="form-group flex flex-col w-full mb-4">
-                    <label htmlFor="" className='text-sm font-semibold font-roboto float-start mb-2'>Time</label>
+                    <label htmlFor="" className='text-sm font-semibold font-roboto float-start mb-2'>Time {networkError && <span className="float-end text-red">Network Error!. Please make sure you're connected to the internet</span>}</label>
                     <div className="flex px-0 items-center justify-between w-full">
                         <i className="bi bi-clock text-xl ps-1 basis-[10%]"></i>
                         <div className="basis-[85%] relative items-center">
@@ -179,24 +210,24 @@ const Home = () => {
                             ></button>
                             }
                             <div className="flex overflow-x-auto items-center gap-[5%] w-full h-full" style={{scrollbarColor: 'transparent', scrollbarWidth: 'none', scrollSnapType: 'x mandatory'}}>
-                            {times.map((time, idx) => 
+                            {trips.map((trip, idx) => 
                                 (
                                     <div 
-                                        onClick={(event)=> {event.stopPropagation();setDepartureTime(time)}} key={time} id={`time${idx}`}
-                                        className={`${departureTime === time? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow-0 shrink-0 flex flex-col justify-center items-center`} style={{scrollSnapAlign: 'start'}}
+                                        onClick={(event)=> {event.stopPropagation();setTravelData({...travelData, trip: trip})}} key={trip.id} id={`time${idx}`}
+                                        className={`${travelData.trip["departure_time"] === trip["departure_time"]? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow-0 shrink-0 flex flex-col justify-center items-center`} style={{scrollSnapAlign: 'start'}}
                                     >
                                         <p 
                                             className={'text-favblue font-roboto font-semibold lg:text-2xl text-16'}
                                         >
-                                            {time}
+                                            {trip["departure_time"].substring(0, 5)}
                                         </p>
-                                        <p className='text-sm max-sm:text-xs text-center'>{Math.round((Math.random() * 70) +1) /* randomizing number of seats left*/}plc left</p>
+                                        <p className='text-sm max-sm:text-xs text-center'>{trip["available_seats"]}plc left</p>
                                     </div>
                                 )
                             )}
                             </div>
                             {
-                            times.length - timeSet > 3
+                            trips.length - timeSet > 3
                             &&
                             <button id="scroll-right" className='bi bi-chevron-right rounded-[50%] text-favblue bg-favbluelight px-1 absolute right-0 translate-x-[50%] top-1/2 -translate-y-1/2'
                                 onClick={scrollRight}
@@ -263,7 +294,7 @@ const Home = () => {
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle-fill text-[8px] basis-[10%] ps-1"></i>
                         <input 
-                            type="text" placeholder='Surname' id='surname'
+                            type="text" placeholder='Surname' id='surname' 
                             className='border-2 border-gray-200 w-full basis-[90%] h-10 rounded-lg ps-4'
                         />
                     </div>
@@ -293,7 +324,7 @@ const Home = () => {
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle text-[8px] basis-[10%] ps-1"></i>
                         <input 
-                            type="text" placeholder='Number' id='number'
+                            type="text" placeholder='Number' id='mobile'
                             className='border-2 border-gray-200 w-full basis-[90%] h-10 rounded-lg ps-4'
                         />
                     </div>
@@ -310,42 +341,42 @@ const Home = () => {
                     <div className="basis-3/5 grid gap-x-2 gap-y-1 items-center justify-items-stretch my-2" style={{gridTemplateColumns: 'repeat(3, min-content)'}}>
                         <span className='text-md font-roboto'>FROM</span>
                         <span className='bi bi-circle-fill text-gray-200 text-xs'></span>
-                        <span className='text-favblue font-semibold font-roboto'>{departure.value}</span>
+                        <span className='text-favblue font-semibold font-roboto'>{travelData.departure.label}</span>
                         <div className="grid grid-cols-subgrid col-span-3 justify-items-center">
                             <div className="col-start-2 border border-[#DBB33C] w-0 h-6"></div>
                         </div>
                         <span className='text-md font-roboto'>TO</span>
                         <span className='bi bi-circle-fill text-gray-200 text-xs'></span>
-                        <span className='text-favblue font-semibold font-roboto'>{destination.value}</span>
+                        <span className='text-favblue font-semibold font-roboto'>{travelData.destination.label}</span>
                     </div>
                     <div className="basis-2/5 flex items-center justify-end my-2">
-                        <span className='bg-favblue rounded-lg text-white px-4 py-2 font-roboto text-md'>XAF 7500</span>
+                        <span className='bg-favblue rounded-lg text-white px-4 py-2 font-roboto text-md'>XAF {payAmt - 500}</span>
                     </div>
                 </div>
                 <div id="middle" className="py-6 md:py-6 px-4 md:px-24 grid gap-y-6 justify-between border-t border-gray-300 border-dashed" style={{gridTemplateColumns: 'repeat(3, max-content)'}}>
                     <div className="flex flex-col">
                         <p className='text-md font-roboto'>CLASS</p>
-                        <p className='text-favblue font-semibold font-roboto'>{travelClass.value.toUpperCase()}</p>
+                        <p className='text-favblue font-semibold font-roboto'>{travelData.travelClass.value.toUpperCase()}</p>
                     </div>
                     <div className="flex flex-col">
                         <p className='text-md font-roboto'>TRAVEL TYPE</p>
-                        <p className='text-favblue font-semibold font-roboto'>{travelType.value.toUpperCase()}</p>
+                        <p className='text-favblue font-semibold font-roboto'>{travelData.travelType.value.toUpperCase()}</p>
                     </div>
                     <div className="flex flex-col">
                         <p className='text-md font-roboto'>TRAVEL DATE</p>
-                        <p className='text-favblue font-semibold font-roboto'>{travelDate.format(`${mobileDisplay ? 'MMM': 'MMMM'} D, YYYY`)}</p>
+                        <p className='text-favblue font-semibold font-roboto'>{travelData.travelDate.format(`${mobileDisplay ? 'MMM': 'MMMM'} D, YYYY`)}</p>
                     </div>
                     <div className="flex flex-col">
                         <p className='text-md font-roboto'>TIME</p>
-                        <p className='text-favblue font-semibold font-roboto'>{departureTime}</p>
+                        <p className='text-favblue font-semibold font-roboto'>{travelData.trip["departure_time"].substring(0, 5)}</p>
                     </div>
                     <div className="flex flex-col">
                         <p className='text-md font-roboto'>SEAT</p>
-                        <p className='text-favblue font-semibold font-roboto'>{seats.value} adult</p>
+                        <p className='text-favblue font-semibold font-roboto'>{travelData.seats.value} adult</p>
                     </div>
                     <div className="flex flex-col">
                         <p className='text-md font-roboto'>TARIFF</p>
-                        <p className='text-favblue font-semibold font-roboto'>XAF 7,000</p>
+                        <p className='text-favblue font-semibold font-roboto'>XAF {payAmt - 500}</p>
                     </div>
                 </div>
                 <div id="bottom" className='py-3 md:py-6 px-4 md:px-24 border-t border-gray-300 border-dashed'>
@@ -359,7 +390,7 @@ const Home = () => {
                     </div>
                     <div className="flex items-center justify-between mb-2">
                         <p className='text-md font-roboto'>TOTAL PAYMENT</p>
-                        <p className='text-favblue font-semibold font-roboto'>XAF 7500</p>
+                        <p className='text-favblue font-semibold font-roboto'>XAF {payAmt}</p>
                     </div>
                     <div className="flex items-center justify-between mt-6">
                         <button className='text-favblue font-roboto border border-favblue py-[7px] rounded-lg hover:bg-favblue hover:text-white basis-[45%]'
@@ -392,7 +423,24 @@ const Home = () => {
             }
             <button 
                 className={`text-center rounded-md text-sm max-sm:text-[1rem] text-white bg-favblue py-3 ${viewIndex === 0? ' basis-3/4 md:basis-1/5 mx-auto': 'basis-[40%]'} shadow-xl font-roboto`}
-                onClick={(e) => {e.preventDefault();setViewIndex(viewIndex + 1)}}
+                onClick={(e) => {
+                    e.preventDefault();
+                    if(viewIndex === 2){
+                        const surNm = document.getElementById('surname');
+                        const givNm = document.getElementById('givenName');
+                        const idNum = document.getElementById('identity');
+                        const mobNum = document.getElementById('mobile');
+
+                        setUserDetails({...userDetails, surname: surNm.value, givenName: givNm.value, id_number: idNum.value, mobile_number: mobNum.value});
+
+                        switch (travelData.travelClass.value) {
+                            case 'classic': setPayAmt(travelData.seats.value * Number(travelData.trip.route.base_price) + 500); break;
+                            case 'vip': setPayAmt(travelData.seats.value * Number(travelData.trip.route.vip_price) + 500); break;
+                            default: break
+                        }
+                    }
+                    setViewIndex(viewIndex + 1);
+                }}
             >Next</button>
         </div>
         }

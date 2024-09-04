@@ -14,3 +14,25 @@ body {
 	min-height: 100vh;
 	@apply flex w-full
 }
+
+.sidebar-links {
+    @apply
+    w-full flex flex-col items-center text-white gap-3 overflow-y-auto
+}
+
+.sidebar-links li {
+    @apply text-x w-[85%]
+}
+
+.side-link {
+    @apply py-2 px-4 w-full flex gap-4 items-center hover:bg-[#00000040] hover:border-s-4 hover:px-3 border-blue-600 font-medium font-poppins
+}
+
+.side-link.active {
+    @apply bg-[#00000040] border-s-4 px-3
+}
+
+.logout {
+    @apply mt-auto bg-[#E22134] text-white font-poppins text-x w-[85%]
+    py-3
+}

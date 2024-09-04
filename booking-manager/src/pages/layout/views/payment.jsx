@@ -101,7 +101,7 @@ export const PaymentComplete = () => {
   )
 }
 
-export const PaymentFailed = () => {
+export const PaymentFailed = ({tryAgain}) => {
   return (
 	<div className="pt-10 h-[75vh] md:py-24 px-8 md:px-24 flex flex-col gap-20 text-center">
 		<div className="flex justify-center">
@@ -110,7 +110,7 @@ export const PaymentFailed = () => {
 			</div>
 		</div>
 		<p className="font-roboto text-16">Sorry we couldn't process your payment</p>
-		<button className="font-medium text-favblue">Try again</button>
+		<button className="font-medium text-favblue" onClick={tryAgain}>Try again</button>
 	</div>
   )
 }

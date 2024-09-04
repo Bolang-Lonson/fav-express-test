@@ -119,14 +119,54 @@ const Home = () => {
         }
     }
 
-    function payHandle({...info}) {
+    async function payHandle({...info}) {
         console.log(`${info.number} through ${info.mthd}`)
         const modal = modalRef.current;
         modal.showModal();
-        setTimeout(() => {
-            modal.close();
-            setViewIndex(5);
-        }, 3000)
+
+        let finalPage;
+        try {
+            await axios.post('http://valiant-wholeness-production.up.railway.app/api/v1/bookings/', {
+                "customer_info": {
+                    "identification": userDetails.id_number,
+                    "phone_number": userDetails.mobile_number,
+                    "username": `${userDetails.givenName} ${userDetails.surname}`
+                },
+                "seats": travelData.seats.value,
+                "status": "confirmed",
+                "is_round_trip": (travelData.travelType.value === 'round-trip'),
+                "is_deleted": false,
+                "slug": "ilSycrIIpNpEJgggVVP7um0pbAuYNZ9TuiZqk",
+                "service_type": travelData.travelClass.value,
+                "trip": 1
+            },
+            { 
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'User-Agent': 'Thunder Client (https://www.thunderclient.com)'
+                }
+            });
+            
+            finalPage = 5;  // Payment complete
+        } catch (error) {
+            finalPage = 6;  //  Payment failed
+            if (error.response) {
+              // The request was made and the server responded with a status code outside the 2xx range
+              console.error('Error Response:', error.response.data);
+            } else if (error.request) {
+              // The request was made but no response was received (network error)
+              console.error('Network Error:', error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.error('Error:', error.message);
+            }
+        } finally {
+            setTimeout(() => {
+                modal.close();
+                setViewIndex(finalPage);
+            }, 3000);
+        }
     }
 
     const [viewIndex, setViewIndex] = useState(0);
@@ -407,7 +447,7 @@ const Home = () => {
             {/* Home View 6: Payment Completed */}
             <PaymentComplete/>
             {/* Home View 7: Payment Failed */}
-            <PaymentFailed/>
+            <PaymentFailed tryAgain={() => setViewIndex(4)}/>
         </ContentSwitcher>
         {
         viewIndex < 3

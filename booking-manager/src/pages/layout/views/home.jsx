@@ -346,7 +346,7 @@ const Home = () => {
                         <i className="bi bi-stars text-xl basis-[10%] ps-1"></i>
                         <Select 
                             options={[
-                                {value: 'classic', label: 'Classic'},
+                                {value: 'standard', label: 'Classic'},
                                 {value: 'vip', label: 'VIP'},
                             ]} className='w-10/12 basis-[85%]'
                             value={travelData.travelClass} onChange={(cl) => setTravelData({...travelData, travelClass: cl})}

@@ -56,7 +56,7 @@ const Home = () => {
         travelDate: new dayjs(),
         seats: {value: 1, label: 1},
         travelType: {value: 'One Way', label: 'One-way'},
-        travelClass: {value: 'classic', label: 'Classic'},
+        travelClass: {value: 'standard', label: 'Classic'},
     })
 
     // user details
@@ -126,27 +126,55 @@ const Home = () => {
 
         let finalPage;
         try {
-            await axios.post('http://valiant-wholeness-production.up.railway.app/api/v1/bookings/', {
+            const resp = await axios.post('https://valiant-wholeness-production.up.railway.app/api/v1/booking-with-payment/',
+            {
                 "customer_info": {
                     "identification": userDetails.id_number,
                     "phone_number": userDetails.mobile_number,
-                    "username": `${userDetails.givenName} ${userDetails.surname}`
+                    "username": `${userDetails.givenName.replace(' ', '')}${userDetails.surname.replace(' ', '')}`
+                },
+                "payment": {
+                    "amount": payAmt,
+                    "provider": info.mthd,
+                    "payer_name": "Saadiq",
+                    "payer_phone": info.number
                 },
                 "seats": travelData.seats.value,
                 "status": "confirmed",
                 "is_round_trip": (travelData.travelType.value === 'round-trip'),
-                "is_deleted": false,
-                "slug": "ilSycrIIpNpEJgggVVP7um0pbAuYNZ9TuiZqk",
                 "service_type": travelData.travelClass.value,
-                "trip": 1
-            },
-            { 
+                "trip": travelData.trip['id']
+            }
+            , 
+            {
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'User-Agent': 'Thunder Client (https://www.thunderclient.com)'
+                    "Content-Type": "application/json",
                 }
             });
+
+            // saving ticket data in local storage
+            const payDetails = resp.data.payment;
+            const ticketData = {
+                "from": travelData.trip.route['origin'],
+                "to": travelData.trip.route['destination'],
+                "trip_date": travelData.travelDate,
+                "trip_time": travelData.trip.departure_time,
+                "id": payDetails['transaction_id'],
+                "amount": payDetails['amount'],
+                "payment_time": payDetails['payment_time'],
+                "class": travelData.travelClass.label,
+                "seats": travelData.seats.value,
+            }
+            let tickets = localStorage.getItem("tickets");
+            // checking if tickets already exist in local storage
+            if (tickets){
+                const ticketArr = JSON.parse(tickets);
+                ticketArr.push(ticketData);
+                localStorage.setItem("tickets", JSON.stringify(tickets));
+            } else {
+                tickets = JSON.stringify([ticketData]);
+                localStorage.setItem("tickets", tickets);
+            }
             
             finalPage = 5;  // Payment complete
         } catch (error) {
@@ -169,7 +197,7 @@ const Home = () => {
         }
     }
 
-    const [viewIndex, setViewIndex] = useState(0);
+    const [viewIndex, setViewIndex] = useState(sessionStorage.getItem("viewIndex") || 0);
     const ContentSwitcher = ({className, children}) => {
         const [currentComponent, setCurrentComponent] = useState(children[viewIndex]);
         return (
@@ -177,7 +205,10 @@ const Home = () => {
                 {currentComponent}
             </div>
         );
-    }
+    };
+
+    useEffect(() => sessionStorage.setItem("viewIndex", viewIndex.toString()), [viewIndex]);
+
   return (
     <div className='pb-32 pt-[5.5rem] md:pt-28'>
         <ContentSwitcher className={`w-[90%] ${viewIndex === 3 && 'overflow-hidden'} mx-auto bg-white rounded-xl md:shadow mb-10 md:mb-16 md:w-3/5`}>
@@ -334,7 +365,7 @@ const Home = () => {
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle-fill text-[8px] basis-[10%] ps-1"></i>
                         <input 
-                            type="text" placeholder='Surname' id='surname' 
+                            type="text" placeholder='Surname' id='surname' defaultValue={userDetails.surname}
                             className='border-2 border-gray-200 w-full basis-[90%] h-10 rounded-lg ps-4'
                         />
                     </div>
@@ -344,7 +375,7 @@ const Home = () => {
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle text-[8px] basis-[10%] ps-1"></i>
                         <input 
-                            type="text" placeholder='Given Names' id='givenName'
+                            type="text" placeholder='Given Names' id='givenName' defaultValue={userDetails.givenName}
                             className='border-2 border-gray-200 w-full basis-[90%] h-10 rounded-lg ps-4'
                         />
                     </div>
@@ -354,7 +385,7 @@ const Home = () => {
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle-fill text-[8px] basis-[10%] ps-1"></i>
                         <input 
-                            type="text" placeholder='Identity' id='identity'
+                            type="text" placeholder='Identity' id='identity' defaultValue={userDetails.id_number}
                             className='border-2 border-gray-200 w-full basis-[90%] h-10 rounded-lg ps-4'
                         />
                     </div>
@@ -364,7 +395,7 @@ const Home = () => {
                     <div className="flex justify-between px-0 items-center">
                         <i className="bi bi-circle text-[8px] basis-[10%] ps-1"></i>
                         <input 
-                            type="text" placeholder='Number' id='mobile'
+                            type="text" placeholder='Number' id='mobile' defaultValue={userDetails.mobile_number}
                             className='border-2 border-gray-200 w-full basis-[90%] h-10 rounded-lg ps-4'
                         />
                     </div>
@@ -396,7 +427,7 @@ const Home = () => {
                 <div id="middle" className="py-6 md:py-6 px-4 md:px-24 grid gap-y-6 justify-between border-t border-gray-300 border-dashed" style={{gridTemplateColumns: 'repeat(3, max-content)'}}>
                     <div className="flex flex-col">
                         <p className='text-md font-roboto'>CLASS</p>
-                        <p className='text-favblue font-semibold font-roboto'>{travelData.travelClass.value.toUpperCase()}</p>
+                        <p className='text-favblue font-semibold font-roboto'>{travelData.travelClass.label.toUpperCase()}</p>
                     </div>
                     <div className="flex flex-col">
                         <p className='text-md font-roboto'>TRAVEL TYPE</p>
@@ -443,9 +474,9 @@ const Home = () => {
                 </div>
             </div>
             {/* Home View 5: Payment */}
-            <Payment payHandle={payHandle}/>
+            <Payment payHandle={payHandle} cancel={() => setViewIndex(3)}/>
             {/* Home View 6: Payment Completed */}
-            <PaymentComplete/>
+            <PaymentComplete reset={() => setViewIndex(0)}/>
             {/* Home View 7: Payment Failed */}
             <PaymentFailed tryAgain={() => setViewIndex(4)}/>
         </ContentSwitcher>
@@ -474,7 +505,7 @@ const Home = () => {
                         setUserDetails({...userDetails, surname: surNm.value, givenName: givNm.value, id_number: idNum.value, mobile_number: mobNum.value});
 
                         switch (travelData.travelClass.value) {
-                            case 'classic': setPayAmt(travelData.seats.value * Number(travelData.trip.route.base_price) + 500); break;
+                            case 'standard': setPayAmt(travelData.seats.value * Number(travelData.trip.route.base_price) + 500); break;
                             case 'vip': setPayAmt(travelData.seats.value * Number(travelData.trip.route.vip_price) + 500); break;
                             default: break
                         }

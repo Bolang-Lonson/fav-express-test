@@ -7,7 +7,7 @@ import mtn from '../../../assets/mtn_logo-removebg-preview 1.png';
 import orange from '../../../assets/orange_money-removebg-preview 1.png';
 import confetti from '../../../assets/festive confetti.png';
 
-const Payment = ({payHandle}) => {
+const Payment = ({payHandle, cancel}) => {
 	const [payMthd, setPayMethod] = useState('');
 	const [momoNum, setMomoNum] = useState('');
 
@@ -48,6 +48,10 @@ const Payment = ({payHandle}) => {
                 className='text-center w-full md:w-1/2 mx-auto rounded-lg text-sm max-sm:text-[1rem] text-white bg-favblue py-3 font-roboto'
                 onClick={launchPayment}
             >Make Payment</button>
+			<button 
+                className={`text-favblue font-roboto border md:-translate-y-8 border-favblue py-[7px] w-full md:w-1/3 mx-auto rounded-lg hover:bg-favblue hover:text-white`}
+                onClick={cancel}
+            >Cancel</button>
 		</div>
 	)
 }
@@ -74,7 +78,7 @@ export const Benefits = () => {
 }
 
 
-export const PaymentComplete = () => {
+export const PaymentComplete = ({reset}) => {
 	const navigate = useNavigate();
 
   return (
@@ -87,7 +91,7 @@ export const PaymentComplete = () => {
 			<p className="basis-full shrink-0 font-roboto text-16 mt-14 lg:text-3xl text-center">Your payment was made successfully </p>
 			<button 
 				className='basis-full shrink-0 text-center w-full md:basis-1/2 mx-auto rounded-lg text-[1rem] text-white bg-favblue py-3 font-roboto'
-				onClick={() => navigate('/tickets')}
+				onClick={() => {reset();navigate('/tickets')}}
 			>Download Ticket</button>
 		</div>
 		

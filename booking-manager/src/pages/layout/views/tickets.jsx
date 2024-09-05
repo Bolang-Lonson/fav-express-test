@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import logo from '../../../assets/VERSION 2.png';
 import QR from '../../../assets/QR_Code-removebg-preview 1.png'
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+import {useMediaQuery} from 'react-responsive';
 
-const Tickets = () => {
+const Tickets = ({tickets}) => {
 
-  const tickets = [1, 2, 3];
-  const navigate = useNavigate();
+	const navigate = useNavigate();
 
   return (
     <div className='pb-32 pt-[5.5rem] md:pt-28'>
@@ -27,26 +29,26 @@ const Tickets = () => {
 						<div className="basis-3/5 grid gap-x-2 gap-y-1 items-center justify-items-stretch my-2" style={{gridTemplateColumns: 'repeat(3, min-content)'}}>
 							<span className='text-md font-roboto'>FROM</span>
 							<span className='bi bi-circle-fill text-gray-200 text-xs'></span>
-							<span className='text-favblue font-semibold font-roboto'>Yaounde</span>
+							<span className='text-favblue font-semibold font-roboto'>{ticket.from.name}</span>
 							<div className="grid grid-cols-subgrid col-span-3 justify-items-center">
 								<div className="col-start-2 border border-[#DBB33C] w-0 h-6"></div>
 							</div>
 							<span className='text-md font-roboto'>TO</span>
 							<span className='bi bi-circle-fill text-gray-200 text-xs'></span>
-							<span className='text-favblue font-semibold font-roboto'>Buea</span>
+							<span className='text-favblue font-semibold font-roboto'>{ticket.to.name}</span>
 						</div>
 						<div className="basis-2/5 flex items-center justify-end my-2">
-							<span className='bg-favblue rounded-lg text-white px-4 py-2 font-roboto text-md'>XAF 7500</span>
+							<span className='bg-favblue rounded-lg text-white px-4 py-2 font-roboto text-md'>XAF {ticket['amount']}</span>
 						</div>
 					</div>
 					<div className="border-t border-dashed border-black py-3 px-5 md:py-6 md:px-24 flex items-center justify-between">
 						<div>
 							<i className="bi bi-calendar4-event text-[#DBB33C] me-3 lg:me-4"></i>
-							<span className='text-md font-extralight font-roboto'>{(new Date()).toLocaleDateString()}</span>
+							<span className='text-md font-extralight font-roboto'>{(new Date(ticket['payment_time'])).toLocaleDateString()}</span>
 						</div>
 						<div>
 							<i className="bi bi-clock text-[#DBB33C] me-3 lg:me-4"></i>
-							<span className='text-md font-extralight font-roboto'>{(new Date()).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', hour12: false })}H</span>
+							<span className='text-md font-extralight font-roboto'>{(new Date(ticket['payment_time'])).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', hour12: false })}H</span>
 						</div>
 					</div>
 				</div>
@@ -60,9 +62,12 @@ const Tickets = () => {
 export default Tickets;
 
 
-export const TicketView = () => {
+export const TicketView = ({tickets}) => {
+	const {id} = useParams();
+    const mobileDisplay = useMediaQuery({ query : '(max-width: 767.99px)'});
 
-	// const {id} = useParams();
+	const currTicket = tickets[id - 1];
+
 	const navigate = useNavigate();
 	const thanksModal = useRef(null);
 
@@ -77,40 +82,40 @@ export const TicketView = () => {
 		<div className='w-[90%] md:w-4/5 lg:w-3/5 bg-white mx-auto rounded-xl overflow-clip'>
 			<div className="bg-favblue flex items-center justify-between px-3">
 				<img src={logo} alt="" className='h-10'/>
-				<p className='text-white font-roboto'>1234-3456-XXXX</p>
+				<p className='text-white font-roboto'>ID: {currTicket['id']}</p>
 			</div>
 			<div id="top" className='py-3 md:py-6 px-6 md:px-24 flex flex-wrap justify-between'>
 				<div className="basis-3/5 grid gap-x-2 gap-y-1 items-center justify-items-stretch my-2" style={{gridTemplateColumns: 'repeat(3, min-content)'}}>
 					<span className='text-md font-roboto'>FROM</span>
 					<span className='bi bi-circle-fill text-gray-200 text-xs'></span>
-					<span className='text-favblue font-semibold font-roboto'>Yaounde</span>
+					<span className='text-favblue font-semibold font-roboto'>{currTicket.from.name}</span>
 					<div className="grid grid-cols-subgrid col-span-3 justify-items-center">
 						<div className="col-start-2 border border-[#DBB33C] w-0 h-6"></div>
 					</div>
 					<span className='text-md font-roboto'>TO</span>
 					<span className='bi bi-circle-fill text-gray-200 text-xs'></span>
-					<span className='text-favblue font-semibold font-roboto'>Buea</span>
+					<span className='text-favblue font-semibold font-roboto'>{currTicket.to.name}</span>
 				</div>
 				<div className="basis-2/5 flex items-center justify-end my-2">
-					<span className='bg-favblue rounded-lg text-white px-4 py-2 font-roboto text-md'>XAF 7500</span>
+					<span className='bg-favblue rounded-lg text-white px-4 py-2 font-roboto text-md'>XAF {currTicket.amount}</span>
 				</div>
 			</div>
 			<div id="middle" className="py-6 md:py-6 px-4 md:px-24 grid gap-y-6 justify-between border-t border-black border-dashed" style={{gridTemplateColumns: 'repeat(2, max-content)'}}>
 				<div className="flex flex-col">
 					<p className='text-md font-roboto'>TRAVEL DATE</p>
-					<p className='text-favblue font-semibold font-roboto'>{(new Date()).toLocaleDateString}</p>
+					<p className='text-favblue font-semibold font-roboto'>{(new dayjs(currTicket.trip_date)).format(`${mobileDisplay ? 'MMM': 'MMMM'} D, YYYY`)}</p>
 				</div>
 				<div className="flex flex-col">
 					<p className='text-md font-roboto'>TIME</p>
-					<p className='text-favblue font-semibold font-roboto'>10:00AM</p>
+					<p className='text-favblue font-semibold font-roboto'>{currTicket.trip_time.substring(0, 5)}</p>
 				</div>
 				<div className="flex flex-col">
 					<p className='text-md font-roboto'>CLASS</p>
-					<p className='text-favblue font-semibold font-roboto'>CLASSIC</p>
+					<p className='text-favblue font-semibold font-roboto'>{currTicket.class}</p>
 				</div>
 				<div className="flex flex-col">
 					<p className='text-md font-roboto'>SEAT</p>
-					<p className='text-favblue font-semibold font-roboto'>1 adult</p>
+					<p className='text-favblue font-semibold font-roboto'>{currTicket.seats} adult</p>
 				</div>
 			</div>
 			<div id="bottom" className='py-4 md:py-6 px-4 md:px-24 border-t border-black border-dashed'>

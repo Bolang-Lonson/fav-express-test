@@ -6,7 +6,7 @@ import Home from './pages/layout/views/home';
 import Tickets, { TicketView } from './pages/layout/views/tickets';
 import Track, { TrackStatus } from './pages/landing/track';
 import Faq from './pages/layout/views/faq';
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import pMinDelay from 'p-min-delay';
 import Lottie from "lottie-react";
 import BusAnimation from './assets/Bus-Animation.json';
@@ -16,8 +16,17 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 const Landing = React.lazy(() => pMinDelay(import('./pages/landing'), 3000));
 
 function App() {
+
+	const [tickets, setTickets] = useState([]);
+
+	useEffect(() => {
+		const storedTickets = localStorage.getItem("tickets");
+		if (storedTickets) {
+			setTickets(JSON.parse(storedTickets));
+		}
+	}, []);
+
 	return (
-		
 		<Routes>
 			<Route index element={
 				<Suspense 
@@ -38,8 +47,8 @@ function App() {
 					</LocalizationProvider>
 					}
 				/>
-				<Route path='/tickets' element={<Tickets/>}/>
-				<Route path='/tickets/:id' element={<TicketView/>}/>
+				<Route path='/tickets' element={<Tickets tickets={tickets}/>}/>
+				<Route path='/tickets/:id' element={<TicketView tickets={tickets}/>}/>
 				<Route path='/faqs' element={<Faq/>}/>
 			</Route>
 		</Routes>

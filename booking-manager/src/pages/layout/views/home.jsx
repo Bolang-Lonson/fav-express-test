@@ -476,7 +476,7 @@ const Home = () => {
             {/* Home View 5: Payment */}
             <Payment payHandle={payHandle} cancel={() => setViewIndex(3)}/>
             {/* Home View 6: Payment Completed */}
-            <PaymentComplete reset={() => setViewIndex(0)}/>
+            <PaymentComplete/>
             {/* Home View 7: Payment Failed */}
             <PaymentFailed tryAgain={() => setViewIndex(4)}/>
         </ContentSwitcher>

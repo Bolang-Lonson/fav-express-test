@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, Suspense } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
 import axios from 'axios'
 import logo from '../../../assets/VERSION 2.png';

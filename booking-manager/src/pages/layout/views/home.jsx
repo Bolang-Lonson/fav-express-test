@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Suspense } from 'react';
 import Select from 'react-select';
 import axios from 'axios'
 import logo from '../../../assets/VERSION 2.png';
@@ -38,6 +38,10 @@ const Home = () => {
         })()     
     }, []);
 
+    const [fieldValidation, setFieldValidation] = useState({
+        trip_selected: false,
+    })
+
 	const modalRef = useRef(null);
     const mobileDisplay = useMediaQuery({ query : '(max-width: 767.99px)'});
     const [timeSet, setTimeSet] = useState(0);
@@ -48,12 +52,13 @@ const Home = () => {
     // agency locations
     const [locations, setLocations] = useState([]);
 
+    const today = new dayjs();
     // Value states to eventually post to backend
     const [travelData, setTravelData] = useState({
-        departure: {value: 'Select Departure', label: 'Select Departure City'},
-        destination: {value: 'Enter Destination', label: 'Select Desitination City'},
-        trip: {departure_time: '', route: {base_price: 7000}},
-        travelDate: new dayjs(),
+        departure: sessionStorage.getItem("departure")? JSON.parse(sessionStorage.getItem("departure")): {value: 'Select Departure', label: 'Select Departure City'},
+        destination: sessionStorage.getItem("destination")? JSON.parse(sessionStorage.getItem("destination")): {value: 'Enter Destination', label: 'Select Desitination City'},
+        trip: sessionStorage.getItem("trip")? JSON.parse(sessionStorage.getItem("trip")): {departure_time: '', route: {base_price: 7000}},
+        travelDate: sessionStorage.getItem("travelDate")? new dayjs(sessionStorage.travelDate): today,
         seats: {value: 1, label: 1},
         travelType: {value: 'One Way', label: 'One-way'},
         travelClass: {value: 'standard', label: 'Classic'},
@@ -98,7 +103,7 @@ const Home = () => {
                 }
             }
         })();
-    },[travelData.departure, travelData.destination, travelData.travelDate])
+    },[travelData.departure, travelData.destination, travelData.travelDate]);
 
     const scrollRight = (e) => {
         e.preventDefault();
@@ -165,15 +170,14 @@ const Home = () => {
                 "class": travelData.travelClass.label,
                 "seats": travelData.seats.value,
             }
-            let tickets = localStorage.getItem("tickets");
+            const tickets = localStorage.getItem("tickets");
             // checking if tickets already exist in local storage
             if (tickets){
                 const ticketArr = JSON.parse(tickets);
                 ticketArr.push(ticketData);
-                localStorage.setItem("tickets", JSON.stringify(tickets));
+                localStorage.setItem("tickets", JSON.stringify(ticketArr));
             } else {
-                tickets = JSON.stringify([ticketData]);
-                localStorage.setItem("tickets", tickets);
+                localStorage.setItem("tickets", JSON.stringify([ticketData]));
             }
             
             finalPage = 5;  // Payment complete
@@ -197,7 +201,7 @@ const Home = () => {
         }
     }
 
-    const [viewIndex, setViewIndex] = useState(sessionStorage.getItem("viewIndex") || 0);
+    const [viewIndex, setViewIndex] = useState(Number(sessionStorage.getItem("viewIndex")) || 0);
     const ContentSwitcher = ({className, children}) => {
         const [currentComponent, setCurrentComponent] = useState(children[viewIndex]);
         return (
@@ -209,6 +213,19 @@ const Home = () => {
 
     useEffect(() => sessionStorage.setItem("viewIndex", viewIndex.toString()), [viewIndex]);
 
+    useEffect(() => {
+        if(trips.length > 0){
+            const tripDate = new dayjs(travelData.trip.date);
+            if(travelData.travelDate.isSame(tripDate, 'day'))
+                setFieldValidation({...fieldValidation, trip_selected: true})
+            else
+                setFieldValidation({...fieldValidation, trip_selected: false})
+    
+            console.log(fieldValidation.trip_selected);
+        } else {
+            setFieldValidation({...fieldValidation, trip_selected: false});
+        }
+    }, [travelData, trips]);
   return (
     <div className='pb-32 pt-[5.5rem] md:pt-28'>
         <ContentSwitcher className={`w-[90%] ${viewIndex === 3 && 'overflow-hidden'} mx-auto bg-white rounded-xl md:shadow mb-10 md:mb-16 md:w-3/5`}>
@@ -221,7 +238,10 @@ const Home = () => {
                         <i className="bi bi-circle-fill text-[8px] basis-[10%] ps-1"></i>
                         <Select 
                             options={locations} className='w-10/12 basis-[85%] z-20'
-                            value={travelData.departure} onChange={(dep) => setTravelData({...travelData, departure: dep})}
+                            value={travelData.departure} onChange={(dep) => {
+                                setTravelData({...travelData, departure: dep, trip: {departure_time: '', route: {base_price: 7000}}}); 
+                                sessionStorage.setItem("departure", JSON.stringify(dep));
+                            }}
                         />
                     </div>
                 </div>
@@ -236,7 +256,9 @@ const Home = () => {
                                 e.preventDefault();
                                 const des = travelData.destination;
                                 const dep = travelData.departure;
-                                setTravelData({...travelData, departure: des, destination: dep})
+                                setTravelData({...travelData, departure: des, destination: dep, trip: {departure_time: '', route: {base_price: 7000}}})
+                                sessionStorage.setItem("departure", JSON.stringify(des));
+                                sessionStorage.setItem("destination", JSON.stringify(dep));
                             }}
                         ></button>
                     </label>
@@ -244,7 +266,10 @@ const Home = () => {
                         <i className="bi bi-circle text-[8px] basis-[10%] ps-1"></i>
                         <Select 
                             options={locations} className='w-10/12 basis-[85%] z-10'
-                            value={travelData.destination} onChange={(des) => setTravelData({...travelData, destination: des})}
+                            value={travelData.destination} onChange={(des) => {
+                                setTravelData({...travelData, destination: des, trip: {departure_time: '', route: {base_price: 7000}}}); 
+                                sessionStorage.setItem("destination", JSON.stringify(des));
+                            }}
                         />
                     </div>
                 </div>
@@ -256,13 +281,13 @@ const Home = () => {
                         {
                         mobileDisplay?
                         <MobileDatePicker 
-                            value={travelData.travelDate} onChange={(newDate) => setTravelData({...travelData, travelDate: newDate})}
-                            className='basis-[85%] text-center' label='Choose Date'
+                            value={travelData.travelDate} onChange={(newDate) => {setTravelData({...travelData, travelDate: newDate}); sessionStorage.setItem("travelDate", newDate)}}
+                            className='basis-[85%] text-center' label='Choose Date' minDate={today}
                         />
                         :
                         <DatePicker 
-                            value={travelData.travelDate} onChange={(newDate) => setTravelData({...travelData, travelDate: newDate})}
-                            className='basis-[85%] text-center' label='Choose Date'
+                            value={travelData.travelDate} onChange={(newDate) => {setTravelData({...travelData, travelDate: newDate}); sessionStorage.setItem("travelDate", newDate)}}
+                            className='basis-[85%] text-center' label='Choose Date' minDate={today}
                         />
                         }
                     </div>
@@ -281,21 +306,24 @@ const Home = () => {
                             ></button>
                             }
                             <div className="flex overflow-x-auto items-center gap-[5%] w-full h-full" style={{scrollbarColor: 'transparent', scrollbarWidth: 'none', scrollSnapType: 'x mandatory'}}>
-                            {trips.map((trip, idx) => 
-                                (
-                                    <div 
-                                        onClick={(event)=> {event.stopPropagation();setTravelData({...travelData, trip: trip})}} key={trip.id} id={`time${idx}`}
-                                        className={`${travelData.trip["departure_time"] === trip["departure_time"]? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow-0 shrink-0 flex flex-col justify-center items-center`} style={{scrollSnapAlign: 'start'}}
-                                    >
-                                        <p 
-                                            className={'text-favblue font-roboto font-semibold lg:text-2xl text-16'}
+                                {
+                                trips.length === 0?
+                                <p className='text-gray-400 text-xl text-center block w-full'>Enter details above</p>:
+                                trips.map((trip, idx) => 
+                                    (
+                                        <div 
+                                            onClick={()=> {setTravelData({...travelData, trip: trip}); sessionStorage.setItem("trip", JSON.stringify(trip))}} key={trip.id} id={`time${idx}`}
+                                            className={` cursor-pointer ${travelData.trip.id === trip.id? 'border-4 bg-[#2C3B6A1A]': ''} border rounded-lg border-favblue h-14 lg:h-16 basis-[30%] grow-0 shrink-0 flex flex-col justify-center items-center`} style={{scrollSnapAlign: 'start'}}
                                         >
-                                            {trip["departure_time"].substring(0, 5)}
-                                        </p>
-                                        <p className='text-sm max-sm:text-xs text-center'>{trip["available_seats"]}plc left</p>
-                                    </div>
-                                )
-                            )}
+                                            <p 
+                                                className={'text-favblue font-roboto font-semibold lg:text-2xl text-16'}
+                                            >
+                                                {trip["departure_time"].substring(0, 5)}
+                                            </p>
+                                            <p className='text-sm max-sm:text-xs text-center'>{trip["available_seats"]}plc left</p>
+                                        </div>
+                                    )
+                                )}
                             </div>
                             {
                             trips.length - timeSet > 3
@@ -400,6 +428,10 @@ const Home = () => {
                         />
                     </div>
                 </div>
+                {
+                    (('user_filled' in fieldValidation) && !fieldValidation.user_filled) &&
+                    <p className="text-red text-xl mt-2 text-center"><i className="bi bi-exclamation-circle"></i> Enter all details above</p>
+                }
             </div>
             {/* Home View 4 */}
             <div className='w-full'>
@@ -493,7 +525,7 @@ const Home = () => {
             >Prev</button>
             }
             <button 
-                className={`text-center rounded-md text-sm max-sm:text-[1rem] text-white bg-favblue py-3 ${viewIndex === 0? ' basis-3/4 md:basis-1/5 mx-auto': 'basis-[40%]'} shadow-xl font-roboto`}
+                className={`text-center rounded-md text-sm max-sm:text-[1rem] text-white bg-favblue py-3 ${viewIndex === 0? ' basis-3/4 md:basis-1/5 mx-auto': 'basis-[40%]'} shadow-xl font-roboto disabled:bg-opacity-70`}
                 onClick={(e) => {
                     e.preventDefault();
                     if(viewIndex === 2){
@@ -504,14 +536,22 @@ const Home = () => {
 
                         setUserDetails({...userDetails, surname: surNm.value, givenName: givNm.value, id_number: idNum.value, mobile_number: mobNum.value});
 
-                        switch (travelData.travelClass.value) {
-                            case 'standard': setPayAmt(travelData.seats.value * Number(travelData.trip.route.base_price) + 500); break;
-                            case 'vip': setPayAmt(travelData.seats.value * Number(travelData.trip.route.vip_price) + 500); break;
-                            default: break
+                        if(!(surNm.value && givNm.value && idNum.value && mobNum.value)) {
+                            setFieldValidation({...fieldValidation, user_filled: false})
+                        } else {
+                            setFieldValidation({...fieldValidation, user_filled: true});
+
+                            switch (travelData.travelClass.value) {
+                                case 'standard': setPayAmt(travelData.seats.value * Number(travelData.trip.route.base_price) + 500); break;
+                                case 'vip': setPayAmt(travelData.seats.value * Number(travelData.trip.route.vip_price) + 500); break;
+                                default: break
+                            }
                         }
                     }
-                    setViewIndex(viewIndex + 1);
-                }}
+                    viewIndex !== 2? setViewIndex(viewIndex + 1): (fieldValidation.user_filled && setViewIndex(viewIndex + 1));
+                }} disabled={
+                    viewIndex === 0? !fieldValidation.trip_selected: (viewIndex === 1? false: (viewIndex === 2 && false))
+                }
             >Next</button>
         </div>
         }

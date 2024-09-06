@@ -167,13 +167,13 @@ const Landing = () => {
                             Track Parcel
                             <i className="bi bi-box-seam ms-2"></i>
                         </button>
-                        <a 
-                        className='text-white font-semibold bg-favblue py-2 px-3 rounded-lg hover:opacity-90 flex'
-                        href='/home'
+                        <button 
+                            className='text-white font-semibold bg-favblue py-2 px-3 rounded-lg hover:opacity-90 flex'
+                            onClick={() => {sessionStorage.clear(); navigate('/home')}}
                         >
                             Book Ticket
                             <i className="bi bi-ticket-perforated-fill ms-2"></i>
-                        </a>
+                        </button>
                     </div>
                 </div>
                     {/* Services Info Slide */}

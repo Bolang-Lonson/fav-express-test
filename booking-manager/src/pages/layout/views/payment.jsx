@@ -78,7 +78,7 @@ export const Benefits = () => {
 }
 
 
-export const PaymentComplete = ({reset}) => {
+export const PaymentComplete = () => {
 	const navigate = useNavigate();
 
   return (
@@ -91,7 +91,7 @@ export const PaymentComplete = ({reset}) => {
 			<p className="basis-full shrink-0 font-roboto text-16 mt-14 lg:text-3xl text-center">Your payment was made successfully </p>
 			<button 
 				className='basis-full shrink-0 text-center w-full md:basis-1/2 mx-auto rounded-lg text-[1rem] text-white bg-favblue py-3 font-roboto'
-				onClick={() => {sessionStorage.setItem("viewIndex", "0");navigate('/tickets')}}
+				onClick={() => {sessionStorage.clear(); navigate('/tickets')}}
 			>Download Ticket</button>
 		</div>
 		

@@ -65,7 +65,7 @@ const Home = () => {
     })
 
     // user details
-    const [userDetails, setUserDetails] = useState({
+    const [userDetails, setUserDetails] = useState(sessionStorage.getItem("userDetails")? JSON.parse(sessionStorage.userDetails): {
         surname: '',
         givenName: '',
         id_number: null,
@@ -535,6 +535,7 @@ const Home = () => {
                         const mobNum = document.getElementById('mobile');
 
                         setUserDetails({...userDetails, surname: surNm.value, givenName: givNm.value, id_number: idNum.value, mobile_number: mobNum.value});
+                        sessionStorage.setItem("userDetails", JSON.stringify(userDetails));
 
                         if(!(surNm.value && givNm.value && idNum.value && mobNum.value)) {
                             setFieldValidation({...fieldValidation, user_filled: false})
@@ -546,9 +547,10 @@ const Home = () => {
                                 case 'vip': setPayAmt(travelData.seats.value * Number(travelData.trip.route.vip_price) + 500); break;
                                 default: break
                             }
+                            setViewIndex(viewIndex + 1);
                         }
                     }
-                    viewIndex !== 2? setViewIndex(viewIndex + 1): (fieldValidation.user_filled && setViewIndex(viewIndex + 1));
+                    viewIndex !== 2 && setViewIndex(viewIndex + 1);
                 }} disabled={
                     viewIndex === 0? !fieldValidation.trip_selected: (viewIndex === 1? false: (viewIndex === 2 && false))
                 }

@@ -90,8 +90,14 @@ export default Tickets;
 export const TicketView = ({tickets}) => {
 	const {id} = useParams();
     const mobileDisplay = useMediaQuery({ query : '(max-width: 767.99px)'});
-
-	const currTicket = tickets[id - 1];
+	const [ticks, setTicks] = useState(tickets);
+	useEffect(() => {
+		const storedTickets = localStorage.getItem("tickets");
+		if (storedTickets) {
+			setTicks(JSON.parse(storedTickets));
+		}
+	}, []);
+	const currTicket = ticks[id - 1];
 
 	const navigate = useNavigate();
 	const thanksModal = useRef(null);

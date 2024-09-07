@@ -203,7 +203,7 @@ const Home = () => {
 
     const [viewIndex, setViewIndex] = useState(Number(sessionStorage.getItem("viewIndex")) || 0);
     const ContentSwitcher = ({className, children}) => {
-        const [currentComponent, setCurrentComponent] = useState(children[viewIndex]);
+        const [currentComponent] = useState(children[viewIndex]);
         return (
             <div className={className} style={{transition: 'all ease 0.5s'}}>
                 {currentComponent}
@@ -225,6 +225,7 @@ const Home = () => {
         } else {
             setFieldValidation({...fieldValidation, trip_selected: false});
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [travelData, trips]);
   return (
     <div className='pb-32 pt-[5.5rem] md:pt-28'>

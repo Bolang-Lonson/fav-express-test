@@ -47,8 +47,8 @@ function App() {
 					</LocalizationProvider>
 					}
 				/>
-				<Route path='/tickets' element={<Tickets tickets={tickets}/>}/>
-				<Route path='/tickets/:id' element={<TicketView tickets={tickets}/>}/>
+				<Route path='/tickets' element={<Tickets tickets={tickets} updateTickets={setTickets}/>}/>
+				<Route path='/tickets/:ticket_id' element={<TicketView tickets={tickets}/>}/>
 				<Route path='/faqs' element={<Faq/>}/>
 			</Route>
 		</Routes>

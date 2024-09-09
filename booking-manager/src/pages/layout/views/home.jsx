@@ -144,11 +144,14 @@ const Home = () => {
                     "payer_name": "Saadiq",
                     "payer_phone": info.number
                 },
-                "seats": travelData.seats.value,
-                "status": "confirmed",
-                "is_round_trip": (travelData.travelType.value === 'round-trip'),
-                "service_type": travelData.travelClass.value,
-                "trip": travelData.trip['id']
+                "booking": {
+                    "seats": travelData.seats.value,
+                    "status": "confirmed",
+                    "is_round_trip": (travelData.travelType.value === 'round-trip'),
+                    "service_type": travelData.travelClass.value,
+                    "trip": travelData.trip['id']
+                }
+                
             }
             , 
             {
@@ -164,7 +167,7 @@ const Home = () => {
                 "to": travelData.trip.route['destination'],
                 "trip_date": travelData.travelDate,
                 "trip_time": travelData.trip.departure_time,
-                "id": payDetails['transaction_id'],
+                "transaction_id": payDetails['transaction_id'],
                 "amount": payDetails['amount'],
                 "payment_time": payDetails['payment_time'],
                 "class": travelData.travelClass.label,

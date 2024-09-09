@@ -6,15 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import {useMediaQuery} from 'react-responsive';
 
-const Tickets = ({tickets}) => {
+const Tickets = ({tickets, updateTickets}) => {
 
 	const [ticks, setTicks] = useState(tickets);
 	useEffect(() => {
 		const storedTickets = localStorage.getItem("tickets");
 		if (storedTickets) {
+			updateTickets(JSON.parse(storedTickets));
 			setTicks(JSON.parse(storedTickets));
 		}
-	}, []);
+	}, [updateTickets]);
 	const navigate = useNavigate();
 
 	const deleteAll = (event) => {
@@ -57,11 +58,13 @@ const Tickets = ({tickets}) => {
 						<div className="basis-2/5 flex flex-col items-end justify-end my-2 gap-8">
 							<span className='bg-favblue rounded-lg text-white px-4 py-2 font-roboto text-md'>XAF {ticket['amount']}</span>
 							<button 
-								className="basis-full text-red py-2 px-5"
-								onClick={() => {
+								className="basis-full text-red py-2 px-5 active:bg-[#0000001A] hover:bg-[#0000001A] rounded-lg"
+								onClick={(e) => {
 									const ticksArr = JSON.parse(localStorage.tickets);
-									localStorage.setItem("tickets", JSON.stringify(ticksArr.splice(idx, 1)));
+									const newArr = ticksArr.splice(idx, 1);
+									localStorage.setItem("tickets", JSON.stringify(newArr));
 									window.location.reload();
+									e.stopPropagation();
 								}}
 							>Delete <i className="bi bi-trash"></i></button>
 						</div>
@@ -88,7 +91,7 @@ export default Tickets;
 
 
 export const TicketView = ({tickets}) => {
-	const {id} = useParams();
+	const {ticket_id} = useParams();
     const mobileDisplay = useMediaQuery({ query : '(max-width: 767.99px)'});
 	const [ticks, setTicks] = useState(tickets);
 	useEffect(() => {
@@ -97,7 +100,7 @@ export const TicketView = ({tickets}) => {
 			setTicks(JSON.parse(storedTickets));
 		}
 	}, []);
-	const currTicket = ticks[id - 1];
+	const currTicket = ticks[ticket_id - 1];
 
 	const navigate = useNavigate();
 	const thanksModal = useRef(null);
@@ -113,7 +116,7 @@ export const TicketView = ({tickets}) => {
 		<div className='w-[90%] md:w-4/5 lg:w-3/5 bg-white mx-auto rounded-xl overflow-clip'>
 			<div className="bg-favblue flex items-center justify-between px-3">
 				<img src={logo} alt="" className='h-10'/>
-				<p className='text-white font-roboto'>ID: {currTicket['id']}</p>
+				<p className='text-white font-roboto'>ID: {currTicket.transaction_id}</p>
 			</div>
 			<div id="top" className='py-3 md:py-6 px-6 md:px-24 flex flex-wrap justify-between'>
 				<div className="basis-3/5 grid gap-x-2 gap-y-1 items-center justify-items-stretch my-2" style={{gridTemplateColumns: 'repeat(3, min-content)'}}>

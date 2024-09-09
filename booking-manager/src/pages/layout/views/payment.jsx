@@ -78,7 +78,7 @@ export const Benefits = () => {
 }
 
 
-export const PaymentComplete = () => {
+export const PaymentComplete = ({amount}) => {
 	const navigate = useNavigate();
 
   return (
@@ -98,7 +98,7 @@ export const PaymentComplete = () => {
 		<hr style={{borderColor: 'rgba(0, 0, 0, 0.5'}}/>
 		<div className="flex flex-col gap-3 items-center">
 			<p className="font-roboto text-16 lg:text-x font-medium">Payment amount</p>
-			<p className="text-xl lg:text-2xl text-favblue font-roboto font-medium">XAF 7,500</p>
+			<p className="text-xl lg:text-2xl text-favblue font-roboto font-medium">XAF {amount}</p>
 			<p className="text-md lg:text-x">{(new Date()).toUTCString()}</p>
 		</div>
 	</div>

@@ -69,7 +69,7 @@ const Home = () => {
         surname: '',
         givenName: '',
         id_number: null,
-        mobile_number: null
+        mobile_number: '237-'
     });
 
     // departure time logic
@@ -204,7 +204,7 @@ const Home = () => {
         }
     }
 
-    const [viewIndex, setViewIndex] = useState(Number(sessionStorage.getItem("viewIndex")) || 0);
+    const [viewIndex, setViewIndex] = useState(Number(sessionStorage.getItem("viewIndex")) || 2);
     const ContentSwitcher = ({className, children}) => {
         const [currentComponent] = useState(children[viewIndex]);
         return (

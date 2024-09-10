@@ -18,6 +18,9 @@ module.exports = {
       },
       fontFamily: {
         poppins: ['var(--poppins-font)', 'sans-serif'],
+      },
+      borderRadius: {
+        x: '10px'
       }
     },
   },

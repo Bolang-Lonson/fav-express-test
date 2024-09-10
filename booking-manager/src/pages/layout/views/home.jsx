@@ -204,7 +204,7 @@ const Home = () => {
         }
     }
 
-    const [viewIndex, setViewIndex] = useState(Number(sessionStorage.getItem("viewIndex")) || 2);
+    const [viewIndex, setViewIndex] = useState(Number(sessionStorage.getItem("viewIndex")) || 0);
     const ContentSwitcher = ({className, children}) => {
         const [currentComponent] = useState(children[viewIndex]);
         return (

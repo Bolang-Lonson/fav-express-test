@@ -5,7 +5,7 @@ import ukflag from '../assets/ukflag.png';
 import profilepic from '../assets/profilepic.png'
 import Image from 'next/image';
 
-import Dropdown from './Dropdown';
+import Dropdown, { Button, Content } from './Dropdown';
 
 const Navbar = () => {
   const hasNotif = true;
@@ -43,8 +43,8 @@ const Navbar = () => {
             <option value="fr">FRE</option>
           </select>
         </div>
-        <Dropdown>
-          <Dropdown.Button className="flex items-center basis-[60%] justify-between active:bg-slate-100 hover:bg-slate-100 p-1 rounded-md px-2">
+        <Dropdown className={'basis-[60%]'}>
+          <Button className="w-full flex items-center justify-between active:bg-slate-100 hover:bg-slate-100 p-1 rounded-md px-2" onClick={() => setIsOpen(!isOpen)}>
             <Image
               src={profilepic}
               alt='profile'
@@ -56,7 +56,12 @@ const Navbar = () => {
               <p className="font-poppins font-medium text-sm text-[#333333B2]">Admin</p>
             </div>
             <i className="bi bi-chevron-down"></i>
-          </Dropdown.Button>
+          </Button>
+          <Content className={`${isOpen ? 'h-fit': 'h-0'} bg-white border-t rounded-md mt-2`} style={{transition: 'height ease-in-out 5s'}}>
+            <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-person-circle me-3"></i> Profile</div>
+            <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-gear me-3"></i> Settings</div>
+            <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-box-arrow-right me-3"></i> Logout</div>
+          </Content>
         </Dropdown>
         
       </div>

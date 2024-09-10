@@ -1,15 +1,8 @@
+"use client"
 import React, { createContext, useState } from "react";
 
 const openContext = createContext();
 const Dropdown = ({children, className}) => {
-
-    export const Button = ({children, className}) => {
-        return (
-          <button className={`${className}`}>
-              {children}
-          </button>
-        )
-    }
   return (
     <div className={`relative ${className}`}>
         {children}
@@ -19,11 +12,17 @@ const Dropdown = ({children, className}) => {
 
 export default Dropdown;
 
-
-
-export const Content = ({children, className}) => {
+export const Button = ({children, className, onClick}) => {
   return (
-    <div className={`absolute hidden min-w-40 shadow z-10 ${className}`}>
+    <button className={`${className}`} onClick={onClick}>
+        {children}
+    </button>
+  )
+}
+
+export const Content = ({children, className, style}) => {
+  return (
+    <div className={`absolute right-0 min-w-40 shadow z-10 overflow-hidden ${className}`} style={style}>
         {children}
     </div>
   )

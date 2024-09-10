@@ -31,7 +31,7 @@ const Destinations = () => {
             {/* destinations list */}
             <div>
               <div>
-                <Image placeholder='blur'/>
+                <Image/>
               </div>
               <div></div>
               <div></div>

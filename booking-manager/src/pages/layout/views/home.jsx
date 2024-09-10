@@ -135,7 +135,7 @@ const Home = () => {
             {
                 "customer_info": {
                     "identification": userDetails.id_number,
-                    "phone_number": userDetails.mobile_number,
+                    "phone_number": userDetails.mobile_number.substring(4),
                     "username": `${userDetails.givenName.replace(' ', '')}${userDetails.surname.replace(' ', '')}`
                 },
                 "payment": {

@@ -18,12 +18,12 @@ const Navbar = () => {
     <nav className='bg-white w-full h-16 flex items-center px-4 justify-between'>
       <div className='bg-[#F5F6F7] h-10 flex items-center px-4 py-2 rounded-[10px] basis-[30%]'>
         <input 
-          type="text" placeholder='Search here...' 
+          type="search" placeholder='Search here...' 
           className='bg-transparent h-full w-full outline-none'
         />
         <button className="bi bi-search"></button>
       </div>
-      <div className='bg-favblue h-10 rounded-x flex items-center gap-3 px-4'>
+      <div className='bg-favblue h-10 rounded-x flex items-center gap-3 px-6'>
         <p className="font-poppins font-bold text-white">{currTime.toLocaleTimeString([], { hour: 'numeric', minute: 'numeric', hour12: true })}</p>
         <div className="border-[0.5px] border-white h-5"></div>
         <p 
@@ -57,13 +57,12 @@ const Navbar = () => {
             </div>
             <i className="bi bi-chevron-down"></i>
           </Button>
-          <Content className={`${isOpen ? 'h-fit': 'h-0'} bg-white border-t rounded-md mt-2`} style={{transition: 'height ease-in-out 5s'}}>
+          <Content className={`${isOpen ? '': 'hidden'} bg-white border-t rounded-md mt-2`} style={{transition: 'display ease-in-out 5s'}}>
             <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-person-circle me-3"></i> Profile</div>
             <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-gear me-3"></i> Settings</div>
             <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-box-arrow-right me-3"></i> Logout</div>
           </Content>
         </Dropdown>
-        
       </div>
     </nav>
   )

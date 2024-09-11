@@ -36,3 +36,22 @@ body {
     @apply mt-auto bg-[#E22134] text-white font-poppins text-x w-[85%]
     py-3
 }
+
+#schedule-table th {
+    @apply text-gray-400 font-poppins font-bold text-xs py-2
+}
+
+#schedule-table th:nth-child(1) {
+    @apply ps-2
+}
+#schedule-table th:nth-child(8) {
+    @apply pe-2
+}
+
+#schedule-table tbody td {
+    @apply text-center py-3 font-poppins font-medium text-xs text-[#616161]
+}
+
+#schedule-table tbody tr:nth-child(odd) {
+    @apply bg-[#F8F8F8]
+}

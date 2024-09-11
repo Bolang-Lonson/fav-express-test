@@ -12,9 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-		<body className='max-h-fit'>
+		<body className='max-h-screen'>
 			<Sidebar/>
-			<main className='w-full bg-[#F3F6F8] p-6'>
+			<main className='w-full bg-[#F3F6F8] p-6 overflow-y-scroll'>
         <Navbar/>
 				{children}
 			</main>

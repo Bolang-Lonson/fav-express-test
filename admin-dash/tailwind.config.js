@@ -10,6 +10,8 @@ module.exports = {
       colors: {
         favblue: '#2f3d6c',
         favbluelight: '#eaf1fe',
+        favgold: '#DBB33C',
+        favgray: '#999999',
         red: '#ff0000',
       },
       fontSize: {

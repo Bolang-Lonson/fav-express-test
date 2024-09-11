@@ -14,7 +14,7 @@ const Sidebar = () => {
     async function signOut () {};
 
   return (
-    <aside className='basis-64 bg-favblue flex flex-col items-center py-5 pb-[5.75rem] gap-8'>
+    <aside className='basis-64 max-h-screen bg-favblue flex flex-col items-center py-5 pb-[5.75rem] gap-8'>
         <div className="sidebar-header flex justify-center items-center">
             <Image
                 src={white_bus_pic}

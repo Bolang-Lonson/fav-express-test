@@ -79,7 +79,7 @@ const Destinations = () => {
             {/* header */}
             <div className="flex items-center justify-between">
               <p className="text-gray-400 font-poppins font-medium text-x">Number of Trips</p>
-              <button className="text-favgold border-b border-favgold px-1">View All</button>
+              <a href='/destinations/trips' className="text-favgold border-b border-favgold px-1">View All</a>
             </div>
             {/* Trip indicators */}
             <div className="grid grid-cols-2 gap-y-4 justify-items-center mt-4">

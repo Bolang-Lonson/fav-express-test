@@ -5,7 +5,7 @@ import ukflag from '../assets/ukflag.png';
 import profilepic from '../assets/profilepic.png'
 import Image from 'next/image';
 
-import Dropdown, { Button, Content } from './Dropdown';
+import Dropdown, { DropdownButton, DropdownContent } from './Dropdown';
 
 const Navbar = () => {
   const hasNotif = true;
@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <nav className='bg-white w-full h-16 flex items-center px-4 justify-between'>
       <div className='bg-[#F5F6F7] h-10 flex items-center px-4 py-2 rounded-[10px] basis-[30%]'>
-        <input 
+        <input Dropdown
           type="search" placeholder='Search here...' 
           className='bg-transparent h-full w-full outline-none'
         />
@@ -44,7 +44,7 @@ const Navbar = () => {
           </select>
         </div>
         <Dropdown className={'basis-[60%]'}>
-          <Button className="w-full flex items-center justify-between active:bg-slate-100 hover:bg-slate-100 p-1 rounded-md px-2" onClick={() => setIsOpen(!isOpen)}>
+          <DropdownButton className="w-full flex items-center justify-between active:bg-slate-100 hover:bg-slate-100 p-1 rounded-md px-2" onClick={() => setIsOpen(!isOpen)}>
             <Image
               src={profilepic}
               alt='profile'
@@ -56,12 +56,12 @@ const Navbar = () => {
               <p className="font-poppins font-medium text-sm text-[#333333B2]">Admin</p>
             </div>
             <i className="bi bi-chevron-down"></i>
-          </Button>
-          <Content className={`${isOpen ? '': 'hidden'} bg-white border-t rounded-md mt-2`} style={{transition: 'display ease-in-out 5s'}}>
+          </DropdownButton>
+          <DropdownContent className={`right-0 ${isOpen ? '': 'hidden'} bg-white border-t rounded-md mt-2`} style={{transition: 'display ease-in-out 5s'}}>
             <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-person-circle me-3"></i> Profile</div>
             <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-gear me-3"></i> Settings</div>
             <div className="py-2 px-4 hover:bg-slate-50"><i className="bi bi-box-arrow-right me-3"></i> Logout</div>
-          </Content>
+          </DropdownContent>
         </Dropdown>
       </div>
     </nav>

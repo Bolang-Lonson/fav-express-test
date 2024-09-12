@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Image from "next/image";
-import { Card, Modal }from '../components';
+import { Card, Modal, ContentSwitcher }from '../components';
 
 import logo1 from '../assets/VERSION 1.png';
 
@@ -17,6 +17,12 @@ function range(start, end, step = 1) {
 const Schedules = () => {
 
 	const AddEmployeeModalRef = useRef(null);
+	const DeleteEmployeeModalRef = useRef(null);
+
+	const [page, setPage] = useState(1);
+	const [loading, setLoading] = useState(false);
+	const [delPg, setDelPg] = useState(0);	// delete modal view index. 0 for delete action, 1 for delete complete
+
 	const employees = [1, 2, 3, 4, 5];
 
 	// Taking a maximum of 10 schedules being displayed
@@ -72,20 +78,8 @@ const Schedules = () => {
 										<td>Male</td>
 										<td>
 											<div className='flex justify-center gap-4 text-x'>
-												<button 
-													className="bi bi-eye text-green-800"
-													onClick={() => {
-														const EditTripModal = EditTripModalRef.current;
-														EditTripModal.showModal();
-													}}
-												></button>
-												<button 
-													className="bi bi-trash text-red"
-													onClick={() => {
-														const DeleteTripModal = DeleteTripModalRef.current;
-														DeleteTripModal.showModal();
-													}}
-												></button>
+												<button className="bi bi-eye text-green-800" onClick={() => window.location.pathname = `${window.location.pathname}/lonson`}></button>
+												<button className="bi bi-trash text-red" onClick={() => DeleteEmployeeModalRef.current.showModal()}></button>
 											</div>
 										</td>
 									</tr>
@@ -180,6 +174,33 @@ const Schedules = () => {
 				{/* add button */}
 				<button className="bg-favblue text-white rounded-3xl py-2 w-1/3 block mx-auto my-3">Add</button>
       </Modal>
+			<Modal reference={DeleteEmployeeModalRef} className={'w-96 rounded-xl p-3'}>
+				<button className="block ms-auto bi bi-x text-3xl text-gray-400 hover:text-black" onClick={() => {DeleteEmployeeModalRef.current.close(); setDelPg(0); setLoading(false)}}></button>
+				<ContentSwitcher viewIndex={delPg} className={'pb-4'}>
+					{/* Deleting */}
+					<div className="flex flex-col items-center py-2 px-4 gap-4">
+						<span className="bi bi-trash text-4xl text-[#E22134] bg-[#E221344B] w-20 aspect-square rounded-full flex items-center justify-center"></span>
+						<p className="font-poppins text-xl font-semibold">Delete Account</p>
+						<p className="font-poppins text-base font-normal">This will permanently delete Lonson from Favour Express and can’t be restored </p>
+						<div className='w-full mt-8 flex gap-4'>
+							<button className="bg-favblue text-white grow py-2 rounded-lg" onClick={() => DeleteEmployeeModalRef.current.close()}>Cancel</button>
+							<button 
+								className={`bg-[#E221344B] text-[#E22134] grow py-2 rounded-lg ${loading && 'opacity-50'}`}
+								onClick={() => {
+									// simulating deletion
+									setLoading(true);
+									setTimeout(() => setDelPg(1), 1000);
+								}}
+							>Delete</button>
+						</div>
+					</div>
+					{/* Delete successful */}
+					<div className="flex flex-col items-center py-6 px-4 gap-6">
+						<span className="bi bi-check text-4xl text-white bg-favblue w-20 aspect-square rounded-full flex items-center justify-center"></span>
+						<p className="font-poppins text-base font-normal">Account deleted successfully</p>
+					</div>
+				</ContentSwitcher>
+			</Modal>
 		</div>
 	)
 }

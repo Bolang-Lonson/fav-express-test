@@ -1,7 +1,5 @@
 "use client"
-import React, { createContext, useState } from "react";
 
-const openContext = createContext();
 const Dropdown = ({children, className}) => {
   return (
     <div className={`relative ${className}`}>
@@ -12,7 +10,7 @@ const Dropdown = ({children, className}) => {
 
 export default Dropdown;
 
-export const Button = ({children, className, onClick}) => {
+export const DropdownButton = ({children, className, onClick}) => {
   return (
     <button className={`${className}`} onClick={onClick}>
         {children}
@@ -20,9 +18,9 @@ export const Button = ({children, className, onClick}) => {
   )
 }
 
-export const Content = ({children, className, style}) => {
+export const DropdownContent = ({children, className, style}) => {
   return (
-    <div className={`absolute right-0 min-w-40 shadow z-10 overflow-hidden ${className}`} style={style}>
+    <div className={`absolute min-w-40 shadow z-10 overflow-hidden ${className}`} style={style}>
         {children}
     </div>
   )

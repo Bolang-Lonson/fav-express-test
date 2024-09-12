@@ -69,3 +69,15 @@ dialog input, dialog select {
 dialog {
     transition: opacity ease-in-out 2s;
 }
+
+#profiledetails > div:nth-child(3n + 1) {
+    @apply justify-self-start
+}
+
+#profiledetails > div:nth-child(3n) {
+    @apply justify-self-end
+}
+
+#profiledetails > div {
+    @apply gap-2
+}

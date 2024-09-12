@@ -39,7 +39,7 @@ const Destinations = () => {
             {/* destinations list */}
             <div className='mt-4'>
               <div className='flex items-center gap-4 py-2 border-b border-[#00000033]'>
-                <Image src={seaImg} width={70} height={70}/>
+                <Image src={seaImg} alt='favour colour logo' width={70} height={70}/>
                 <div className="me-auto flex flex-col items-center justify-around h-14">
                   <p className="font-poppins text-sm font-medium">Yaounde - Limbe</p>
                   <p className="font-poppins text-gray-400 text-xs">Distance - 2000km</p>
@@ -50,7 +50,7 @@ const Destinations = () => {
                 </div>
               </div>
               <div className='flex items-center gap-4 py-2 border-b border-[#00000033]'>
-                <Image src={mtnImg} width={70} height={70}/>
+                <Image src={mtnImg} alt='favour colour logo' width={70} height={70}/>
                 <div className="me-auto flex flex-col items-center justify-around h-14">
                   <p className="font-poppins text-sm font-medium">Buea - Yaounde</p>
                   <p className="font-poppins text-gray-400 text-xs">Distance - 2000km</p>
@@ -61,7 +61,7 @@ const Destinations = () => {
                 </div>
               </div>
               <div className='flex items-center gap-4 py-2 border-b border-[#00000033]'>
-                <Image src={ydeImg} width={70} height={70}/>
+                <Image src={ydeImg} alt='favour colour logo' width={70} height={70}/>
                 <div className="me-auto flex flex-col items-center justify-around h-14">
                   <p className="font-poppins text-sm font-medium">Yaounde - Buea</p>
                   <p className="font-poppins text-gray-400 text-xs">Distance - 2000km</p>
@@ -167,7 +167,7 @@ const Destinations = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Image src={driverImg} quality={100} width={50} className='border aspect-square rounded-full border-black'/>
+                    <Image src={driverImg} alt='favour colour logo' quality={100} width={50} className='border aspect-square rounded-full border-black'/>
                     <div>
                       <p className='font-poppins text-x'>Jean Bet</p>
                       <p className="font-poppins text-xs text-favgray">Driver</p>
@@ -188,7 +188,7 @@ const Destinations = () => {
       </section>
       <Modal reference={AddDestinationModalRef} className={'min-w-[50vw] rounded-xl py-8 px-20'}>
         <div className="flex items-start justify-between">
-          <Image src={logo1} width={100} className='aspect-square'/>
+          <Image src={logo1} alt='favour colour logo' width={100} className='aspect-square'/>
           <button className="bi bi-x text-gray-400 text-3xl" onClick={() => AddDestinationModalRef.current.close()}></button>
         </div>
         <div className="flex items-start justify-between mt-4">

@@ -79,12 +79,12 @@ const Buses = () => {
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan={8}>
+							<td colSpan={8}>
 								<div className="w-full flex items-center justify-end mt-6 gap-4 pe-12">
 									<button className='flex items-center'><i className="bi bi-arrow-left-short text-lg"></i>previous</button>
-									{range(1, numOfPages).map((num) => {
+									{range(1, numOfPages).map((num, idx) => {
 										return (
-											<div className="w-8 aspect-square bg-black rounded-md text-white justify-center flex items-center">{num}</div>
+											<div key={idx} className="w-8 aspect-square bg-black rounded-md text-white justify-center flex items-center">{num}</div>
 										)
 									})}
 									<button className='flex items-center'>next<i className="bi bi-arrow-right-short text-lg"></i></button>
@@ -97,7 +97,7 @@ const Buses = () => {
 			<Modal reference={AddBusModalRef} className={'min-w-[50vw] rounded-xl py-8 px-20'}>
 				{/* Logo and close button */}
         <div className="flex items-start justify-between">
-          <Image src={logo1} width={100} className='aspect-square'/>
+          <Image src={logo1} alt='favour colour logo' width={100} className='aspect-square'/>
           <button className="bi bi-x text-gray-400 text-4xl translate-x-10 hover:text-black" onClick={() => AddBusModalRef.current.close()}></button>
         </div>
 				{/* Instruction */}
@@ -146,7 +146,7 @@ const Buses = () => {
 			<Modal reference={EditBusModalRef} className={'min-w-[50vw] rounded-xl py-8 px-20'}>
 				{/* Logo and close button */}
         <div className="flex items-start justify-between">
-          <Image src={logo1} width={100} className='aspect-square'/>
+          <Image src={logo1} alt='favour colour logo' width={100} className='aspect-square'/>
           <button className="bi bi-x text-gray-400 text-4xl translate-x-10 hover:text-black" onClick={() => EditBusModalRef.current.close()}></button>
         </div>
 				{/* Instruction */}

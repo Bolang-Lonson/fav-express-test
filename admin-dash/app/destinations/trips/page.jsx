@@ -101,12 +101,12 @@ const Trips = () => {
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan={8}>
+							<td colSpan={8}>
 								<div className="w-full flex items-center justify-end mt-6 gap-4 pe-12">
 									<button className='flex items-center'><i className="bi bi-arrow-left-short text-lg"></i>previous</button>
-									{range(1, numOfPages).map((num) => {
+									{range(1, numOfPages).map((num, idx) => {
 										return (
-											<div className="w-8 aspect-square bg-black rounded-md text-white justify-center flex items-center">{num}</div>
+											<div key={idx} className="w-8 aspect-square bg-black rounded-md text-white justify-center flex items-center">{num}</div>
 										)
 									})}
 									<button className='flex items-center'>next<i className="bi bi-arrow-right-short text-lg"></i></button>

@@ -17,7 +17,9 @@ body {
 
 .sidebar-links {
     @apply
-    w-full flex flex-col items-center text-white gap-3 overflow-y-auto
+    w-full flex flex-col items-center text-white gap-3 overflow-y-auto;
+    scrollbar-width: 0px;
+    scrollbar-color: transparent;
 }
 
 .sidebar-links li {

@@ -55,3 +55,7 @@ body {
 #schedule-table tbody tr:nth-child(odd) {
     @apply bg-[#F8F8F8]
 }
+
+.grid label {
+    @apply text-[#333333]
+}

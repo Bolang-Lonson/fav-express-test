@@ -51,7 +51,7 @@ const Schedules = () => {
 						>Add Employee</button>
 					</div>
 					<div className="flex items-center justify-between py-8 px-6">
-						<p className="font-poppins text-xl font-medium">Scheduled Trips</p>
+						<p className="font-poppins text-xl font-medium">Employee Listing</p>
 						<div className="border-b border-black pb-1"><span className="bi bi-search me-2"></span><input type="search" placeholder='Search' className='outline-none'/></div>
 					</div>
 					<table className="fav-table w-full border-collapse table-auto">

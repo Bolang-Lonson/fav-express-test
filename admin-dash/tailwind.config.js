@@ -15,6 +15,8 @@ module.exports = {
         favred: '#E22134',
         favredlight: '#E221344B',
         red: '#ff0000',
+        caretred: '#D62C2C',
+        caretgreen: '#4EEA7A'
       },
       fontSize: {
         md: '14px',

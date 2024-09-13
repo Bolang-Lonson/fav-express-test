@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 
-  const loggedIn = false;
+  const loggedIn = true;
   return (
     <html lang="en">
 		<body className='max-h-screen'>

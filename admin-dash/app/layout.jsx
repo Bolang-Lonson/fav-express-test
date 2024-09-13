@@ -10,14 +10,21 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+  const loggedIn = false;
   return (
     <html lang="en">
 		<body className='max-h-screen'>
-			<Sidebar/>
-			<main className='w-full bg-[#F3F6F8] p-6 overflow-y-scroll'>
-        <Navbar/>
-				{children}
-			</main>
+			{loggedIn && <Sidebar/>}
+			{loggedIn ? 
+        <main className='w-full bg-[#F3F6F8] p-6 overflow-y-scroll'>
+          <Navbar/>
+          {children}
+        </main>:
+        <main className="w-full bg-[#F9F9F9] min-h-screen px-32 py-24">
+          {children}
+        </main>
+      }
 		</body>
     </html>
   );

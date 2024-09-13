@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <nav className='bg-white w-full h-16 flex items-center px-4 justify-between'>
       <div className='bg-[#F5F6F7] h-10 flex items-center px-4 py-2 rounded-[10px] basis-[30%]'>
-        <input Dropdown
+        <input
           type="search" placeholder='Search here...' 
           className='bg-transparent h-full w-full outline-none'
         />

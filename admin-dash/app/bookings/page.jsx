@@ -1,6 +1,7 @@
 "use client"
+
 import { Card } from '../components';
-import Chart from 'react-apexcharts';
+// import Chart from 'react-apexcharts';
 
 function range(start, end, step = 1) {
   const result = [];
@@ -65,19 +66,19 @@ const Bookings = () => {
           let delta_color;
           switch (Math.sign(sample.percent_delta)) {
             case -1:
-              dirxn = 'down'; delta_color = 'caretred'; break;
+              dirxn = 'down'; delta_color = 'text-caretred'; break;
             case 1:
-              dirxn = 'up'; delta_color = 'caretgreen'; break;
+              dirxn = 'up'; delta_color = 'text-caretgreen'; break;
             case 0:
               dirxn = ''; delta_color = ''; break;
             default:
           }
           return (
-            <InfoCard className={'p-6 flex flex-col gap-8'}>
+            <InfoCard className={'p-6 flex flex-col gap-8'} key={idx}>
               <p className={`font-poppins font-medium text-base text-${sample.title_color}`}><i className={`bi ${sample.icon} me-3`}></i> {sample.title}</p>
               <p className='flex items-center gap-4'>
                 <span className='font-poppins font-semibold text-3xl'>{sample.value}</span>
-                <span className={`font-poppins text-base text-${delta_color}`}><i className={`bi bi-caret-${dirxn}-fill`}></i> {Math.abs(sample.percent_delta)}%</span>
+                <span className={`font-poppins text-base ${delta_color}`}><i className={`bi bi-caret-${dirxn}-fill`}></i> {Math.abs(sample.percent_delta)}%</span>
               </p>
             </InfoCard>
           )
@@ -86,12 +87,12 @@ const Bookings = () => {
       <section className='mt-6'>
         <InfoCard className={'h-96 w-full py-4 px-6'}>
           <p className="font-poppins font-medium text-base text-favgray">Booking Type Statistics</p>
-          <Chart 
+          {/* <Chart 
             options={options}
             series={series}
             type="area"
             height='340'
-          />
+          /> */}
         </InfoCard>
       </section>
       <section className='mt-6'>

@@ -26,10 +26,10 @@ const Sidebar = () => {
                 <Link href='/' className={`side-link ${(pathname === '/')? 'active': ''}`}><i className="bi bi-columns-gap text-xl"></i> Dashboard</Link>
             </li>
             <li>
-                <Link href='/payments' className={`side-link ${pathname.includes('/payments') && 'active'}`}><i className="bi bi-bar-chart-line-fill text-xl"></i>Payments</Link>
+                <Link href='/payments' className={`side-link ${pathname.includes('/payments') && 'active'}`}><i className="bi bi-bar-chart-line-fill text-xl"></i>Payments <span className="bg-favgold aspect-square h-fit w-auto px-2 rounded-full">1</span></Link>
             </li>
             <li>
-                <Link href='/bookings' className={`side-link ${pathname.includes('/bookings') && 'active'}`}><i className="bi bi-star-fill text-xl"></i>Bookings</Link>
+                <Link href='/bookings' className={`side-link ${pathname.includes('/bookings') && 'active'}`}><i className="bi bi-star-fill text-xl"></i>Bookings <span className="bg-favgold aspect-square h-fit w-auto px-2 rounded-full">1</span></Link>
             </li>
             <li>
                 <Link href='/employees' className={`side-link ${pathname.includes('/employees') && 'active'}`}><i className="bi bi-people-fill text-xl"></i>Employees</Link>

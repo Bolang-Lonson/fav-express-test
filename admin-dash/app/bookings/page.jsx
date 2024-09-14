@@ -1,9 +1,9 @@
 "use client"
 
 import { Card } from '../components';
-// import Chart from 'react-apexcharts';
+import { Chart } from 'react-google-charts';
 
-function range(start, end, step = 1) {
+export function range(start, end, step = 1) {
   const result = [];
   for (let i = start; i <= end; i += step) {
     result.push(i);
@@ -11,7 +11,7 @@ function range(start, end, step = 1) {
   return result;
 }
 
-const InfoCard = ({ children, className }) => {
+export const InfoCard = ({ children, className }) => {
   return (
     <div className={`bg-white rounded-xl p-2 ${className}`}>
       {children}
@@ -19,33 +19,34 @@ const InfoCard = ({ children, className }) => {
   )
 }
 
+export const data = [
+  ['Day', 'VIP', 'Classic'],
+  ['20 Jun', 90, 105],
+  ['21 Jun', 98, 95],
+  ['22 Jun', 98, 125],
+  ['23 Jun', 125, 115],
+  ['24 Jun', 120, 95],
+  ['25 Jun', 132, 90],
+  ['26 Jun', 110, 105],
+];
+
+export const options = {
+  curveType: 'function',
+  legend: { position: 'bottom'},
+};
+
 const Bookings = () => {
   const info = [
     {title: 'Total Bookings', icon: 'bi-bookmark-check', value: '14.7 M', percent_delta: 32, title_color: 'favblue'},
     {title: 'New Bookings', icon: 'bi-bookmark-plus', value: '100', percent_delta: -12, title_color: 'favblue'},
-    {title: 'Total Bookings', icon: 'bi-postcard', value: '500', percent_delta: 25, title_color: 'favgold'},
-    {title: 'Total Bookings', icon: 'bi-postcard', value: 'XAF 3M', percent_delta: 32, title_color: 'favgold'},
+    {title: 'Rescheduled Bookings', icon: 'bi-postcard', value: '500', percent_delta: 25, title_color: 'favgold'},
+    {title: 'Total Revenue', icon: 'bi-postcard', value: 'XAF 3M', percent_delta: 32, title_color: 'favgold'},
   ];
 
   const bookings = [1, 2, 3, 4, 5];
   // Taking a maximum of 10 schedules being displayed
 	const numOfPages = Math.ceil(bookings.length / 10);
 
-  const options = {
-    chart: {
-      id: "basic-bar"
-    },
-    xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-    }
-  }
-
-  const series = [
-    {
-      name: "series-1",
-      data: [30, 40, 45, 50, 49, 60, 70, 91]
-    }
-  ]
   return (
     <main className="min-h-full">
       <section className="flex items-center justify-between mt-6">
@@ -85,14 +86,15 @@ const Bookings = () => {
         })}
       </section>
       <section className='mt-6'>
-        <InfoCard className={'h-96 w-full py-4 px-6'}>
+        <InfoCard className={'min-h-96 w-full py-4 px-6'}>
           <p className="font-poppins font-medium text-base text-favgray">Booking Type Statistics</p>
-          {/* <Chart 
+          <Chart 
+            chartType='LineChart'
+            width='100%'
+            height='340px'
+            data={data}
             options={options}
-            series={series}
-            type="area"
-            height='340'
-          /> */}
+          />
         </InfoCard>
       </section>
       <section className='mt-6'>
@@ -148,4 +150,4 @@ const Bookings = () => {
   )
 }
   
-  export default Bookings;
+export default Bookings;

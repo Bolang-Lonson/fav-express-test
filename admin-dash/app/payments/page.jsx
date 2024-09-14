@@ -179,7 +179,7 @@ const Payments = () => {
                     <td>Lonson LePro</td>
                     <td>XAF 7,500</td>
                     <td>Mobile Money</td>
-                    <td>15:10H</td>
+                    <td>{(new Date()).toLocaleTimeString()}</td>
                     <td>{(new Date()).toLocaleDateString()}</td>
                     <td>Paid</td>
                   </tr>

@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image';
-import { Chart } from 'react-google-charts';
+import dynamic from 'next/dynamic';
 import { Card } from '../components';
 import { InfoCard, data, options, range } from "../bookings/page";
 import {
@@ -12,6 +12,10 @@ import {
 
 import mtn from '../assets/mtn_logo-removebg-preview 1.png';
 import orange from '../assets/orange_money-removebg-preview 1.png'
+
+const Chart = dynamic(() => import('react-google-charts'), {
+	ssr: false
+});
 
 const Payments = () => {
 

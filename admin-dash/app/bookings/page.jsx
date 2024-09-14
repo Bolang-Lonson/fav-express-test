@@ -1,7 +1,11 @@
 "use client"
+import dynamic from 'next/dynamic';
 
 import { Card } from '../components';
-import { Chart } from 'react-google-charts';
+
+const Chart = dynamic(() => import('react-google-charts'), {
+	ssr: false
+});
 
 export function range(start, end, step = 1) {
   const result = [];

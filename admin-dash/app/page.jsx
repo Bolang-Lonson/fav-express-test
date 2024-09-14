@@ -1,12 +1,16 @@
-"use client";
+"use client"
 
 import Image from "next/image";
-import { Chart } from 'react-google-charts';
-import { InfoCard, data, options } from "./bookings/page";
+import dynamic from "next/dynamic";
 
+import { InfoCard, data, options } from "./bookings/page";
 
 import bluedwg from './assets/bluevector.png';
 import reddwg from './assets/redvector.png';
+
+const Chart = dynamic(() => import('react-google-charts'), {
+	ssr: false
+});
 
 const TotalCard = ({ children, className}) => {
 	return (
